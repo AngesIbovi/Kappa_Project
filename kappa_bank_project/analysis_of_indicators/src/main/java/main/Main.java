@@ -8,7 +8,7 @@ import controler.ProtocoleHandler;
 public class Main {
 
 	public void DisplayMenu() throws IOException {
-		System.out.println("------------------------Bienvenue à la banque mutuelle -----------------------------");
+		System.out.println("------------------------Bienvenue ï¿½ la banque mutuelle -----------------------------");
 		System.out.println();
 		System.out.println("                A) Tapez 1 pour vous autentifier");
 		System.out.println();
@@ -34,15 +34,15 @@ public class Main {
 			String reponseautentification = new ProtocoleHandler().authentification(login, password);
 			if (reponseautentification == "OK") {
 				System.out
-						.println("-----------------------------Vous étes connecter :" + login + "------------------------");
+						.println("-----------------------------Vous Ãªtes connecter :" + login + "------------------------");
 				System.out.println();
 				System.out.println("----------------------------Analyse des Indicateurs-------------------------------");
 				System.out.println();
-				System.out.println("tapez 1 pour consulter les types de prêts  ");
-				System.out.println("tapez 2 voir la durée moyenne des prêts");
-				System.out.println("tapez 3	consulter les intérêts perçus  j'usqu'a une date");
+				System.out.println("tapez 1 pour consulter les types de prÃªts  ");
+				System.out.println("tapez 2 voir la durÃ©e moyenne des prÃªts");
+				System.out.println("tapez 3	consulter les intÃ©rÃªts perdus  j'usqu'a une date");
 				System.out.println("tapez 4 pour consulter les simulations");
-				System.out.println("tapez 5 pour la consultation  avancée");
+				System.out.println("tapez 5 pour la consultation  avancÃ©e");
 				System.out.println("tapez sur une autre touche pour sortir");
 
 				int choiceOperation;

@@ -11,10 +11,6 @@ public class LoanCalculation {
 		float payment=0;
 		
 		payment=(float)capital/(nbr_month);
-		
-		System.out.println("--------Calcul du remboursement du prêt sans intérêt---------");
-		System.out.println("Le capital: "+capital+" nombre de mois: "+nbr_month+"\n");
-		System.out.println("Le payement mesuel est de :"+payment);
 		return payment;
 	}
 	

@@ -1,33 +1,41 @@
 package lendingscenario;
-
+import lendingscenario.*;
 import java.sql.Date;
 import java.util.Scanner;
 
 public class GetInformation {
 
 	public static Information Insert() {
+		Information information;
 		Scanner scanner1 = new Scanner(System.in);
 		Scanner scanner2 = new Scanner(System.in);
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Donnez le montant du prêt: ");
+		System.out.println("Le montant de frais de dossier est fixÃ© Ã  :"+GetInformation.fee());
+		System.out.println("Donnez le montant du prÃªt: ");
 		float amount_orrowed = scanner1.nextFloat();
-		System.out.println("Donnez la durée du prêt: ");
+		System.out.println("Donnez la durÃ©e du prÃªt: ");
 		int duration = sc.nextInt();
-		System.out.println("Donnez la periodicité du prêt: ");
+		System.out.println("Donnez la periodicitÃ© du prÃªt: ");
 		String periodicity = scanner2.nextLine();
 		System.out.println("Donnez le pourcentage de l'assurance: ");
 		int value_insurance = sc.nextInt();
-		System.out.println("Donnez la fréquence de révision du taux pour la première fois: ");
+		System.out.println("Donnez la frÃ©quence de rÃ©vision du taux pour la premiÃ¨re fois: ");
 		int first_time = scanner1.nextInt();
-		System.out.println("Donnez la fréquence de révision du taux pour les fois suivantes: ");
+		System.out.println("Donnez la frÃ©quence de rÃ©vision du taux pour les fois suivantes: ");
 		int all_other_times = scanner2.nextInt();
 		
-		Information information = new Information(amount_orrowed, duration, periodicity, value_insurance, first_time,
+		 information = new Information(amount_orrowed, duration, periodicity, value_insurance, first_time,
 				all_other_times);
 		
 		System.out.println(information.toString());
 		
 		return information;
 	
+	}
+	
+	public static float fee(){
+		Information info = new Information();
+		float fee =info.application_fee;
+		return fee;
 	}
 }

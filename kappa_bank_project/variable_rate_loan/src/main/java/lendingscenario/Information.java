@@ -8,6 +8,7 @@ public class Information {
 	private  int value_insurance;
 	/*frequency variable rate review*/
 	private  int First_time, All_other_times;
+	 final float application_fee=100;
 	
 	public Information(){}
 	
@@ -29,6 +30,7 @@ public class Information {
 		this.value_insurance = value_insurance;
 		First_time = first_time;
 		All_other_times = all_other_times;
+		
 	}
 
 	public float getAmount_orrowed() {

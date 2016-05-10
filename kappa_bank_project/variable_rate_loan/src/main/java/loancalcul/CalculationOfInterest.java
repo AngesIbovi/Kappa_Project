@@ -13,11 +13,22 @@ public class CalculationOfInterest {
 	System.out.println("montant"+amount+"\n taux:"+ rate);
 		interest= (float) (amount*((rate*0.01)/12));
 		
-	System.out.println("--------------Intérêts de la banque --------------");	
-	System.out.println("Le payement mesuel des inérêts sont de :"+interest+" par mois");
 		return interest;
 	}
 
 	
+	public int calcul_duration(int date)
+	{
+		int max,min;
+		if(date==1)
+		{
+			min=1;max=12;
+		}
+		else {
+			min=1;max=date*12;
+		}
+		
+		return max;
+	}
 
 }

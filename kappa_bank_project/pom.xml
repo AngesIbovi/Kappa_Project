@@ -31,5 +31,6 @@
     <module>view_print_results_loan</module>
     <module>server</module>
     <module>amount_of_interest_rates</module>
+    <module>View</module>
   </modules>
 </project>
