@@ -22,6 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/user/Downloads/Projet_Kappa_COPIL-master/Projet_Kappa/lib/gson-2.5/gson-2.5.jar"/>
+	<classpathentry kind="lib" path="G:/PDS/Projet_Kappa_COPIL_R1/Projet_Kappa_COPIL_R1/Projet_Kappa/lib/gson-2.5/gson-2.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
