@@ -1,0 +1,5 @@
+AUTH {"id":"Lynda", "password":"Lynda"}
+getAccounts {"firstName":"Anges", "lastName":"Ibovi"}
+getSims {"account_id":"43"}
+getSim {"sim_id":36}
+BYE

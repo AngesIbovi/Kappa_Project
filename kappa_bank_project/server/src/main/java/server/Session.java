@@ -8,6 +8,7 @@ import java.net.Socket;
 
 import model.query.AuthenticationQuery;
 import model.query.GetAccountsQuery;
+import model.query.GetAllSimsQuery;
 import model.query.GetSimQuery;
 import model.query.GetSimsQuery;
 import model.response.AuthenticationServerResponse;
@@ -181,6 +182,13 @@ public class Session extends Thread {
 				}
 				GetSimsQuery getSimsQuery = JsonImpl.fromJson(content, GetSimsQuery.class);
 				response = MessageHandler.handleGetSimsQuery(getSimsQuery);
+				break;
+			case "getAllSims":
+				if(authorization_level < 1) {
+					return new UnauthorizedErrorServerResponse((this.user_id == null), this.authorization_level, 1);
+				}
+				GetAllSimsQuery getAllSimsQuery = JsonImpl.fromJson(content, GetAllSimsQuery.class);
+				response = MessageHandler.handleGetAllSimsQuery(getAllSimsQuery);
 				break;
 			case "getSim":
 				if(authorization_level < 1) {

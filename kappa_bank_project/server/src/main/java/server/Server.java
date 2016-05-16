@@ -79,6 +79,7 @@ public class Server {
 		// Initializing server components
 		try {
 			Properties prop = KappaProperties.getInstance();
+			//System.out.print(prop);
 			serverSocket = new ServerSocket(Integer.parseInt(prop.getProperty("SERVER_PORT")));
 		} catch(Throwable t) {
 			logger.trace("Exiting Server.initAll with a " + t.getClass().getName());

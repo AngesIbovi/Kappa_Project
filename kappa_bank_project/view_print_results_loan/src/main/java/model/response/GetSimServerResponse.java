@@ -25,13 +25,13 @@ public class GetSimServerResponse extends ServerResponse {
 	private String age;
 	private String loan_type_id;
 	private String user_login;
-	private String account_num;
+	private String account_num;   
 	
 	
 	
 	/* Constructors */
 	
-	public GetSimServerResponse(String name, String age,String user_login, String account_num, String loan_type_id,String id, List<Event> events, List<Repayment> repayments,
+	public GetSimServerResponse(String name,String age,String user_login, String account_num,String loan_type_id, String id, List<Event> events, List<Repayment> repayments,
 			Date effectiveDate, float capital, float remainingOwedCapital, int repaymentFrequency,
 			int remainingRepayments, float repaymentConstant, AmortizationType amortizationType) {
 		super();
@@ -66,6 +66,13 @@ public class GetSimServerResponse extends ServerResponse {
 		return name;
 	}
 
+	public String getAcountNum() {
+		return account_num;
+	}
+
+	public void setAccountNum(String account_num) {
+		this.account_num = account_num;
+	}
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -77,14 +84,7 @@ public class GetSimServerResponse extends ServerResponse {
 	public void setAge(String age) {
 		this.age = age;
 	}
-
-	public String getAcountNum() {
-		return account_num;
-	}
-
-	public void setAccountNum(String account_num) {
-		this.account_num = account_num;
-	}
+	
 
 	public String getLoanTypeId() {
 		return loan_type_id;
@@ -101,7 +101,6 @@ public class GetSimServerResponse extends ServerResponse {
 	public void setAccountId(String user_login) {
 		this.user_login = user_login;
 	}
-	
 	public String getId() {
 		return id;
 	}
@@ -178,7 +177,7 @@ public class GetSimServerResponse extends ServerResponse {
 	 * if this is "steady", then the repayment constant refers to the amount of money repaid each month in total</br>
 	 * if this is "degressive", then the repayment constant attribute refers to the amount of capital repaid each month instead  
 	 */
-	public AmortizationType getAmortizationType() {
+	public AmortizationType getAmortizationType() { 
 		return amortizationType;
 	}
 
