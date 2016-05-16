@@ -6,10 +6,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import model.SessionInformation;
 import model.query.AuthenticationQuery;
 import model.query.GetAccountsQuery;
 import model.query.GetSimQuery;
 import model.query.GetSimsQuery;
+import model.query.SearchAccountsQuery;
 import model.response.AuthenticationServerResponse;
 import model.response.ErrorServerResponse;
 import model.response.ServerResponse;
@@ -23,18 +25,21 @@ import util.JsonImpl;
  * This class handles exactly one client, from their connection to their disconnection. </br>
  * The life span of this thread is either the same as the Socket it was given in its constructor's life span,
  * or shorter, depending on whether or not an exit signal is received.
- * @version R3 sprint 1 - 13/04/2016
+ * @version R3 sprint 3 - 08/05/2016
  * @author Kappa-V
  * @changes
+ * 		R3 sprint 2 -> R3 sprint 3:</br>
+ * 			-In handleMessage, renamed getAccounts into searchAccounts, and added a new getAccounts.</br>
+ * 			-Now uses an instance of the new class SessionInformation</br>
  * 		R3 sprint 1 -> R3 sprint 2: </br>
- * 			-Removed the calls to the deprecated consult, withdrawal, deleteCustomer and newCustomer MessageHandler methods
- * 			-Added the calls to the getAccounts, getSims, and getSim MessageHandler methods instead
- * 			-Removed the unused password attribute
+ * 			-Removed the calls to the deprecated consult, withdrawal, deleteCustomer and newCustomer MessageHandler methods</br>
+ * 			-Added the calls to the getAccounts, getSims, and getSim MessageHandler methods instead</br>
+ * 			-Removed the unused password attribute</br>
  * 		R2 sprint 1 -> R3 sprint 1: </br>
  * 			-renamed Session from ProtocolHandler</br>
  * 			-added user_id, password and authorization_level attributes to handle authentication</br>
- * 			-added the handleMessage method which was previously in the MessageHandler class
- * 			-in handleMessage, added the new Auth method, and re-used prefixEnd's value when calculating the prefix String
+ * 			-added the handleMessage method which was previously in the MessageHandler class</br>
+ * 			-in handleMessage, added the new Auth method, and re-used prefixEnd's value when calculating the prefix String</br>
  */
 public class Session extends Thread {
 	/**
@@ -43,31 +48,21 @@ public class Session extends Thread {
 	private static Logger logger = Logger.getLogger(Session.class);
 	
 	/**
-	 * The socket of this Session's client.
-	 */
-	private Socket client;
-	
-	/**
 	 * This boolean is used to exit the run() method before the client decides to end the session. It is set to false by the exit() method.
 	 */
 	private boolean exit = false;
 	
 	/**
-	 * User id provided by the client during the authentication phase
+	 * This session's information. Can be updated.
 	 */
-	private String user_id = null;
-	
-	/**
-	 * User authorization level as dictated by the database during the authentication phase.
-	 */
-	private int authorization_level = 3;
+	private SessionInformation sessionInformation;
 	
 	/**
 	 * Main constructor for this class.
 	 * @param client : the client this Session will handle.
 	 */
 	public Session(Socket client) {
-		this.client = client;
+		this.sessionInformation = new SessionInformation(-1, null, client);
 	}
 	
 	/**
@@ -79,11 +74,11 @@ public class Session extends Thread {
 		logger.trace("Entering Session.run");
 		try {
 			// initialization
-			PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-			BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			PrintWriter out = new PrintWriter(sessionInformation.getSocket().getOutputStream(), true);
+			BufferedReader in = new BufferedReader(new InputStreamReader(sessionInformation.getSocket().getInputStream()));
 			
 			// Main loop
-			while (!client.isClosed() && !exit) {
+			while (!sessionInformation.getSocket().isClosed() && !exit) {
 				// Read query
 				String clientMessage = "";
 				do {
@@ -94,21 +89,21 @@ public class Session extends Thread {
 				ServerResponse serverResponse = handleMessage(clientMessage);
 				
 				// Response
-				if(!client.isClosed()) {
+				if(!sessionInformation.getSocket().isClosed()) {
 					if(serverResponse == null) { // handleMessage returns null if clientMessage.equals("BYE")
-						client.close();
+						sessionInformation.getSocket().close();
 					} else {
 						out.println(serverResponse.toString());
 					}
 				}
 			}
 		} catch (IOException e) {
-			if(client.isClosed()) {
+			if(sessionInformation.getSocket().isClosed()) {
 				logger.info("Session shut down.");
 			} else {
 				logger.error("Session : IOException caught", e);
 				try {
-					client.close();
+					sessionInformation.getSocket().close();
 				} catch (IOException e1) {
 					logger.warn("Exception caught while attempting to close a socket", e1);
 				}
@@ -122,7 +117,7 @@ public class Session extends Thread {
 		logger.trace("Entering Session.exit");
 		exit = true;
 		try {
-			client.close();
+			sessionInformation.getSocket().close();
 		} catch (IOException e) {
 			logger.warn("Exception caught while attempting to close a socket");
 		}
@@ -138,7 +133,7 @@ public class Session extends Thread {
 		logger.trace("Entering Session.handleMessage");
 		if(message.equals("BYE")) {
 			logger.trace("Exiting Session.handleMessage. Message was \"BYE\"");
-			logger.info(this.user_id + " logged out successfully.");
+			logger.info(this.sessionInformation.getUser_id() + " logged out successfully.");
 			return null;
 		}
 		
@@ -162,29 +157,35 @@ public class Session extends Thread {
 				if(response instanceof AuthenticationServerResponse) { // response can also be ErrorServerResponse if the database can't be reached.
 					AuthenticationServerResponse authResponse = (AuthenticationServerResponse) response;
 					if(authResponse.getStatus().equals(AuthenticationServerResponse.Status.OK)) {
-						this.authorization_level = authResponse.getYour_authorization_level();
-						this.user_id = authQuery.getId();
-						logger.info(this.user_id + " logged in successfully.");
+						this.sessionInformation = new SessionInformation(authResponse.getYour_authorization_level(), authQuery.getId(), this.sessionInformation.getSocket());
+						logger.info(this.sessionInformation.getUser_id() + " logged in successfully.");
 					}
 				}
 				break;
+			case "searchAccounts":
+				if(this.sessionInformation.getAuthorization_level() < 2) {
+					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id()==null), this.sessionInformation.getAuthorization_level(), 2);
+				}
+				SearchAccountsQuery searchAccountsQuery = JsonImpl.fromJson(content, SearchAccountsQuery.class);
+				response = MessageHandler.handleSearchAccountsQuery(searchAccountsQuery, this.sessionInformation.getUser_id());
+				break;
 			case "getAccounts":
-				if(authorization_level < 2) {
-					return new UnauthorizedErrorServerResponse((this.user_id==null), this.authorization_level, 2);
+				if(this.sessionInformation.getAuthorization_level() < 1) {
+					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id()==null), this.sessionInformation.getAuthorization_level(), 1);
 				}
 				GetAccountsQuery getAccountsQuery = JsonImpl.fromJson(content, GetAccountsQuery.class);
-				response = MessageHandler.handleGetAccountsQuery(getAccountsQuery, this.user_id);
+				response = MessageHandler.handleGetAccountsQuery(getAccountsQuery);
 				break;
 			case "getSims":
-				if(authorization_level < 1) {
-					return new UnauthorizedErrorServerResponse((this.user_id == null), this.authorization_level, 1);
+				if(this.sessionInformation.getAuthorization_level() < 1) {
+					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id() == null), this.sessionInformation.getAuthorization_level(), 1);
 				}
 				GetSimsQuery getSimsQuery = JsonImpl.fromJson(content, GetSimsQuery.class);
 				response = MessageHandler.handleGetSimsQuery(getSimsQuery);
 				break;
 			case "getSim":
-				if(authorization_level < 1) {
-					return new UnauthorizedErrorServerResponse((this.user_id == null), this.authorization_level, 1);
+				if(this.sessionInformation.getAuthorization_level() < 1) {
+					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id() == null), this.sessionInformation.getAuthorization_level(), 1);
 				}
 				GetSimQuery getSimQuery = JsonImpl.fromJson(content, GetSimQuery.class);
 				response = MessageHandler.handleGetSimQuery(getSimQuery);

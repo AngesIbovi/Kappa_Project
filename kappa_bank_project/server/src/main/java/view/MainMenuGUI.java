@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowAdapter;
@@ -16,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import model.SessionInformation;
 import util.JsonImpl;
 import util.KappaProperties;
 
@@ -23,10 +23,13 @@ import util.KappaProperties;
  * A GUI containing tabs.</br> 
  * You can navigate between tabs by clicking on their names at the top of the frame.
  * @author Kappa-V
- * @version R3 sprint 2
+ * @version R3 sprint 2 - 01/05/2016
+ * @changes
+ * 		R3 sprint 2 -> R3 sprint 3:</br>
+ * 			-Now implements SessionSpecific instead of OnSuccessfulLoginRunnable
  */
 @SuppressWarnings("serial") // Is not going to be serialized
-public class MainMenuGUI extends JDialog implements AuthGUI.OnSuccessfulLoginRunnable { // JDialog disables the minimize and maximize buttons
+public class MainMenuGUI extends JDialog implements SessionSpecific { // JDialog disables the minimize and maximize buttons
 	/**
 	 * The set of all tabs that could be used.</br>
 	 * The user's authorizationLevel is used to determine which ones to display.
@@ -85,12 +88,12 @@ public class MainMenuGUI extends JDialog implements AuthGUI.OnSuccessfulLoginRun
 	 * @param S : the socket for this session
 	 */
 	@Override
-	public void run(Socket S, int authorization_level) {
-		this.socket = S;
+	public void setSessionInformation(SessionInformation sessionInformation) {
+		this.socket = sessionInformation.getSocket();
 		
 		for(Tab t : tabs) {
-			if(t.authorizationLevel <= authorization_level) {
-				t.setSocket(S);
+			if(t.authorizationLevel <= sessionInformation.getAuthorization_level()) {
+				t.setSessionInformation(sessionInformation);
 				tabbedPane.addTab(t.name, t);
 			}
 		}
@@ -127,18 +130,14 @@ public class MainMenuGUI extends JDialog implements AuthGUI.OnSuccessfulLoginRun
 	}
 	
 	/**
-	 * calls the launch method on a set of demo Tabs.
+	 * The main method for the client.</br>
+	 * Calls the launch method on a set of Tabs each corresponding to one of the individual UCs. 
 	 * @param args : not used
 	 */
 	public static void main(String[] args) {
 		Set<Tab> tabs = new HashSet<>();
 		
-		Tab t = new Tab("Test 1", 1){};
-		t.setBackground(Color.MAGENTA);
-		tabs.add(t);
-		
-		t = new Tab("Test 2", 2){};
-		t.setBackground(Color.ORANGE);
+		Tab t = new ComparisonGUI();
 		tabs.add(t);
 		
 		launch(tabs);

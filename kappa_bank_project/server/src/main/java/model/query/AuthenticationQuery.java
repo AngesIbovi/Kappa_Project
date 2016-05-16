@@ -7,7 +7,7 @@ import util.JsonImpl;
  * @version R3 sprint 1 - 18/04/2016
  * @author Kappa-V
  */
-public class AuthenticationQuery {
+public class AuthenticationQuery implements ClientQuery {
 	// Attributes
 	private String id;
 	private String password;

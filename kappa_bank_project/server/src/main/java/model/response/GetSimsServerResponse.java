@@ -5,8 +5,11 @@ import java.util.List;
 
 /**
  * Communication class. See the protocol's documentation for more details.
- * @version R3 sprint 2 - 28/04/2016
+ * @version R3 sprint 3 - 13/05/2016
  * @author Kappa-V
+ * @changes
+ * 		R3 sprint 2 -> R3 sprint 3:</br>
+ * 			-Implemented toString for the SimulationIdentifier subclass</br>
  */
 public class GetSimsServerResponse extends ServerResponse {
 	// Inner class
@@ -33,6 +36,11 @@ public class GetSimsServerResponse extends ServerResponse {
 
 		public void setId(String id) {
 			this.id = id;
+		}
+		
+		@Override
+		public String toString() {
+			return name;
 		}
 	}
 	

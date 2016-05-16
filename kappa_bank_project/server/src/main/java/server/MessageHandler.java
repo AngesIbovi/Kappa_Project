@@ -17,11 +17,17 @@ import org.apache.log4j.Logger;
  * This version of the protocol uses a two-level verification system : server responsed are prefixed by either
  * "OK" or "ERR" (if the query was ill-formatted, or a server-side issue makes handling it impossible), and if the prefix
  * was "OK", the JSON object contained within the response tells if the operation was carried out properly.
- * @version R3 sprint 1 - 18/04/2016
+ * @version R3 sprint 3 - 08/05/2016
  * @author Kappa-V
  * @changes
+ * 		R3 sprint 2 -> R3 sprint 3:</br>
+ * 			-Renamed handleGetAccountsQuery into handleSearchAccountsQuery</br>
+ * 			-Added a new method, handleGetAccountsQuery. Since the code for that new method and the now renamed 
+ * 			 handleSearchAccountsQuery are very similar, a new private handleGetOrSearchHandleQuery method was created to factorise
+ * 			 the database transaction code that was common to both. 
+ * 			-handleSearchAccounts now fetches the name of the owner of each account in the Customers table.</br>
  * 		R3 sprint 1 -> R3 sprint 2:</br>
- * 			-Removed the deprecated methods
+ * 			-Removed the deprecated methods</br>
  * 		R2 sprint 1 -> R3 sprint 1: </br>
  * 			-addition of the handleAuthQuery method</br>
  * 			-removal of the handleMessage method. It was moved to the Session class instead.</br>
@@ -88,6 +94,25 @@ public abstract class MessageHandler {
 		}
 	}
 	
+
+	/**
+	 * Searches for accounts.
+	 * @param getAccountsQuery : contains the login of the customer whose accounts this method is supposed to return.
+	 * @return the server's response to the query. Never null nor an exception
+	 */
+	public static ServerResponse handleGetAccountsQuery(GetAccountsQuery getAccountsQuery) {
+		logger.trace("Entering MessageHandler.handleGetAccountsQuery");
+		
+		// Constructing the SQL query
+		String SQLquery = "SELECT A.Account_Id, A.Account_Num, C.First_Name, C.Last_Name FROM ACCOUNTS A"
+				+ " INNER JOIN CUSTOMERS C ON A.Customer_Id=C.Customer_Id"
+				+ " WHERE C.User_login='" + getAccountsQuery.getCust_login() + "'";
+		
+
+		logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+		return handleGetOrSearchHandleQuery(SQLquery);
+	}
+	
 	/**
 	 * Searches for accounts.
 	 * @param query : contains optional search parameters:</br>
@@ -96,14 +121,14 @@ public abstract class MessageHandler {
 	 * adviser is the current user.
 	 * @return the server's response to the query. Never null nor an exception.
 	 */
-	public static ServerResponse handleGetAccountsQuery(GetAccountsQuery query, String user_id) {
-		logger.trace("Entering MessageHandler.handleGetAccountsQuery");
+	public static ServerResponse handleSearchAccountsQuery(SearchAccountsQuery query, String user_id) {
+		logger.trace("Entering MessageHandler.handleSearchAccountsQuery");
 		
 		// Constructing the SQL query
-		String SQLquery = "SELECT A.Account_Id, A.Account_Num FROM ACCOUNTS A";
+		String SQLquery = "SELECT A.Account_Id, A.Account_Num, C.First_Name, C.Last_Name FROM ACCOUNTS A INNER JOIN CUSTOMERS C ON A.Customer_Id=C.Customer_Id";
 		
 		if((query.getFirstName() != null) || (query.getLastName() != null) || (query.isMyCustomers())) {
-			 SQLquery+= " INNER JOIN CUSTOMERS C ON A.Customer_Id=C.Customer_Id WHERE ";
+			 SQLquery+= " WHERE ";
 		}
 		
 		boolean first = true;
@@ -131,14 +156,24 @@ public abstract class MessageHandler {
 			SQLquery += "C.Advisor_Id IN (SELECT Advisor_Id FROM EMPLOYEES WHERE User_login='" + user_id + "')";
 		}
 		
-		
+		logger.trace("Exiting MessageHandler.handleSearchAccountsQuery");
+		return handleGetOrSearchHandleQuery(SQLquery);
+	}
+	
+	/**
+	 * GetAccounts and SearchAccounts return similar results, only the SQLquery is different. This method is used to factorise the code for both methods.
+	 * @param SQLquery : the SQL query constructed in handleGetAccountsQuery or handleSearchAccountsQuery
+	 * @return the server's response. Never null not an exception.
+	 */
+	private static ServerResponse handleGetOrSearchHandleQuery(String SQLquery) {
+		logger.trace("Entering MessageHandler.handleGetOrSearchHandleQuery");
 		
 		// Connection and treatment
 		Connection databaseConnection;
 		try {
 			databaseConnection = ConnectionPool.acquire();
 		} catch (Exception e) {
-			logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+			logger.trace("Exiting MessageHandler.handleGetOrSearchHandleQuery");
 			logger.warn("Can't acquire a connection from the pool", e);
 			return new ErrorServerResponse("Server-side error. Please retry later.");
 		}
@@ -152,10 +187,14 @@ public abstract class MessageHandler {
 				GetAccountsServerResponse response = new GetAccountsServerResponse();
 				
 				while(results.next()) {
-					response.addAccount(results.getString("Account_Id"), results.getString("Account_Num"));
+					String id = results.getString("Account_Id");
+					String num = results.getString("Account_Num");
+					String name = results.getString("First_Name") + ' ' + results.getString("Last_Name");
+					
+					response.addAccount(id, num, name);
 				}
 				
-				logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+				logger.trace("Exiting MessageHandler.handleGetOrSearchHandleQuery");
 				return response;
 			} catch (SQLException e) {
 				throw e;
@@ -164,7 +203,7 @@ public abstract class MessageHandler {
 			}
 		} catch (SQLException e) {
 			logger.warn("SQLException caught", e);
-			logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+			logger.trace("Exiting MessageHandler.handleGetOrSearchHandleQuery");
 			return new ErrorServerResponse("Database error");
 		} finally {
 			// Good practice : the cleanup code is in a finally block.
@@ -230,7 +269,7 @@ public abstract class MessageHandler {
 		
 		// SQL queries
 		String SQLquery1 = "SELECT * FROM Repayments WHERE \"Loan_Id\"='" + query.getSim_id() + "'";
-		String SQLquery2 = "SELECT * FROM Events WHERE Loan_Id='" + query.getSim_id() + "'";
+//		String SQLquery2 = "SELECT * FROM Events WHERE Loan_Id='" + query.getSim_id() + "'";
 		String SQLquery3 = "SELECT * FROM Loans WHERE Loan_Id='" + query.getSim_id() + "'";
 		
 		// Connection and treatment
@@ -261,7 +300,7 @@ public abstract class MessageHandler {
 				}
 				
 				
-				/* Events */ 
+				/* Events */ // TODO
 //				results = statement.executeQuery(SQLquery2);
 //				while(results.next()) {
 //					response.getEvents().add(new GetSimServerResponse.Event(

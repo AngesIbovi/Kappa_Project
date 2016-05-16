@@ -7,7 +7,7 @@ import util.JsonImpl;
  * @version R3 sprint 2 - 28/04/2016
  * @author Kappa-V
  */
-public class GetSimQuery {
+public class GetSimQuery implements ClientQuery {
 	// Attributes
 	private String sim_id;
 	

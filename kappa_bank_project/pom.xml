@@ -32,5 +32,6 @@
     <module>server</module>
     <module>amount_of_interest_rates</module>
     <module>View</module>
+    <module>comparison</module>
   </modules>
 </project>

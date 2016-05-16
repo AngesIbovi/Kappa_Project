@@ -28,7 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-
+import model.SessionInformation;
 import model.query.AuthenticationQuery;
 import model.response.AuthenticationServerResponse;
 import util.JsonImpl;
@@ -36,22 +36,16 @@ import util.KappaProperties;
 
 /**
  * A Jframe used for the authentication phase.
- * @version R3 Sprint 2 - 29/04/2016
+ * @version R3 Sprint 3 - 08/05/2016
  * @Author Kappa-V
  * @Changes
+ * 		R3 sprint 2 -> R3 sprint 3:</br>
+ * 			-Now uses a public SessionSpecific class instead of an inner OnSuccessfulLoginRunnable interface.
  * 		R3 sprint 1 -> R3 sprint 2:</br>
  * 			-Moved the main method to the MainMenuGUI class
  */
 @SuppressWarnings("serial") // Is not going to be serialized
 public class AuthGUI extends JFrame {
-
-	/**
-	 * An interface used like the Runnable interface, but with parameters.
-	 */
-	public interface OnSuccessfulLoginRunnable {
-		public void run(Socket S, int authorization_level);
-	}
-	
 	/**
 	 * Main constructor. Initializes the socket connection to the server, plans its own cleanup process, 
 	 * positions the various Swing components properly, and handles the authentication process in an event handler.
@@ -60,7 +54,7 @@ public class AuthGUI extends JFrame {
 	 * @throws IOException - if the server is unavailable.
 	 * @throws NullPointerException - if JsonImpl.init() had not been called yet.
 	 */
-	public AuthGUI(final OnSuccessfulLoginRunnable onSuccessfulLogin) throws IOException, NullPointerException {
+	public AuthGUI(final SessionSpecific onSuccessfulLogin) throws IOException, NullPointerException {
 		final AuthGUI thisObject = this;
 		
 		/* Network connection */
@@ -75,7 +69,6 @@ public class AuthGUI extends JFrame {
 		// Cleanup planning  
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		// TODO: check if on successful login, when the auth window gets disposed, this listener is called
 		addWindowStateListener(new WindowStateListener() {
 			public void windowStateChanged(WindowEvent e) {
 				if(e.getNewState() == WindowEvent.WINDOW_CLOSED) {
@@ -233,7 +226,7 @@ public class AuthGUI extends JFrame {
 														thisObject.dispose();
 													}
 												});
-												onSuccessfulLogin.run(connection, response.getYour_authorization_level()); // This is where the callable is used
+												onSuccessfulLogin.setSessionInformation(new SessionInformation(response.getYour_authorization_level(), loginField.getText(), connection)); // This is where the callable is used
 												break;
 											
 											// Unsuccessful connection attempt
@@ -252,6 +245,7 @@ public class AuthGUI extends JFrame {
 											throw new Exception("Unknown prefix");
 										}
 									} catch (Exception e1) {
+										e1.printStackTrace();
 										JOptionPane.showMessageDialog(thisObject, "Unknown response format. Please try again later or download the newest version.");
 									}
 								} catch (IOException e1) {

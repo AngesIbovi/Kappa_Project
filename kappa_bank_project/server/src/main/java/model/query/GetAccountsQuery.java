@@ -4,14 +4,12 @@ import util.JsonImpl;
 
 /**
  * Communication class. See the protocol's documentation for more details.
- * @version R3 sprint 2 - 28/04/2016
  * @author Kappa-V
+ * @version R3 sprint 3 - 08/05/2016
  */
-public class GetAccountsQuery {
+public class GetAccountsQuery implements ClientQuery {
 	// Attributes
-	private String firstName;
-	private String lastName;
-	private boolean myCustomers;
+	private String cust_login;
 	
 	// toString method
 	@Override
@@ -19,41 +17,17 @@ public class GetAccountsQuery {
 		return "getAccounts " + JsonImpl.toJson(this);
 	}
 
-	//constructor
-	public GetAccountsQuery(String firstName, String lastName, boolean myCustomers) {
+	// Constructor
+	public GetAccountsQuery(String cust_login) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.myCustomers = myCustomers;
-	}
-	
-	
-	
-	// getters and setters
-
-	public String getFirstName() {
-		return firstName;
+		this.cust_login = cust_login;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	// Getters and setters
+	public String getCust_login() {
+		return cust_login;
 	}
-
-	public String getLastName() {
-		return lastName;
+	public void setCust_login(String cust_login) {
+		this.cust_login = cust_login;
 	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public boolean isMyCustomers() {
-		return myCustomers;
-	}
-
-	public void setMyCustomers(boolean myCustomers) {
-		this.myCustomers = myCustomers;
-	}
-	
-	
 }
