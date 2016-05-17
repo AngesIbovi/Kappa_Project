@@ -281,7 +281,7 @@ public abstract class MessageHandler {
 		// SQL queries
 		String SQLquery1 = "SELECT * FROM Repayments WHERE \"Loan_Id\"='" + query.getSim_id() + "'";
 		String SQLquery2 = "SELECT * FROM Events WHERE Loan_Id='" + query.getSim_id() + "'";
-		String SQLquery3 = "SELECT * FROM Loans lo, Loan_Types lt,Accounts ac, Customers cust WHERE lo.ACCOUNT_ID=ac.ACCOUNT_ID AND lo.LOAN_TYPE_ID=lt.LOAN_TYPE_ID AND cust.CUSTOMER_ID=ac.ACCOUNT_ID AND lo.Loan_Id='" + query.getSim_id() + "'";
+		String SQLquery3 = "SELECT Amortization_Type,Capital,cust.AGE as AGE,Effective_Date,lo.Name as Name,RemainingOwedCapital,Remaining_Repayments,Repayment_Constant,Repayment_Frequency,lo.AGE as AGE,CONCAT (cust.FIRST_NAME ,' '|| cust.LAST_NAME) as User_login,lo.LOAN_TYPE_ID,Account_Num,lt.NAME as Loan_Type FROM Loans lo, Loan_Types lt,Accounts ac, Customers cust WHERE lo.ACCOUNT_ID=ac.ACCOUNT_ID AND lo.LOAN_TYPE_ID=lt.LOAN_TYPE_ID AND cust.CUSTOMER_ID=ac.ACCOUNT_ID AND lo.Loan_Id='" + query.getSim_id() + "'";
 		
 		// Connection and treatment
 		Connection databaseConnection;
@@ -325,6 +325,7 @@ public abstract class MessageHandler {
 				
 				/* Other attributes */
 				results = statement.executeQuery(SQLquery3);
+				System.out.println(SQLquery3);
 				if(results.next()) {
 					response.setAmortizationType(GetSimServerResponse.AmortizationType.valueOf(results.getString("Amortization_Type")));
 					response.setCapital(results.getFloat("Capital"));
@@ -339,6 +340,8 @@ public abstract class MessageHandler {
 					response.setAccountId(results.getString("User_login"));
 					response.setLoanTypeId(results.getString("LOAN_TYPE_ID")); 
 					response.setAccountNum(results.getString("Account_Num"));
+					response.setTypeSim(results.getString("Loan_Type"));
+					response.setAge((results.getString("AGE")));
 				}
 				
 				/* Return */
@@ -349,7 +352,7 @@ public abstract class MessageHandler {
 			} finally {
 				statement.close();
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e) { 
 			logger.warn("SQLException caught", e);
 			logger.trace("Exiting MessageHandler.handleGetSimQuery");
 			return new ErrorServerResponse("Database error");

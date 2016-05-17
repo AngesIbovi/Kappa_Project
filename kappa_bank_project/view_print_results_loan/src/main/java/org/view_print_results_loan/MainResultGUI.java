@@ -1,5 +1,4 @@
 package org.view_print_results_loan;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +17,6 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 import javax.swing.*;
 
-import model.query.AuthenticationQuery;
 import model.query.GetAllSimsQuery;
 import model.query.GetSimQuery;
 import model.query.GetSimsQuery; 
@@ -27,6 +25,7 @@ import model.response.GetAllSimsServerResponse;
 import model.response.GetAllSimsServerResponse.SimulationIdentifier;
 import model.response.GetSimServerResponse;
 import model.response.GetSimServerResponse.AmortizationType;
+import model.response.GetSimServerResponse.Repayment;
 import model.response.GetSimsServerResponse;
 import util.JsonImpl;
 import util.KappaProperties;    
@@ -38,6 +37,7 @@ import util.KappaProperties;
  */
 @SuppressWarnings("serial") // Is not going to be serialized
 public class MainResultGUI extends JFrame {
+	private JTable tblPayment;
  
 	
 	public MainResultGUI() throws ClassNotFoundException, SQLException, NumberFormatException, UnknownHostException, IOException { 
@@ -344,8 +344,8 @@ public class MainResultGUI extends JFrame {
 									GetSimQuery query = new GetSimQuery(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
 									out.println(query.toString());
 									// Receiving the server's response
-									String message = in.readLine();
-									
+									String message = in.readLine(); 
+
 									//Treating the server's response
 									try {
 										// Prefix and content detection
@@ -358,18 +358,33 @@ public class MainResultGUI extends JFrame {
 										String prefix = message.substring(0, prefixEnd);
 										String content = message.substring(prefixEnd + 1);
 										
-										//System.out.print(content);
 										// Prefix identification
 										switch(prefix) {
 										case "ERR":
 											JOptionPane.showMessageDialog(thisObject, "Format error. Try downloading the newest version.");
+											 
 											break;
 										
 										case "OK":
 											// De-serialization
 											GetSimServerResponse response = JsonImpl.fromJson(content, GetSimServerResponse.class);
 											AmortizationType amortization = response.getAmortizationType(); 
+											List<Repayment> listrepay=  response.getRepayments();   
+											System.out.print(listrepay.toString());
 											String amort = amortization.toString();
+											
+
+											Object[][] data = new Object[listrepay.size()][2];
+
+											for(int i=0 ; i < listrepay.size() ; i++) {
+												data[i][0] = listrepay.get(i).getCapital();
+												data[i][1] = listrepay.get(i).getDate();
+
+											}
+											String titretable[] = new String [] {
+													"ECHEANCE", "DATE", 
+											};
+											
 											if (amort=="steady"){
 												amort="CONSTANT";
 											}else if(amort=="degressive") {
@@ -380,7 +395,7 @@ public class MainResultGUI extends JFrame {
 											lblCustomer.setText(response.getAccountId());
 											lblAge.setText(response.getAge());
 											lblCapital.setText(Float.toString(response.getCapital()));
-											lblTypeLoan.setText(response.getLoanTypeId());
+											lblTypeLoan.setText(response.getTypeSim());
 											lblNumAccount.setText(response.getAcountNum());
 											lblRepaymentConstant.setText(amort);
 											lblRepaymentAmount.setText(Float.toString(response.getRepaymentConstant()));
@@ -391,6 +406,18 @@ public class MainResultGUI extends JFrame {
 											lblInterest.setText("Interet");
 											lblInsurance.setText("0");
 											lblApplicationFee.setText("0");
+											//textPane.setText(listrepay.toString()); 
+											tblPayment = new JTable(data,titretable); 
+											tblPayment.setPreferredScrollableViewportSize(new Dimension(300, 100));
+											tblPayment.setFillsViewportHeight(true);
+											tblPayment.setBounds(77, 272, 413, 31);
+											getContentPane().add(tblPayment);
+											// Create the scroll pane and add the table to it.
+											JScrollPane scrollPane = new JScrollPane(tblPayment);
+											// Add the scroll pane to this panel.
+											add(scrollPane);
+
+											
 											break;
 										
 										default:
