@@ -1,0 +1,89 @@
+######################		STATE ONE : LOGIN PHASE		######################
+
+Client:
+				AUTH {"id": STRING, "password": STRING}
+Server:
+				OK {"status": OK/KO, "wrong_id": BOOLEAN, "your_authorization_level": NUMBER}
+
+This is how you interpret and create this response :
+	if (status == ok)
+		your_authorization_level contains the information the GUI needs to display the main menu properly.
+	else
+		If (wrong_id == true) the user id was wrong
+		else the password was wrong.
+
+Authorization levels :
+	1 - Customer
+	2 - Adviser
+	3 - Agency director
+	4 - Technical Department
+
+
+######################		STATE TWO : COMMUNICATION		######################
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		Client-side query				|		 Server-side normal response			|		Required Authorization level	|								Comments						|
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	getAccounts {"firstName":STRING,	|	OK {"accounts": [							|					2					|	The query contains optional search parameters. 				|
+			"lastName":STRING,			|			{"account_id":STRING,				|										|	Set firstName and/or lastName to null if you do not wish to	|
+			"myCustomers": BOOL}		|			"account_num":STRING}				|										|	perform an advanced search.									|
+										|		]}										|										|	myCustomers is a bool that will determine if the search will|
+										|												|										|	go through all customers or just the one whose adviser is	|
+										|												|										|	the current user.											|
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
+	getSims {"account_id":STRING}		|	OK {"simulations": [						|					1					|	Searches with all the simulations associated with an account|
+										|			{"name": STRING,					|										|	if simulations==null, the account didn't exist				|
+										|			 "id": STRING}						|										|	if simulations==[], the account has no simulations yet		|
+										|		]}										|										|																|
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	getSim {"sim_id": STRING}			|	OK {"name":String, "id":String,				|					1					|																|
+										|		"rateNature":fixed/floating,			|										|																|
+										|		"events": [								|										|																|
+										|			{"type":"LoanRedemption"/...,		|										|																|
+										|			"startDate":sql.Date,				|										|																|
+										|			"endDate":sql.Date,					|										|																|
+										|			"value":float,						|										|																|
+										|			"isReal":boolean}],					|										|																|
+										|		"repayments": [							|										|																|
+										|			{"date":sql.Date,					|										|																|
+										|			"capital":float,					|										|																|
+										|			"interest":float,					|										|																|
+										|			"insurance":float}],				|										|																|
+										|		"effectiveDate":sql.Date,				|										|																|
+										|		"capital":float,						|										|																|
+										|		"remainingOwedCapital":float,			|										|																|
+										|		"repaymentFrequency":int,				|										|																|
+										|		"remainingRepayments":int,				|										|																|
+										|		"amortizationType":steady/degressive,	|										|																|
+										|		"repaymentConstant":float}				|										|																|
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+If the client uses one of these requests without being authenticated, or without having the required authorization level, the server will answer with this:
+						UNAUTHORIZED {"connected": BOOLEAN, "your_authorization_level": NUMBER, "required_authorization_level": NUMBER}
+
+Either (connected == false) and the rest of the object is not relevant, or (connected == true) and the rest of the object helps to describe the authorization mismatch.
+
+
+
+In case another error occurs, the server answers with this :
+						ERR {"message": STRING}
+
+Note that these errors mean it is not useful to try again. These errors can be caused by :
+	-Server-side inability to connect to the database
+	-The client-side request was ill-formated. Bad examples :
+					zefzef {"account_id": NUMBER} 				<- Unknown prefix
+					CONSULT zegfzregrzeg						<- No content, or ill-formated content  
+					CONSULT{"account_id": NUMBER}				<- No space between prefix and content. Will be treated the same way as "unknown prefix".
+					CONSULT {"account_id": BOOLEAN}				<- Deserialization error. Notice how the object doesn't match the class we expect it to be an instance of.
+
+
+
+######################		STATE THREE : DISCONNECTION		######################
+
+Client:
+					BYE
+
+
+
+
+

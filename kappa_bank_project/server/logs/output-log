@@ -1,0 +1,15 @@
+INFO  2016-05-10 23:52:16 at Server:200 :		 Server initialized.
+INFO  2016-05-10 23:54:04 at Server:153 :		 Connection received
+ERROR 2016-05-10 23:54:26 at Session:109 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:90)
+INFO  2016-05-10 23:54:26 at Session:117 :		 Connection terminated
