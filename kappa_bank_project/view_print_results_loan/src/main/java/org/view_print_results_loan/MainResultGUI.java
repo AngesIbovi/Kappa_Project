@@ -16,6 +16,8 @@ import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import model.query.GetAllSimsQuery;
 import model.query.GetSimQuery;
@@ -38,6 +40,7 @@ import util.KappaProperties;
 @SuppressWarnings("serial") // Is not going to be serialized
 public class MainResultGUI extends JFrame {
 	private JTable tblPayment;
+	private JTable tblRepay;
  
 	
 	public MainResultGUI() throws ClassNotFoundException, SQLException, NumberFormatException, UnknownHostException, IOException { 
@@ -277,6 +280,22 @@ public class MainResultGUI extends JFrame {
 		lblNomDuScenario.setBounds(10, 42, 147, 22);
 		getContentPane().add(lblNomDuScenario);
 		
+		tblRepay = new JTable();
+		tblRepay.setBounds(27, 272, 700, 422);
+		getContentPane().add(tblRepay);
+		
+		JScrollPane scrollPane = new JScrollPane(tblRepay);
+		scrollPane.setBounds(27, 272, 825, 422);
+		getContentPane().add(scrollPane);
+		
+		JLabel lblTableauDamortissement = new JLabel("TABLEAU D'AMORTISSEMENT");
+		lblTableauDamortissement.setForeground(Color.BLUE);
+		lblTableauDamortissement.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTableauDamortissement.setBounds(269, 250, 473, 14);
+		getContentPane().add(lblTableauDamortissement);
+		
+ 
+		
 		// Sending the account_id over to the server
 		GetAllSimsQuery query = new GetAllSimsQuery("-1");
 		out.println(query.toString());
@@ -324,7 +343,7 @@ public class MainResultGUI extends JFrame {
 				throw new Exception("Unknown prefix");
 			}
 		} catch (Exception e1) {
-			System.out.print(e1);
+			//System.out.print(e1); 
 			JOptionPane.showMessageDialog(thisObject, "Unknown response format. Please try again later or download the newest version.");
 		} 
 		
@@ -374,17 +393,28 @@ public class MainResultGUI extends JFrame {
 											String amort = amortization.toString();
 											
 
-											Object[][] data = new Object[listrepay.size()][2];
+											String[][] datas = (String[][]) new String[listrepay.size()][6];
 
 											for(int i=0 ; i < listrepay.size() ; i++) {
-												data[i][0] = listrepay.get(i).getCapital();
-												data[i][1] = listrepay.get(i).getDate();
+												datas[i][0] =  Integer.toString(i+1);
+												datas[i][1] = listrepay.get(i).getDate().toString();
+												datas[i][2] = Float.toString(listrepay.get(i).getCapital());
+												datas[i][3] =  Float.toString(listrepay.get(i).getInterest());
+												datas[i][4] = Float.toString(listrepay.get(i).getInsurance());
+												datas[i][5] = Float.toString(listrepay.get(i).getInsurance()+listrepay.get(i).getCapital() + listrepay.get(i).getInterest());
 
 											}
-											String titretable[] = new String [] {
-													"ECHEANCE", "DATE", 
-											};
-											
+											//String titretable[] = new String [] {
+											//		"ECHEANCE", "DATE", 
+											//};
+											//tblRepay.set; 
+
+													String col[] = {"ECHEANCE","DATE","MENSUALITE","DONT INTERETS","ASSURANCE","MENSUALITE TOTAL"}; 
+													DefaultTableModel model = new DefaultTableModel(datas,col);
+													tblRepay.setModel(model);
+													tblRepay.setFillsViewportHeight(true);
+													// Create the scroll pane and add the table to it. 
+													// Add the scroll pane to this panel. 
 											if (amort=="steady"){
 												amort="CONSTANT";
 											}else if(amort=="degressive") {
@@ -407,15 +437,6 @@ public class MainResultGUI extends JFrame {
 											lblInsurance.setText("0");
 											lblApplicationFee.setText("0");
 											//textPane.setText(listrepay.toString()); 
-											tblPayment = new JTable(data,titretable); 
-											tblPayment.setPreferredScrollableViewportSize(new Dimension(300, 100));
-											tblPayment.setFillsViewportHeight(true);
-											tblPayment.setBounds(77, 272, 413, 31);
-											getContentPane().add(tblPayment);
-											// Create the scroll pane and add the table to it.
-											JScrollPane scrollPane = new JScrollPane(tblPayment);
-											// Add the scroll pane to this panel.
-											add(scrollPane);
 
 											
 											break;
