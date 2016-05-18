@@ -22,16 +22,24 @@ public class GetSimServerResponse extends ServerResponse {
 	private int remainingRepayments;
 	private float repaymentConstant;
 	private AmortizationType amortizationType;
+	private String age;
+	private String loan_type_id;
+	private String user_login;
+	private String account_num;
+	private String type_sim;
 	
 	
 	
 	/* Constructors */
 	
-	public GetSimServerResponse(String name, String id, List<Event> events, List<Repayment> repayments,
+	public GetSimServerResponse(String name, String age, String type_sim, String user_login, String account_num, String loan_type_id,String id, List<Event> events, List<Repayment> repayments,
 			Date effectiveDate, float capital, float remainingOwedCapital, int repaymentFrequency,
 			int remainingRepayments, float repaymentConstant, AmortizationType amortizationType) {
 		super();
 		this.name = name;
+		this.age = age;
+		this.user_login = user_login;
+		this.loan_type_id = loan_type_id;
 		this.id = id;
 		this.events = events;
 		this.repayments = repayments;
@@ -42,6 +50,8 @@ public class GetSimServerResponse extends ServerResponse {
 		this.remainingRepayments = remainingRepayments;
 		this.repaymentConstant = repaymentConstant;
 		this.amortizationType = amortizationType;
+		this.account_num = account_num;
+		this.type_sim = type_sim; 
 	}
 	
 	public GetSimServerResponse() {
@@ -62,6 +72,45 @@ public class GetSimServerResponse extends ServerResponse {
 		this.name = name;
 	}
 
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getTypeSim() {
+		return type_sim;
+	}
+
+	public void setTypeSim(String type_sim) {
+		this.type_sim = type_sim;
+	}
+
+	public String getAcountNum() {
+		return account_num;
+	}
+
+	public void setAccountNum(String account_num) {
+		this.account_num = account_num;
+	}
+	public String getLoanTypeId() {
+		return loan_type_id;
+	}
+
+	public void setLoanTypeId(String loan_type_id) {
+		this.loan_type_id = loan_type_id;
+	}
+
+	public String getAccountId() {
+		return user_login;
+	}
+
+	public void setAccountId(String user_login) {
+		this.user_login = user_login;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -270,6 +319,12 @@ public class GetSimServerResponse extends ServerResponse {
 
 		public float getInsurance() {
 			return insurance;
+		}
+
+		@Override
+		public String toString() {
+			return "Repayment [date=" + date + ", capital=" + capital + ", interest=" + interest + ", insurance="
+					+ insurance + "]";
 		}
 
 		public void setInsurance(float insurance) {

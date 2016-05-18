@@ -220,6 +220,56 @@ public abstract class MessageHandler {
 		}
 	}
 
+	
+
+	/**
+	 * Get all Simulations.
+	 * @param query : contains the account id.
+	 * @return the server's response to the query. Never null nor an exception.
+	 */
+	public static ServerResponse handleGetAllSimsQuery(GetAllSimsQuery query) {
+		logger.trace("Entering MessageHandler.handleGetSimsQuery");
+		
+		String SQLquery = "SELECT Loan_Id, Name FROM Loans WHERE Account_Id<>'" + query.getAccount_id() + "'";
+		
+		Connection databaseConnection;
+		try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (Exception e) {
+			logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+		
+		try {
+			Statement statement = databaseConnection.createStatement();
+
+			try {
+				ResultSet results = statement.executeQuery(SQLquery);
+				
+				GetSimsServerResponse response = new GetSimsServerResponse();
+				
+				while(results.next()) {
+					response.addSimulation(new SimulationIdentifier(results.getString("Name"), results.getString("Loan_Id")));
+				}
+				
+				logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+				return response;
+			} catch (SQLException e) {
+				throw e;
+			} finally {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			logger.warn("SQLException caught", e);
+			logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+			return new ErrorServerResponse("Database error");
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+			ConnectionPool.release(databaseConnection);
+		}
+	}
+
 	/**
 	 * Searches for one simulation in particular
 	 * @param query : contains the simulation id.
@@ -231,7 +281,7 @@ public abstract class MessageHandler {
 		// SQL queries
 		String SQLquery1 = "SELECT * FROM Repayments WHERE \"Loan_Id\"='" + query.getSim_id() + "'";
 		String SQLquery2 = "SELECT * FROM Events WHERE Loan_Id='" + query.getSim_id() + "'";
-		String SQLquery3 = "SELECT * FROM Loans WHERE Loan_Id='" + query.getSim_id() + "'";
+		String SQLquery3 = "SELECT Amortization_Type,Capital,cust.AGE as AGE,Effective_Date,lo.Name as Name,RemainingOwedCapital,Remaining_Repayments,Repayment_Constant,Repayment_Frequency,lo.AGE as AGE,CONCAT (cust.FIRST_NAME ,' '|| cust.LAST_NAME) as User_login,lo.LOAN_TYPE_ID,Account_Num,lt.NAME as Loan_Type FROM Loans lo, Loan_Types lt,Accounts ac, Customers cust WHERE lo.ACCOUNT_ID=ac.ACCOUNT_ID AND lo.LOAN_TYPE_ID=lt.LOAN_TYPE_ID AND cust.CUSTOMER_ID=ac.ACCOUNT_ID AND lo.Loan_Id='" + query.getSim_id() + "'";
 		
 		// Connection and treatment
 		Connection databaseConnection;
@@ -275,6 +325,7 @@ public abstract class MessageHandler {
 				
 				/* Other attributes */
 				results = statement.executeQuery(SQLquery3);
+				System.out.println(SQLquery3);
 				if(results.next()) {
 					response.setAmortizationType(GetSimServerResponse.AmortizationType.valueOf(results.getString("Amortization_Type")));
 					response.setCapital(results.getFloat("Capital"));
@@ -284,7 +335,13 @@ public abstract class MessageHandler {
 					response.setRemainingOwedCapital(results.getFloat("RemainingOwedCapital"));
 					response.setRemainingRepayments(results.getInt("Remaining_Repayments"));
 					response.setRepaymentConstant(results.getInt("Repayment_Constant"));
-					response.setRepaymentFrequency(results.getInt("Repayment_Frequency"));
+					response.setRepaymentFrequency(results.getInt("Repayment_Frequency")); 
+					response.setAge(results.getString("AGE"));
+					response.setAccountId(results.getString("User_login"));
+					response.setLoanTypeId(results.getString("LOAN_TYPE_ID")); 
+					response.setAccountNum(results.getString("Account_Num"));
+					response.setTypeSim(results.getString("Loan_Type"));
+					response.setAge((results.getString("AGE")));
 				}
 				
 				/* Return */
@@ -295,7 +352,7 @@ public abstract class MessageHandler {
 			} finally {
 				statement.close();
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e) { 
 			logger.warn("SQLException caught", e);
 			logger.trace("Exiting MessageHandler.handleGetSimQuery");
 			return new ErrorServerResponse("Database error");
@@ -304,4 +361,7 @@ public abstract class MessageHandler {
 			ConnectionPool.release(databaseConnection);
 		}
 	}
+
+	 
+
 }
