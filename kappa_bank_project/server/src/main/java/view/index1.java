@@ -5,6 +5,13 @@
  */
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.io.IOException;
+import java.sql.SQLException;
+
+import javax.swing.SwingConstants;
+
 /**
  *
  * @author user
@@ -36,6 +43,7 @@ public class index1 extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jButtonResult = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -211,8 +219,20 @@ public class index1 extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING) 
+        );
+        setLayout(new BorderLayout()); 
+        jPanel5.setLayout(new FlowLayout());
+        add(jPanel5,BorderLayout.CENTER); 
+        add(jButtonResult,BorderLayout.CENTER); 
+        jButtonResult.setBounds(20, 30, 500, 200);
+        jButtonResult.setVerticalAlignment(SwingConstants.BOTTOM); 
+        
+        setVisible(true);
+        jPanel5.add(jButtonResult);
+        jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1260, Short.MAX_VALUE)
+            .addGap(0, 766, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,6 +313,20 @@ public class index1 extends javax.swing.JFrame {
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
+            }
+        });
+        jButtonResult.setText("CLIQUEZ POUR ACCEDER AU MODULE S.V.P");
+        jButtonResult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	MainResultGUI frame = null;
+				try {
+					frame = new MainResultGUI();
+				} catch (NumberFormatException | ClassNotFoundException | SQLException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                frame.setVisible(true);
+            	//jButton4ActionPerformed(evt);
             }
         });
 
@@ -774,6 +808,7 @@ public class index1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonResult;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

@@ -1,4 +1,4 @@
-package org.view_print_results_loan;
+package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -30,7 +31,7 @@ import model.response.GetSimServerResponse.AmortizationType;
 import model.response.GetSimServerResponse.Repayment;
 import model.response.GetSimsServerResponse;
 import util.JsonImpl;
-import util.KappaProperties;  
+import util.KappaProperties;    
  
 /**
  * A Main Jframe used for the displaying results.
@@ -39,8 +40,9 @@ import util.KappaProperties;
  */
 @SuppressWarnings("serial") // Is not going to be serialized
 public class MainResultGUI extends JFrame {
-	private JTable tblPayment;
+	//private JTable tblPayment;
 	private JTable tblRepay;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
  
 	
 	public MainResultGUI() throws ClassNotFoundException, SQLException, NumberFormatException, UnknownHostException, IOException { 
@@ -111,161 +113,172 @@ public class MainResultGUI extends JFrame {
 		getContentPane().add(lblParamtres);
 		
 		final JLabel lblTypeDePrt = new JLabel("Type de prêt :");
-		lblTypeDePrt.setBounds(27, 124, 87, 14);
+		lblTypeDePrt.setBounds(27, 149, 87, 14);
 		getContentPane().add(lblTypeDePrt);
 		
 		final JLabel lblTypeLoan = new JLabel("");
 		lblTypeLoan.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTypeLoan.setBackground(SystemColor.activeCaption);
-		lblTypeLoan.setBounds(118, 124, 155, 18);
+		lblTypeLoan.setBounds(118, 149, 155, 18);
 		getContentPane().add(lblTypeLoan); 
 		lblTypeLoan.setOpaque(true);
 		
 		final JLabel lblge = new JLabel("Âge :");
-		lblge.setBounds(244, 96, 38, 14);
+		lblge.setBounds(283, 96, 38, 14);
 		getContentPane().add(lblge);
 		
 		final JLabel lblAge = new JLabel("");
 		lblAge.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAge.setOpaque(true);
 		lblAge.setBackground(SystemColor.activeCaption);
-		lblAge.setBounds(276, 96, 55, 18);
+		lblAge.setBounds(315, 96, 55, 18);
 		getContentPane().add(lblAge);
 		
 		final JLabel lblMensualits = new JLabel("Montant du prêt :");
-		lblMensualits.setBounds(10, 149, 97, 14);
+		lblMensualits.setBounds(278, 121, 97, 14);
 		getContentPane().add(lblMensualits);
 		
 		final JLabel lblCapital = new JLabel("");
 		lblCapital.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCapital.setOpaque(true);
 		lblCapital.setBackground(SystemColor.activeCaption);
-		lblCapital.setBounds(117, 149, 55, 18);
+		lblCapital.setBounds(385, 121, 55, 18);
 		getContentPane().add(lblCapital);
 		
 		final JLabel lblhorsMisAssurance = new JLabel("(hors mis assurance)");
 		lblhorsMisAssurance.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		lblhorsMisAssurance.setBounds(179, 149, 136, 14);
+		lblhorsMisAssurance.setBounds(447, 121, 136, 14);
 		getContentPane().add(lblhorsMisAssurance);
 		
 		final JLabel lblNumCompte = new JLabel("Num. Compte :");
-		lblNumCompte.setBounds(341, 96, 87, 14);
+		lblNumCompte.setBounds(21, 121, 87, 14);
 		getContentPane().add(lblNumCompte);
 		
 		final JLabel lblNumAccount = new JLabel("");
 		lblNumAccount.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNumAccount.setOpaque(true);
 		lblNumAccount.setBackground(SystemColor.activeCaption);
-		lblNumAccount.setBounds(426, 96, 114, 18);
+		lblNumAccount.setBounds(118, 121, 155, 18);
 		getContentPane().add(lblNumAccount);
 		
 		final JLabel lblClient = new JLabel("Client :");
-		lblClient.setBounds(37, 96, 38, 14);
+		lblClient.setBounds(76, 96, 38, 14);
 		getContentPane().add(lblClient);
 		
 		final JLabel lblCustomer = new JLabel("");
 		lblCustomer.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCustomer.setOpaque(true);
 		lblCustomer.setBackground(SystemColor.activeCaption);
-		lblCustomer.setBounds(79, 96, 155, 18);
+		lblCustomer.setBounds(118, 96, 155, 18);
 		getContentPane().add(lblCustomer);
 		
 		final JLabel lblTypeDeRemboursement = new JLabel("Type de remboursement :");
-		lblTypeDeRemboursement.setBounds(293, 124, 152, 14);
+		lblTypeDeRemboursement.setBounds(283, 149, 152, 14);
 		getContentPane().add(lblTypeDeRemboursement);
 		
 		final JLabel lblRepaymentConstant = new JLabel("");
 		lblRepaymentConstant.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRepaymentConstant.setOpaque(true);
 		lblRepaymentConstant.setBackground(SystemColor.activeCaption);
-		lblRepaymentConstant.setBounds(455, 124, 85, 18);
+		lblRepaymentConstant.setBounds(445, 149, 85, 18);
 		getContentPane().add(lblRepaymentConstant);
 		
 		final JLabel lblRsultat = new JLabel("Résultats");
 		lblRsultat.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblRsultat.setBounds(10, 208, 87, 22);
+		lblRsultat.setBounds(10, 189, 87, 22);
 		getContentPane().add(lblRsultat);
 		
 		final JLabel lblTauxDintrt = new JLabel("Taux d'intérêt :");
-		lblTauxDintrt.setBounds(20, 234, 94, 14);
+		lblTauxDintrt.setBounds(20, 215, 94, 14);
 		getContentPane().add(lblTauxDintrt);
 		
 		final JLabel lblLoanRate = new JLabel("");
 		lblLoanRate.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLoanRate.setOpaque(true);
 		lblLoanRate.setBackground(SystemColor.activeCaption);
-		lblLoanRate.setBounds(118, 234, 74, 18);
+		lblLoanRate.setBounds(118, 215, 74, 18);
 		getContentPane().add(lblLoanRate);
 		
 		final JLabel label = new JLabel("(hors mis assurance)");
 		label.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		label.setBounds(198, 234, 136, 14);
+		label.setBounds(198, 215, 136, 14);
 		getContentPane().add(label);
 		
 		final JLabel lblMontantDesMensualits = new JLabel("Mensualités :");
-		lblMontantDesMensualits.setBounds(30, 261, 84, 14);
+		lblMontantDesMensualits.setBounds(315, 215, 84, 14);
 		getContentPane().add(lblMontantDesMensualits);
 		
 		final JLabel lblRepaymentAmount = new JLabel("");
 		lblRepaymentAmount.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRepaymentAmount.setOpaque(true);
 		lblRepaymentAmount.setBackground(SystemColor.activeCaption);
-		lblRepaymentAmount.setBounds(118, 259, 74, 18);
+		lblRepaymentAmount.setBounds(403, 213, 74, 18);
 		getContentPane().add(lblRepaymentAmount);
 		
 		final JLabel lblTauxDassurance = new JLabel("Taux d'assurance :");
-		lblTauxDassurance.setBounds(222, 259, 114, 14);
+		lblTauxDassurance.setBounds(199, 240, 114, 14);
 		getContentPane().add(lblTauxDassurance);
 		
 		final JLabel lblInsuranceRate = new JLabel("");
 		lblInsuranceRate.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInsuranceRate.setOpaque(true);
 		lblInsuranceRate.setBackground(SystemColor.activeCaption);
-		lblInsuranceRate.setBounds(338, 259, 150, 18);
+		lblInsuranceRate.setBounds(315, 240, 74, 18);
 		getContentPane().add(lblInsuranceRate);
 		
+		final JLabel lblTeg = new JLabel("TEG * :");
+		lblTeg.setBounds(399, 242, 38, 14);
+		getContentPane().add(lblTeg);
+		
+		final JLabel lblEffectiveRate = new JLabel("");
+		lblEffectiveRate.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEffectiveRate.setOpaque(true);
+		lblEffectiveRate.setBackground(SystemColor.activeCaption);
+		lblEffectiveRate.setBounds(438, 240, 74, 18);
+		getContentPane().add(lblEffectiveRate);
+		
 		final JLabel lblCotTotalDu = new JLabel("Coût total du crédit *:");
-		lblCotTotalDu.setBounds(10, 284, 136, 14);
+		lblCotTotalDu.setBounds(10, 265, 136, 14);
 		getContentPane().add(lblCotTotalDu);
 		
 		final JLabel lblTotalCreditCost = new JLabel("");
 		lblTotalCreditCost.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotalCreditCost.setOpaque(true);
 		lblTotalCreditCost.setBackground(SystemColor.activeCaption);
-		lblTotalCreditCost.setBounds(138, 284, 74, 18);
+		lblTotalCreditCost.setBounds(138, 265, 74, 18);
 		getContentPane().add(lblTotalCreditCost);
 		
 		final JLabel lblIntrt = new JLabel("Intérêts :");
-		lblIntrt.setBounds(224, 284, 63, 14);
+		lblIntrt.setBounds(224, 265, 63, 14);
 		getContentPane().add(lblIntrt);
 		
 		final JLabel lblInterest = new JLabel("");
 		lblInterest.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInterest.setOpaque(true);
 		lblInterest.setBackground(SystemColor.activeCaption);
-		lblInterest.setBounds(283, 284, 74, 18);
+		lblInterest.setBounds(283, 265, 74, 18);
 		getContentPane().add(lblInterest);
 		
 		final JLabel lblAssurance = new JLabel("Assurance :");
-		lblAssurance.setBounds(374, 284, 74, 14);
+		lblAssurance.setBounds(45, 240, 74, 14);
 		getContentPane().add(lblAssurance);
 		
 		final JLabel lblInsurance = new JLabel("");
 		lblInsurance.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInsurance.setOpaque(true);
 		lblInsurance.setBackground(SystemColor.activeCaption);
-		lblInsurance.setBounds(447, 284, 74, 18);
+		lblInsurance.setBounds(118, 240, 74, 18);
 		getContentPane().add(lblInsurance);
 		
 		final JLabel lblFraisDeDossier = new JLabel("Frais de dossier :");
-		lblFraisDeDossier.setBounds(315, 234, 97, 14);
+		lblFraisDeDossier.setBounds(367, 265, 97, 14);
 		getContentPane().add(lblFraisDeDossier);
 		
 		final JLabel lblApplicationFee = new JLabel("");
 		lblApplicationFee.setHorizontalAlignment(SwingConstants.CENTER);
 		lblApplicationFee.setOpaque(true);
 		lblApplicationFee.setBackground(SystemColor.activeCaption);
-		lblApplicationFee.setBounds(414, 234, 74, 18);
+		lblApplicationFee.setBounds(466, 265, 74, 18);
 		getContentPane().add(lblApplicationFee);
 		
 		//We define the home choice of ComboBox
@@ -275,7 +288,7 @@ public class MainResultGUI extends JFrame {
 		final JLabel lblTitle = new JLabel("");
 		lblTitle.setForeground(Color.BLUE);
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTitle.setBounds(167, 42, 473, 14);
+		lblTitle.setBounds(146, 42, 394, 14);
 		getContentPane().add(lblTitle);
 		
 		JLabel lblNomDuScenario = new JLabel("Nom du scenario :");
@@ -283,105 +296,93 @@ public class MainResultGUI extends JFrame {
 		lblNomDuScenario.setBounds(10, 42, 147, 22);
 		getContentPane().add(lblNomDuScenario);
 		
-		tblRepay = new JTable();
+		tblRepay = new JTable(); 
 		tblRepay.setBounds(27, 272, 700, 422);
 		getContentPane().add(tblRepay);
 		
 		JScrollPane scrollPane = new JScrollPane(tblRepay);
-		scrollPane.setBounds(550, 96, 802, 422);
+		scrollPane.setBounds(557, 118, 795, 422);
 		getContentPane().add(scrollPane);
 		
 		JLabel lblTableauDamortissement = new JLabel("TABLEAU D'AMORTISSEMENT");
 		lblTableauDamortissement.setForeground(Color.BLUE);
-		lblTableauDamortissement.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTableauDamortissement.setBounds(841, 74, 370, 14);
+		lblTableauDamortissement.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTableauDamortissement.setBounds(813, 94, 473, 14);
 		getContentPane().add(lblTableauDamortissement);
 		
-		JLabel lblTotalDesMensualites = new JLabel("TOTAL DES MENSUALITES : ");
-		lblTotalDesMensualites.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTotalDesMensualites.setForeground(Color.BLUE);
-		lblTotalDesMensualites.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTotalDesMensualites.setBounds(596, 529, 458, 14);
-		getContentPane().add(lblTotalDesMensualites);
+		JLabel lblEstRel = new JLabel("Est réel :");
+		lblEstRel.setBounds(528, 42, 74, 14);
+		getContentPane().add(lblEstRel);
 		
-		JLabel lblTotalDesInterets = new JLabel("TOTAL DES INTERETS :");
-		lblTotalDesInterets.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTotalDesInterets.setForeground(Color.BLUE);
-		lblTotalDesInterets.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTotalDesInterets.setBounds(684, 565, 370, 14);
-		getContentPane().add(lblTotalDesInterets);
+		final JRadioButton rdbtnOui = new JRadioButton("OUI");
+		rdbtnOui.setEnabled(false);
+		buttonGroup.add(rdbtnOui);
+		rdbtnOui.setBounds(590, 38, 55, 23);
+		getContentPane().add(rdbtnOui);
 		
-		JLabel lblTotalDeL = new JLabel("TOTAL DE L ASSURANCE :");
-		lblTotalDeL.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTotalDeL.setForeground(Color.BLUE);
-		lblTotalDeL.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTotalDeL.setBounds(684, 601, 370, 14);
-		getContentPane().add(lblTotalDeL);
+		final JRadioButton rdbtnNon = new JRadioButton("NON");
+		rdbtnNon.setEnabled(false);
+		buttonGroup.add(rdbtnNon);
+		rdbtnNon.setBounds(669, 38, 55, 23);
+		getContentPane().add(rdbtnNon);
 		
-		JLabel label_1 = new JLabel("(hors mis assurance)");
-		label_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		label_1.setBounds(1238, 531, 114, 14);
+		Label label_1 = new Label("TOTAL DES MENSUALITES HORS ASSURANCE :");
+		label_1.setAlignment(Label.RIGHT);
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label_1.setBounds(728, 558, 416, 22);
 		getContentPane().add(label_1);
 		
-		final JLabel lblTotalCapital = new JLabel("");
-		lblTotalCapital.setBackground(Color.WHITE);
-		lblTotalCapital.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTotalCapital.setForeground(new Color(0, 100, 0));
-		lblTotalCapital.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTotalCapital.setBounds(1056, 529, 155, 14);
-		getContentPane().add(lblTotalCapital);
-		
-		final JLabel lblTotalInterest = new JLabel("");
-		lblTotalInterest.setBackground(SystemColor.inactiveCaptionBorder);
-		lblTotalInterest.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTotalInterest.setForeground(new Color(0, 0, 128));
-		lblTotalInterest.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTotalInterest.setBounds(1056, 567, 155, 14);
-		getContentPane().add(lblTotalInterest);
-		
-		final JLabel lblTotalInsurance = new JLabel("");
-		lblTotalInsurance.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTotalInsurance.setForeground(new Color(255, 69, 0));
-		lblTotalInsurance.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTotalInsurance.setBounds(1056, 603, 155, 14);
-		getContentPane().add(lblTotalInsurance);
-		
-		JLabel label_2 = new JLabel("€");
-		label_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label_2.setBounds(1221, 562, 87, 22);
+		Label label_2 = new Label("TOTAL DES INTERETS :");
+		label_2.setAlignment(Label.RIGHT);
+		label_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label_2.setBounds(728, 596, 416, 22);
 		getContentPane().add(label_2);
 		
-		JLabel label_3 = new JLabel("€");
-		label_3.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label_3.setBounds(1221, 598, 87, 22);
+		Label label_3 = new Label("TOTAL DE L'ASSURANCE :");
+		label_3.setAlignment(Label.RIGHT);
+		label_3.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label_3.setBounds(728, 639, 416, 22);
 		getContentPane().add(label_3);
 		
-		JLabel label_4 = new JLabel("€");
-		label_4.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label_4.setBounds(1221, 529, 17, 22);
+		final Label lblTotalCapital = new Label("");
+		lblTotalCapital.setBackground(SystemColor.inactiveCaptionBorder);
+		lblTotalCapital.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTotalCapital.setAlignment(Label.RIGHT);
+		lblTotalCapital.setBounds(1150, 558, 167, 22);
+		getContentPane().add(lblTotalCapital);
+		
+		final Label lblTotalInterest = new Label("");
+		lblTotalInterest.setBackground(SystemColor.inactiveCaptionBorder);
+		lblTotalInterest.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTotalInterest.setAlignment(Label.RIGHT);
+		lblTotalInterest.setBounds(1150, 596, 167, 22);
+		getContentPane().add(lblTotalInterest);
+		
+		final Label lblTotalInsurance = new Label("");
+		lblTotalInsurance.setBackground(SystemColor.inactiveCaptionBorder);
+		lblTotalInsurance.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTotalInsurance.setAlignment(Label.RIGHT);
+		lblTotalInsurance.setBounds(1150, 639, 167, 22);
+		getContentPane().add(lblTotalInsurance);
+		
+		Label label_4 = new Label("€");
+		label_4.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label_4.setAlignment(Label.RIGHT);
+		label_4.setBounds(1302, 558, 29, 22);
 		getContentPane().add(label_4);
 		
-		final JButton btnNewButton = new JButton("GRAPHE DES RESULTATS");
-		btnNewButton.setEnabled(false);
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { 
-            	ChartResult frame = null;
-				try {
-					frame = new ChartResult();
-				} catch (NumberFormatException | ClassNotFoundException | SQLException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-                frame.setVisible(true);
-            	//jButton4ActionPerformed(evt);
-			}
-		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnNewButton.setBounds(140, 363, 288, 67);
-		getContentPane().add(btnNewButton);
+		Label label_5 = new Label("€");
+		label_5.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label_5.setAlignment(Label.RIGHT);
+		label_5.setBounds(1302, 596, 29, 22);
+		getContentPane().add(label_5);
 		
- 
-		
+		Label label_6 = new Label("€");
+		label_6.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label_6.setAlignment(Label.RIGHT);
+		label_6.setBounds(1302, 639, 29, 22);
+		getContentPane().add(label_6);
+		 
 		// Sending the account_id over to the server
 		GetAllSimsQuery query = new GetAllSimsQuery("-1");
 		out.println(query.toString());
@@ -410,10 +411,10 @@ public class MainResultGUI extends JFrame {
 			case "OK":
 				// De-serialization
 				GetAllSimsServerResponse response = JsonImpl.fromJson(content, GetAllSimsServerResponse.class);     
-				System.out.println(response.getSimulations()); 
+				//System.out.println(response); 
 				List<SimulationIdentifier> listSims=  response.getSimulations();  
 				for(int i=0; i<listSims.toArray().length;i++){
-				System.out.println(listSims.toArray()[i]);
+				//System.out.println(listSims.toArray()[i]);
 				cbScenChoice.addItem((SimulationIdentifier) listSims.toArray()[i]); 
 			    } 
 				//System.out.println(listSims.toArray().length); 
@@ -474,16 +475,16 @@ public class MainResultGUI extends JFrame {
 											// De-serialization
 											GetSimServerResponse response = JsonImpl.fromJson(content, GetSimServerResponse.class);
 											AmortizationType amortization = response.getAmortizationType(); 
+											String state = response.getIs_reel(); 
 											List<Repayment> listrepay=  response.getRepayments();   
-											System.out.print(listrepay.toString());
-											String amort = amortization.toString();
-											float total_insurance=0;
-											float total_capital=0; 
-											float total_interest=0;
-
-
+											//System.out.print(response);
+											String amort = amortization.toString();  
+											float total_insurance = 0;  
+											float total_capital = 0;  
+											float total_interest = 0;
 											String[][] datas = (String[][]) new String[listrepay.size()][6];
-
+											
+											//we prepare to bind data into our JTable
 											for(int i=0 ; i < listrepay.size() ; i++) {
 												//We get the total amount of each part of the credit
 												total_insurance =  total_insurance+listrepay.get(i).getInsurance();
@@ -503,17 +504,31 @@ public class MainResultGUI extends JFrame {
 											//tblRepay.set; 
 
 													String col[] = {"ECHEANCE","DATE","MENSUALITE","DONT INTERETS","ASSURANCE","MENSUALITE TOTAL"}; 
-													DefaultTableModel model = new DefaultTableModel(datas,col);
+													DefaultTableModel model = new DefaultTableModel(datas,col){
+
+													    @Override
+													    public boolean isCellEditable(int i, int i1) {
+													        return false; //To change body of generated methods, choose Tools | Templates.
+													    }
+
+													   };
 													tblRepay.setModel(model);
 													tblRepay.setFillsViewportHeight(true);
 													// Create the scroll pane and add the table to it. 
 													// Add the scroll pane to this panel. 
+											if (Objects.equals(state.toUpperCase(), new String("Y"))){ 
+												//System.out.print(state.toUpperCase()); 
+												//JOptionPane.showMessageDialog(thisObject, state.toUpperCase());
+													rdbtnOui.setSelected(true);
+												}else if (Objects.equals(state.toUpperCase(), new String("N"))){
+													rdbtnNon.setSelected(true);
+											}
 											if (amort=="steady"){
 												amort="CONSTANT";
 											}else if(amort=="degressive") {
 												amort="DEGRESSIF";
 											}
-											System.out.println(response);
+											System.out.println(total_insurance);
 											lblTitle.setText(response.getName());
 											lblCustomer.setText(response.getAccountId());
 											lblAge.setText(response.getAge());
@@ -523,18 +538,17 @@ public class MainResultGUI extends JFrame {
 											lblRepaymentConstant.setText(amort);
 											lblRepaymentAmount.setText(Float.toString(response.getRepaymentConstant()));
 											lblLoanRate.setText("0.5");
-											lblInsuranceRate.setText(Float.toString(total_insurance/total_capital)); 
-											lblTotalCreditCost.setText(Float.toString(total_capital+total_interest+total_insurance));
-											lblInterest.setText(Float.toString(total_interest));
-											//lblInsurance.setText(Float.toString(response.getInsurance()));
-											lblInsurance.setText(Float.toString(total_insurance));
-											lblApplicationFee.setText(Float.toString(response.getProcessing_fee()));
+											lblInsuranceRate.setText("10000");
+											lblEffectiveRate.setText("TEG");
+											lblTotalCreditCost.setText("0");
+											lblInterest.setText("Interet");
+											lblInsurance.setText("0");
+											lblApplicationFee.setText("0");
 											//textPane.setText(listrepay.toString()); 
+											//We load total in the label
 											lblTotalCapital.setText(Float.toString(total_capital));
-											lblTotalInterest.setText(Float.toString(total_interest));
 											lblTotalInsurance.setText(Float.toString(total_insurance));
-											btnNewButton.setEnabled(true);
-											
+											lblTotalInterest.setText(Float.toString(total_interest));
 											break;
 										
 										default:

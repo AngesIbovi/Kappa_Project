@@ -281,7 +281,7 @@ public abstract class MessageHandler {
 		// SQL queries
 		String SQLquery1 = "SELECT * FROM Repayments WHERE \"Loan_Id\"='" + query.getSim_id() + "'";
 		String SQLquery2 = "SELECT * FROM Events WHERE Loan_Id='" + query.getSim_id() + "'";
-		String SQLquery3 = "SELECT Amortization_Type,Capital,cust.AGE as AGE,Effective_Date,lo.Name as Name,RemainingOwedCapital,Remaining_Repayments,Repayment_Constant,Repayment_Frequency,lo.AGE as AGE,CONCAT (cust.FIRST_NAME ,' '|| cust.LAST_NAME) as User_login,lo.LOAN_TYPE_ID,Account_Num,lt.NAME as Loan_Type FROM Loans lo, Loan_Types lt,Accounts ac, Customers cust WHERE lo.ACCOUNT_ID=ac.ACCOUNT_ID AND lo.LOAN_TYPE_ID=lt.LOAN_TYPE_ID AND cust.CUSTOMER_ID=ac.ACCOUNT_ID AND lo.Loan_Id='" + query.getSim_id() + "'";
+		String SQLquery3 = "SELECT Insurance, PROCESSING_FEE, Is_Real, Amortization_Type,Capital,cust.AGE as AGE,Effective_Date,lo.Name as Name,RemainingOwedCapital,Remaining_Repayments,Repayment_Constant,Repayment_Frequency,lo.AGE as AGE,CONCAT (cust.FIRST_NAME ,' '|| cust.LAST_NAME) as User_login,lo.LOAN_TYPE_ID,Account_Num,lt.NAME as Loan_Type FROM Loans lo, Loan_Types lt,Accounts ac, Customers cust WHERE lo.ACCOUNT_ID=ac.ACCOUNT_ID AND lo.LOAN_TYPE_ID=lt.LOAN_TYPE_ID AND cust.CUSTOMER_ID=ac.ACCOUNT_ID AND lo.Loan_Id='" + query.getSim_id() + "'";
 		
 		// Connection and treatment
 		Connection databaseConnection;
@@ -324,8 +324,7 @@ public abstract class MessageHandler {
 //				}
 				
 				/* Other attributes */
-				results = statement.executeQuery(SQLquery3);
-				System.out.println(SQLquery3);
+				results = statement.executeQuery(SQLquery3); 
 				if(results.next()) {
 					response.setAmortizationType(GetSimServerResponse.AmortizationType.valueOf(results.getString("Amortization_Type")));
 					response.setCapital(results.getFloat("Capital"));
@@ -335,13 +334,15 @@ public abstract class MessageHandler {
 					response.setRemainingOwedCapital(results.getFloat("RemainingOwedCapital"));
 					response.setRemainingRepayments(results.getInt("Remaining_Repayments"));
 					response.setRepaymentConstant(results.getInt("Repayment_Constant"));
-					response.setRepaymentFrequency(results.getInt("Repayment_Frequency")); 
-					response.setAge(results.getString("AGE"));
+					response.setRepaymentFrequency(results.getInt("Repayment_Frequency"));  
 					response.setAccountId(results.getString("User_login"));
 					response.setLoanTypeId(results.getString("LOAN_TYPE_ID")); 
 					response.setAccountNum(results.getString("Account_Num"));
 					response.setTypeSim(results.getString("Loan_Type"));
+					response.setIs_reel(results.getString("Is_Real"));
 					response.setAge((results.getString("AGE")));
+					response.setInsurance((results.getInt("Insurance")));
+					response.setProcessing_fee((results.getInt("PROCESSING_FEE")));
 				}
 				
 				/* Return */

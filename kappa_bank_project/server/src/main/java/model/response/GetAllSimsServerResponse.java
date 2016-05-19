@@ -5,8 +5,8 @@ import java.util.List;
 
 /**
  * Communication class. See the protocol's documentation for more details.
- * @version R3 sprint 2 - 28/04/2016
- * @author Kappa-V
+ * @version R3 sprint 2 - 15/05/2016
+ * @author Kappa-M
  */
 public class GetAllSimsServerResponse extends ServerResponse {
 	// Inner class

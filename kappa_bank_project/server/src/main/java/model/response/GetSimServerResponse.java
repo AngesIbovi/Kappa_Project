@@ -27,12 +27,17 @@ public class GetSimServerResponse extends ServerResponse {
 	private String user_login;
 	private String account_num;
 	private String type_sim;
+	private String is_reel;
+	private float insurance;
+	private float processing_fee;
 	
 	
 	
 	/* Constructors */
 	
-	public GetSimServerResponse(String name, String age, String type_sim, String user_login, String account_num, String loan_type_id,String id, List<Event> events, List<Repayment> repayments,
+	
+
+	public GetSimServerResponse(float insurance, float processing_fee, String is_reel, String name, String age, String type_sim, String user_login, String account_num, String loan_type_id,String id, List<Event> events, List<Repayment> repayments,
 			Date effectiveDate, float capital, float remainingOwedCapital, int repaymentFrequency,
 			int remainingRepayments, float repaymentConstant, AmortizationType amortizationType) {
 		super();
@@ -52,6 +57,8 @@ public class GetSimServerResponse extends ServerResponse {
 		this.amortizationType = amortizationType;
 		this.account_num = account_num;
 		this.type_sim = type_sim; 
+		this.insurance=insurance;
+		this.processing_fee=processing_fee;
 	}
 	
 	public GetSimServerResponse() {
@@ -63,6 +70,31 @@ public class GetSimServerResponse extends ServerResponse {
 	
 	
 	/* Getters and setters */
+	
+	
+	public String getIs_reel() {
+		return is_reel;
+	}
+
+	public float getInsurance() {
+		return insurance;
+	}
+
+	public void setInsurance(float insurance) {
+		this.insurance = insurance;
+	}
+
+	public float getProcessing_fee() {
+		return processing_fee;
+	}
+
+	public void setProcessing_fee(float processing_fee) {
+		this.processing_fee = processing_fee;
+	}
+
+	public void setIs_reel(String is_reel) {
+		this.is_reel = is_reel;
+	}
 	
 	public String getName() {
 		return name;
