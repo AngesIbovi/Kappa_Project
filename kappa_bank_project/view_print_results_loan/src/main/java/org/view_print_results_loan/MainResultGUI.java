@@ -58,7 +58,7 @@ public class MainResultGUI extends JFrame {
 		// Socket initialization
 		Properties prop = KappaProperties.getInstance();
 		//System.out.print(prop);
-		final Socket connection = new Socket("localhost", Integer.parseInt(prop.getProperty("SERVER_PORT")));
+		final Socket connection = new Socket(prop.getProperty("SERVER_IP"), Integer.parseInt(prop.getProperty("SERVER_PORT")));
 		final PrintWriter out = new PrintWriter(connection.getOutputStream(), true);
 		final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		
@@ -366,8 +366,9 @@ public class MainResultGUI extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { 
             	ChartResult frame = null;
-				try {
-					frame = new ChartResult();
+				try { 
+					System.out.print(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
+					frame = new ChartResult(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
 				} catch (NumberFormatException | ClassNotFoundException | SQLException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -377,8 +378,28 @@ public class MainResultGUI extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnNewButton.setBounds(140, 363, 288, 67);
+		btnNewButton.setBounds(10, 356, 246, 67);
 		getContentPane().add(btnNewButton);
+		
+		final JButton btnDashboard = new JButton("DASHBOARD");
+		btnDashboard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) { 
+				BarChartResult frame = null;
+				try { 
+					System.out.print(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
+					frame = new BarChartResult(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId(),"");
+				} catch (NumberFormatException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+                frame.setVisible(true);
+            	//jButton4ActionPerformed(evt);
+			}
+		});
+		btnDashboard.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnDashboard.setEnabled(false);
+		btnDashboard.setBounds(293, 356, 246, 67);
+		getContentPane().add(btnDashboard);
 		
  
 		
@@ -534,6 +555,7 @@ public class MainResultGUI extends JFrame {
 											lblTotalInterest.setText(Float.toString(total_interest));
 											lblTotalInsurance.setText(Float.toString(total_insurance));
 											btnNewButton.setEnabled(true);
+											btnDashboard.setEnabled(true);
 											
 											break;
 										
