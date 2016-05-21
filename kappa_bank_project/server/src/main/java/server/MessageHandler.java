@@ -62,7 +62,7 @@ public abstract class MessageHandler {
 		
 		try {
 			String SQLQuery = "SELECT * FROM USERS "
-					+ "WHERE \"Login\" LIKE '" + authQuery.getId() + "'";
+					+ "WHERE \"LOGIN\" LIKE '" + authQuery.getId() + "'";
 			
 			Statement statement = databaseConnection.createStatement();
 			
@@ -383,7 +383,7 @@ public abstract class MessageHandler {
 				}
 				
 				/* Return */
-				logger.trace("Exiting MessageHandler.handleGetSimQuery");
+				logger.trace("Exiting MessageHandler.handleGetSimQuery"); 
 				return response;
 			} catch (SQLException e) {
 				throw e;
