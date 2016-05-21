@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
@@ -51,17 +52,17 @@ import util.JsonImpl;
 public class ChartResult extends JFrame {
 	
 
-	public ChartResult() throws ClassNotFoundException, SQLException, NumberFormatException, IOException  {
+	public ChartResult(String args) throws ClassNotFoundException, SQLException, NumberFormatException, IOException  {
 		super("Graphique des résultats");
 		final ChartResult thisObject = this;  
 		// Initializing tools 
-		
+		System.out.println(args);
 				/* Network connection */
 		
 		// Socket initialization
 		Properties prop = KappaProperties.getInstance();
 		//System.out.println(prop.getProperty());
-		final Socket connection = new Socket("localhost", Integer.parseInt(prop.getProperty("SERVER_PORT")));
+		final Socket connection = new Socket(prop.getProperty("SERVER_IP"), Integer.parseInt(prop.getProperty("SERVER_PORT")));
 		final PrintWriter out = new PrintWriter(connection.getOutputStream(), true);
 		final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
@@ -83,22 +84,17 @@ public class ChartResult extends JFrame {
 						}
 					}
 				});
-		JPanel ChoicePanel = new JPanel();
-		add(ChoicePanel, BorderLayout.WEST);
+	 
 		
-		JPanel chartPanel = createChartPanel();
+		JPanel chartPanel = createChartPanel(args);
 		add(chartPanel, BorderLayout.CENTER);
-
-		JLabel lblChoixDuScenario = new JLabel("Sélectionner le scenario :");
-		lblChoixDuScenario.setFont(new Font("Tahoma", Font.PLAIN, 12)); 
-		lblChoixDuScenario.setBounds(10, 74, 87, 22);
-		ChoicePanel.add(lblChoixDuScenario); 
+ 
 		
 		final JComboBox<SimulationIdentifier> cbScenChoice = new JComboBox<SimulationIdentifier>();
 		cbScenChoice.setToolTipText("Veuillez choisir la simulation");
 		cbScenChoice.setEditable(true);
 		cbScenChoice.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		ChoicePanel.add(cbScenChoice);
+		 
 		cbScenChoice.setSelectedItem("- Choisir -");  		
 		setSize(1240, 680);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -164,63 +160,13 @@ public class ChartResult extends JFrame {
 						EventQueue.invokeLater(new Runnable() { // Starting a thread is long, so we need to clear the eventqueue first
 							public void run() {
 								new Thread(new Runnable() { // We launch a new thread for this treatment, so that the GUI can still update. This new thread will be the host for the onSuccessfulLogin callable 
-									public void run() {
-									 
-										try {
-											// Sending the loan_id over to the server
-											GetSimQuery query = new GetSimQuery(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
-											out.println(query.toString());
-											// Receiving the server's response
-											String message = in.readLine(); 
-
-											//Treating the server's response
+									public void run() { 
 											try {
-												// Prefix and content detection
-												int prefixEnd = message.indexOf(' ');
-												
-												if(prefixEnd == -1) {
-													throw new Exception("No prefix");
-												}
-												
-												String prefix = message.substring(0, prefixEnd);
-												String content = message.substring(prefixEnd + 1);
-												
-												// Prefix identification
-												switch(prefix) {
-												case "ERR":
-													JOptionPane.showMessageDialog(thisObject, "Format error. Try downloading the newest version.");
-													 
-													break;
-												
-												case "OK":
-													// De-serialization
-													GetSimServerResponse response = JsonImpl.fromJson(content, GetSimServerResponse.class);
-													AmortizationType amortization = response.getAmortizationType(); 
-													String state = response.getIs_reel(); 
-													List<Repayment> listrepay=  response.getRepayments();    
-													String[][] datas = (String[][]) new String[listrepay.size()][6];
-													
-													//we prepare to bind data into our JTable
-													for(int i=0 ; i < listrepay.size() ; i++) { 
-														datas[i][0] =  Integer.toString(i+1);
-														datas[i][1] = listrepay.get(i).getDate().toString();
-														datas[i][2] = Float.toString(listrepay.get(i).getCapital());
-														datas[i][3] =  Float.toString(listrepay.get(i).getInterest());
-														datas[i][4] = Float.toString(listrepay.get(i).getInsurance());
-														datas[i][5] = Float.toString(listrepay.get(i).getInsurance()+listrepay.get(i).getCapital() + listrepay.get(i).getInterest());
-
-													}    
-													break;
-												
-												default:
-													throw new Exception("Unknown prefix");
-												}
-											} catch (Exception e1) {
-												JOptionPane.showMessageDialog(thisObject, "Unknown response format. Please try again later or download the newest version.");
-											}
-										} catch (IOException e1) {
-											JOptionPane.showMessageDialog(thisObject, "Unable to connect to the server. Please try again later.");
-										}
+												createChartPanel(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
+											} catch (NumberFormatException | IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} 
 									}
 								}).start();
 							}
@@ -233,12 +179,14 @@ public class ChartResult extends JFrame {
 	
 	
 	
-	private JPanel createChartPanel() {
+	private JPanel createChartPanel(String args) throws NumberFormatException, UnknownHostException, IOException {
+		//System.out.print(args);
+		 
 		String chartTitle = "Graphiques de l'évolution sur la durée du prêt ";
-		String xAxisLabel = "X";
-		String yAxisLabel = "Y";
+		String xAxisLabel = "ECHEANCES";
+		String yAxisLabel = "MONTANT";
 		
-		XYDataset dataset = createDataset();
+		XYDataset dataset = createDataset(args.toString());
 		
 		JFreeChart chart = ChartFactory.createXYLineChart(chartTitle, 
 				xAxisLabel, yAxisLabel, dataset);
@@ -267,34 +215,89 @@ public class ChartResult extends JFrame {
 		return new ChartPanel(chart);
 	}
 
-	private XYDataset createDataset() {
+	private XYDataset createDataset(String args) throws NumberFormatException, UnknownHostException, IOException { 
+		
+		Properties prop = KappaProperties.getInstance();
+		final Socket connection = new Socket("localhost", Integer.parseInt(prop.getProperty("SERVER_PORT")));
+		final PrintWriter out = new PrintWriter(connection.getOutputStream(), true);
+		final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		// TODO: check if on successful login, when the auth window gets disposed, this listener is called
+		addWindowStateListener(new WindowStateListener() { 
+			@Override
+			public void windowStateChanged(WindowEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getNewState() == WindowEvent.WINDOW_CLOSED) {
+					out.println("BYE");
+					try {
+						connection.close();
+					} catch (IOException e1) {
+						e1.printStackTrace(); // For debug purposes.
+					}
+				}
+			}
+		});
+		
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		XYSeries series1 = new XYSeries("Capital");
 		XYSeries series2 = new XYSeries("Assurance");
-		XYSeries series3 = new XYSeries("Intérêts");
+		XYSeries series3 = new XYSeries("Intérêts"); 
 		
-		series1.add(1.0, 2.0);
-		series1.add(2.0, 3.0);
-		series1.add(3.0, 2.5);
-		series1.add(3.5, 2.8);
-		series1.add(4.2, 6.0);
-		
-		series2.add(2.0, 1.0);
-		series2.add(2.5, 2.4);
-		series2.add(3.2, 1.2);
-		series2.add(3.9, 2.8);
-		series2.add(4.6, 3.0);
-		
-		series3.add(1.2, 4.0);
-		series3.add(2.5, 4.4);
-		series3.add(3.8, 4.2);
-		series3.add(4.3, 3.8);
-		series3.add(4.5, 4.0);
-		
-		dataset.addSeries(series1);
-		dataset.addSeries(series2);
-		dataset.addSeries(series3);
-		
+		try {
+			// Sending the loan_id over to the server
+
+			String id = args.toString();
+			GetSimQuery query = new GetSimQuery(id);
+			 
+			out.println(query.toString());
+			// Receiving the server's response
+			String message = in.readLine(); 
+
+			//Treating the server's response
+			try {
+				// Prefix and content detection
+				int prefixEnd = message.indexOf(' ');
+				
+				if(prefixEnd == -1) {
+					throw new Exception("No prefix");
+				}
+				
+				String prefix = message.substring(0, prefixEnd);
+				String content = message.substring(prefixEnd + 1);
+				
+				// Prefix identification
+				switch(prefix) {
+				case "ERR":
+					System.out.println("Format error. Try downloading the newest version.");
+					 
+					break;
+				
+				case "OK":
+					// De-serialization
+					GetSimServerResponse response = JsonImpl.fromJson(content, GetSimServerResponse.class);  
+					List<Repayment> listrepay=  response.getRepayments();    
+					//String[][] datas = (String[][]) new String[listrepay.size()][6];
+					float restant=0;
+					//we prepare to bind data into our JTable
+					for(int i=0 ; i < listrepay.size() ; i++) { 
+						series1.add(i+1, listrepay.get(i).getCapital());
+						series2.add(i+1, listrepay.get(i).getInsurance());
+						series3.add(i+1, listrepay.get(i).getInterest()); 
+					}    
+					
+					dataset.addSeries(series1);
+					dataset.addSeries(series2);
+					dataset.addSeries(series3);
+					break;
+
+				default:
+					throw new Exception("Unknown prefix");
+				}
+			} catch (Exception e1) {
+				System.out.println("Unknown response format. Please try again later or download the newest version.");
+			}
+		} catch (IOException e1) {
+			System.out.println("Unable to connect to the server. Please try again later.");
+		}  
 		return dataset;
 	}
 	
@@ -332,7 +335,7 @@ public class ChartResult extends JFrame {
 	}
 	
 
-	public static void main(String[] args) throws IOException {
+	public static void main(final String args) throws IOException {
 		try {
 			KappaProperties.init();
 			JsonImpl.init();
@@ -349,7 +352,7 @@ public class ChartResult extends JFrame {
             	ChartResult cr = null;
 				try {
 					try {
-						cr = new ChartResult();
+						cr = new ChartResult(args);
 					} catch (ClassNotFoundException | SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
