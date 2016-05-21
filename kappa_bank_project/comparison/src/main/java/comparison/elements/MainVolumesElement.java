@@ -64,7 +64,7 @@ public class MainVolumesElement extends SimulationComparisonElement {
 		}
 	}
 	
-	private List<Row> rows;
+	private List<Row> rows = new ArrayList<>();
 	
 	@Override
 	public void setSimulations(List<GetSimServerResponse> simulations) {

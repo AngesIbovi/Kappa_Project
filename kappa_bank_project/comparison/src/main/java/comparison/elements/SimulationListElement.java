@@ -9,6 +9,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import javax.swing.JScrollPane;
 import java.awt.Insets;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ScrollPaneConstants;
@@ -26,7 +27,7 @@ import javax.swing.JTable;
  */
 @SuppressWarnings("serial") // Is not going to be serialized
 public class SimulationListElement extends SimulationComparisonElement {
-	private List<GetSimServerResponse> simulations;
+	private List<GetSimServerResponse> simulations=new ArrayList<>();
 	
 	@Override
 	public void setSimulations(List<GetSimServerResponse> simulations) {
