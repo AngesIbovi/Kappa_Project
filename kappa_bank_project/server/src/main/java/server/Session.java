@@ -1,6 +1,7 @@
 package server;
 
 import java.io.BufferedReader;
+import server.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -9,9 +10,12 @@ import java.net.Socket;
 import model.SessionInformation;
 import model.query.AuthenticationQuery;
 import model.query.GetAccountsQuery;
+import model.query.GetAllAccountsQuery;
+import model.query.GetAllLoanTypeQuery;
 import model.query.GetAllSimsQuery;
 import model.query.GetSimQuery;
 import model.query.GetSimsQuery;
+import model.query.GetValueOfRateQuery;
 import model.query.SearchAccountsQuery;
 import model.response.AuthenticationServerResponse;
 import model.response.ErrorServerResponse;
@@ -198,6 +202,38 @@ public class Session extends Thread {
 				GetSimQuery getSimQuery = JsonImpl.fromJson(content, GetSimQuery.class);
 				response = MessageHandler.handleGetSimQuery(getSimQuery);
 				break;
+			case "getAllAccounts":
+				GetAllAccountsQuery accountsquery = JsonImpl.fromJson(content,GetAllAccountsQuery.class);
+				System.out.println(accountsquery.toString());
+				try {
+					response=MessageHandler.handleGetAllAccountQuery();
+				}catch(Exception e){
+				}
+				response=MessageHandler.handleGetAllAccountQuery();
+				break;
+				
+			case "getAllLoanType":
+				
+				GetAllLoanTypeQuery loantypequry = JsonImpl.fromJson(content,GetAllLoanTypeQuery.class);
+				System.out.println(loantypequry.toString());
+				try {
+					response=MessageHandler.handleGetAllLoanTypeQuery();
+				}catch(Exception e){
+				}
+				response=MessageHandler.handleGetAllLoanTypeQuery();
+				break;
+				
+            case "GetValueOfRate":
+				
+				GetValueOfRateQuery ValueOfRatequery = JsonImpl.fromJson(content,GetValueOfRateQuery.class);
+				System.out.println(ValueOfRatequery.toString());
+				try {
+					response=MessageHandler.handleGetrateQuery();
+				}catch(Exception e){
+				}
+				response=MessageHandler.handleGetrateQuery();
+				break;
+
 			default:
 				response = new ErrorServerResponse("Unknown prefix");
 			}

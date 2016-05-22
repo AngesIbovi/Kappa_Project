@@ -1,4 +1,6 @@
-package controler;
+package authentificationmanager;
+
+
 
 import java.awt.EventQueue;
 import java.io.BufferedReader;
@@ -11,21 +13,24 @@ import javax.swing.JOptionPane;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.JsonAdapter;
 
-import loan.ServeurCommuniction;
-import model.query.response.AuthenticationQuery;
-import model.query.response.AuthenticationServerResponse;
-import model.query.response.NewCustomerServerResponse.Status;
-import serialization.JsonImpl;
+import model.query.AuthenticationQuery;
+import model.response.AuthenticationServerResponse;
+import model.response.AuthenticationServerResponse.Status;
+
+
 
 public class ProtocoleHandler {
 	
 
 	
-	public String authentification(String  login, String password) throws IOException{
+	public String authentification(String  login, char[] cs) throws IOException{
+		String password="";
+		for(int i=0;i<cs.length;i++){
+		password=password+cs[i];	
+		}
 		System.out.println(login);
-		System.out.println(password);
+	
 		
 		Socket socket = ServeurCommuniction.getS();
 		System.out.println(socket.toString());
@@ -39,8 +44,8 @@ public class ProtocoleHandler {
 		
 	
 	// send the information
-	System.out.println(login);
-	System.out.println(password);
+
+	System.out.println(cs);
 	AuthenticationQuery query = new AuthenticationQuery(login, password);
 	
 	Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -58,12 +63,18 @@ public class ProtocoleHandler {
 		
 		
 		String prefix = message.substring(0, prefixEnd);
+		
+		if(prefix=="ERR"){
+			return "erreur";
+		}
+				
 		String content = message.substring(prefixEnd + 1);
 		
 		AuthenticationServerResponse autentificaiton = gson.fromJson(content, AuthenticationServerResponse.class);
-	
+	System.out.println("le status est "+ autentificaiton.getStatus());
 		statut = autentificaiton.getStatus();
-		if(statut==null)statut = statut.KO;
+		if(statut==null)statut=statut.KO;
+		
 	return statut.name();
 	}
 

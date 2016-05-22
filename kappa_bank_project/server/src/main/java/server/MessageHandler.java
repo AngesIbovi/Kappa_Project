@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import model.query.*;
 import model.response.*;
@@ -306,12 +307,184 @@ public abstract class MessageHandler {
 			ConnectionPool.release(databaseConnection);
 		}
 	}
+	
+	
+	
+	
+	
+	/**
+	 * Get a list of account number of customer and send this to GUI of variable loan
+	 * @param Account : all account number
+	 * @return the server's response to the query. 
+	 * Typically an GetAllaccountsServerResponse, but can also be an ErrorServerResponse.
+	 */
+	
+	
+	public static ServerResponse handleGetAllLoanTypeQuery(){
+		Connection databaseConnection;
+		ArrayList<String> array = new ArrayList<>();
+		try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (IllegalStateException | ClassNotFoundException | SQLException e) {
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+		
+		try {
+			String SQLQuery = "SELECT NAME FROM LOAN_TYPES";
+			
+			Statement statement = databaseConnection.createStatement();
+			
+			try {
+				ResultSet results = statement.executeQuery(SQLQuery);
+				
+				GetAllLoanTypeServerReponse getAlltypeloan = new GetAllLoanTypeServerReponse ();
+				
+				while(results.next()) {
+					array.add(results.getString("Name"));
+				}
+				getAlltypeloan.setArray(array);
+				logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+				return getAlltypeloan;
+			} catch (SQLException e) {
+				logger.warn("SQLException caught", e);
+				throw e;
+			} finally {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			logger.warn("SQLException caught", e);
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			return new ErrorServerResponse("Database error");
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+			ConnectionPool.release(databaseConnection);
+		}
+		
+	}
+	
+	
+
+	
+
+	public static ServerResponse handleGetrateQuery(){
+		Connection databaseConnection;
+		
+		try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (IllegalStateException | ClassNotFoundException | SQLException e) {
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+		
+		try {
+			String SQLQuery = "select  MAX(value) as value from loan_rate_history where change_date like (current_date)";
+			System.out.println(SQLQuery);
+			Statement statement = databaseConnection.createStatement();
+			
+			try {
+				ResultSet results = statement.executeQuery(SQLQuery);
+				//double value=0;
+				
+				while(results.next()){
+				//	value = results.getDouble("value");
+					System.out.println("resultat "+results.getFloat("value"));
+				}
+				
+				
+				
+				GetValueOfRateServerResponse getvalueofrate = new GetValueOfRateServerResponse ();
+				//getvalueofrate.setRate(value);
+				
+				logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+				return getvalueofrate;
+			} catch (SQLException e) {
+				logger.warn("SQLException caught", e);
+				throw e;
+			} finally {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			logger.warn("SQLException caught", e);
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			return new ErrorServerResponse("Database error");
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+			ConnectionPool.release(databaseConnection);
+		}
+		
+	}
+	
+
+	
+	
+	/**
+	 * Get a list of account number of customer and send this to GUI of variable loan
+	 * @param Account : all account number
+	 * @return the server's response to the query. 
+	 * Typically an GetAllaccountsServerResponse, but can also be an ErrorServerResponse.
+	 */
+
+	public static ServerResponse handleGetAllAccountQuery(){
+		Connection databaseConnection;
+		ArrayList<String> array = new ArrayList<>();
+		try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (IllegalStateException | ClassNotFoundException | SQLException e) {
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+		
+		try {
+			String SQLQuery = "SELECT ACCOUNT_NUM FROM ACCOUNTS";
+			
+			Statement statement = databaseConnection.createStatement();
+			
+			try {
+				ResultSet results = statement.executeQuery(SQLQuery);
+				
+				GetAllAcountsServerResponse getAllaccounts = new GetAllAcountsServerResponse();
+				
+				while(results.next()) {
+					array.add(results.getString("ACCOUNT_NUM"));
+				}
+				getAllaccounts.setArray(array);
+				logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+				return getAllaccounts;
+			} catch (SQLException e) {
+				logger.warn("SQLException caught", e);
+				throw e;
+			} finally {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			logger.warn("SQLException caught", e);
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			return new ErrorServerResponse("Database error");
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+			ConnectionPool.release(databaseConnection);
+		}
+		
+	}
+
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * Searches for one simulation in particular
 	 * @param query : contains the simulation id.
 	 * @return the server's response to the query. Never null nor an exception.
 	 */
+	
+	
 	public static ServerResponse handleGetSimQuery(GetSimQuery query) {
 		logger.trace("Entering MessageHandler.handleGetSimQuery");
 		
@@ -346,6 +519,9 @@ public abstract class MessageHandler {
 						results.getFloat("Insurance")
 					));
 				}
+				
+				
+				
 				
 				
 				/* Events */ 
