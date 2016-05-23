@@ -1,6 +1,12 @@
 package view;
-/*
- * To change this license header, choose License Headers in Project Properties.
+
+import java.io.IOException;
+
+import javax.swing.ImageIcon;
+
+import authentificationmanager.ProtocoleHandler;
+
+/*To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -31,7 +37,7 @@ public class AuthentificationGui extends javax.swing.JFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        login = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -39,7 +45,7 @@ public class AuthentificationGui extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel10 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        password = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -73,9 +79,9 @@ public class AuthentificationGui extends javax.swing.JFrame {
         jLabel1.setMaximumSize(new java.awt.Dimension(50, 50));
         jLabel1.setMinimumSize(new java.awt.Dimension(50, 50));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jTextField1.setText("Pseudo");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        login.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        login.setText("Pseudo");
+        login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
@@ -115,13 +121,13 @@ public class AuthentificationGui extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(51, 0, 51));
         jLabel10.setText("Incorrect : Login, Password");
 
-        jPasswordField1.setText("Mot de passe");
-        jPasswordField1.addFocusListener(new java.awt.event.FocusAdapter() {
+        password.setText("Mot de passe");
+        password.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jPasswordField1FocusLost(evt);
             }
         });
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordField1ActionPerformed(evt);
             }
@@ -149,9 +155,9 @@ public class AuthentificationGui extends javax.swing.JFrame {
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
+                            .addComponent(login)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPasswordField1))
+                            .addComponent(password))
                         .addGap(59, 59, 59))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -178,11 +184,11 @@ public class AuthentificationGui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addGap(5, 5, 5)
@@ -194,12 +200,14 @@ public class AuthentificationGui extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
         );
 
-        jPasswordField1.getAccessibleContext().setAccessibleName("");
-        jPasswordField1.getAccessibleContext().setAccessibleDescription("Mot de passe");
+        password.getAccessibleContext().setAccessibleName("");
+        password.getAccessibleContext().setAccessibleDescription("Mot de passe");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 153, 204));
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/clef.png"))); // NOI18N
+        
+       jLabel5.setIcon(new javax.swing.ImageIcon(getClass().
+        		getResource("clef.png"))); // NOI18N
         jLabel5.setText("Authentification");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -208,7 +216,7 @@ public class AuthentificationGui extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel7.setText("Etablissement");
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/Image1kappa.jpg"))); // NOI18N
+       jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("Image1kappa.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -255,7 +263,29 @@ public class AuthentificationGui extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    	String reponseautentification;
+		try {
+			
+			System.out.println(login.getText());
+			System.out.println(login.getText());
+			
+			reponseautentification = new ProtocoleHandler().authentification(login.getText(), password.getPassword());
+			System.out.println(reponseautentification);
+			if(reponseautentification=="KO")jLabel10.setForeground(new java.awt.Color(153, 0, 0));
+			if(reponseautentification=="OK"){
+				jLabel10.setForeground(new java.awt.Color(51, 0, 51));
+				
+				new index().setVisible(true);
+				this.setVisible(false);
+			}
+			
+			if(reponseautentification=="ERR"){
+				System.out.println("erreur survenue");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
@@ -318,7 +348,7 @@ public class AuthentificationGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JTextField login;
     // End of variables declaration//GEN-END:variables
 }

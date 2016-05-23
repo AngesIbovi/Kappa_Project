@@ -5,7 +5,10 @@
     <artifactId>kappa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
+   <groupId>com.java.kappa.project</groupId>
   <artifactId>commons</artifactId>
+  <version>0.0.1-SNAPSHOP</version>
   <name>commons</name>
+  
   <description>contains classes and bundles jars used by all client modules, and the server.</description>
 </project>
