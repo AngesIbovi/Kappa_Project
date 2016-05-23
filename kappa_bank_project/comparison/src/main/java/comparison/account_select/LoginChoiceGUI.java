@@ -85,7 +85,7 @@ public abstract class LoginChoiceGUI extends AccountSelectionGUI {
 		gbc_resultsList.gridy = 3;
 		add(resultsList, gbc_resultsList);
 		
-		JButton selectButton = new JButton("S�lectionner");
+		JButton selectButton = new JButton("Sélectionner");
 		setSelectButton(selectButton);
 		getSelectButton().setEnabled(false);
 		GridBagConstraints gbc_selectButton = new GridBagConstraints();

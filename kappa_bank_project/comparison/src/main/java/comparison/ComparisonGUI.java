@@ -45,7 +45,7 @@ public class ComparisonGUI extends Tab {
 			accountSelectionGUI = new LoginChoiceGUI() {
 				public void onSelect(List<Account> L) {
 					if(L.size() == 0) {
-						JOptionPane.showMessageDialog(thisObject, "Veuillez s�lectionner au moins un compte.");
+						JOptionPane.showMessageDialog(thisObject, "Veuillez sélectionner au moins un compte.");
 					} else {
 						simulationSelectionGUI.getSimulations(L);
 						cards.show(thisObject, simulationSelectionCardName);
@@ -57,7 +57,7 @@ public class ComparisonGUI extends Tab {
 			accountSelectionGUI = new AdvisorLoginChoiceGUI() {
 				public void onSelect(List<Account> L) {
 					if(L.size() == 0) {
-						JOptionPane.showMessageDialog(thisObject, "Veuillez s�lectionner au moins un compte.");
+						JOptionPane.showMessageDialog(thisObject, "Veuillez sélectionner au moins un compte.");
 					} else {
 						simulationSelectionGUI.getSimulations(L);
 						cards.show(thisObject, simulationSelectionCardName);
@@ -71,7 +71,7 @@ public class ComparisonGUI extends Tab {
 		simulationSelectionGUI = new SimulationSelectionGUI() {
 			public void onSelect(List<SimulationIdentifier> L) {
 				if(L.size() < 2) {
-					JOptionPane.showMessageDialog(thisObject, "Veuillez s�lectionner au moins deux simulations. Utilisez ctrl+clic pour en s�lectionner plusieurs � la fois.");
+					JOptionPane.showMessageDialog(thisObject, "Veuillez sélectionner au moins deux simulations. Utilisez ctrl+clic pour en sélectionner plusieurs à la fois.");
 				} else {
 					simulationComparisonGUI.getSimulations(L);
 					cards.show(thisObject, simulationComparisonCardName);

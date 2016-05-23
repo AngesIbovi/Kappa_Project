@@ -92,7 +92,7 @@ public abstract class AccountSelectionGUI extends JPanel implements SessionSpeci
 							out = new PrintWriter(sessionInformation.getSocket().getOutputStream(), true);
 							in = new BufferedReader(new InputStreamReader(sessionInformation.getSocket().getInputStream()));
 						} catch (Exception e1) { // Reached if an IO exception occurs, or if the socket is not connected anymore
-							JOptionPane.showMessageDialog(thisObject, "Erreur: connection au serveur interrompue. V�rifiez votre connection Internet, puis essayez de vous re-connecter.");
+							JOptionPane.showMessageDialog(thisObject, "Erreur: connection au serveur interrompue. Vérifiez votre connection Internet, puis essayez de vous re-connecter.");
 							return;
 						}
 						
@@ -120,7 +120,7 @@ public abstract class AccountSelectionGUI extends JPanel implements SessionSpeci
 								throw new Exception("ERR or UNAUTHORIZED");
 							}
 						} catch (IOException e) {
-							JOptionPane.showMessageDialog(thisObject, "Erreur: Connexion au serveur interrompue. V�rifiez votre connection Internet, puis essayez de vous re-connecter.");
+							JOptionPane.showMessageDialog(thisObject, "Erreur: Connexion au serveur interrompue. Vérifiez votre connection Internet, puis essayez de vous re-connecter.");
 							return;
 						} catch (Exception e) {
 							JOptionPane.showMessageDialog(thisObject, "Erreur: Essayez de t�l�charger la nouvelle version de ce logiciel.");

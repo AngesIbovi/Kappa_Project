@@ -71,7 +71,7 @@ public abstract class SimulationSelectionGUI extends JPanel implements SessionSp
 					out = new PrintWriter(socket.getOutputStream(), true);
 					in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				} catch (Exception e1) { // Reached if an IO exception occurs, or if the socket is not connected anymore
-					JOptionPane.showMessageDialog(thisObject, "Erreur: connection au serveur interrompue. V�rifiez votre connection Internet, puis essayez de vous re-connecter.");
+					JOptionPane.showMessageDialog(thisObject, "Erreur: connection au serveur interrompue. Vérifiez votre connection Internet, puis essayez de vous re-connecter.");
 					return;
 				}
 
@@ -101,10 +101,10 @@ public abstract class SimulationSelectionGUI extends JPanel implements SessionSp
 							throw new Exception("ERR or UNAUTHORIZED");
 						}
 					} catch (IOException e) {
-						JOptionPane.showMessageDialog(thisObject, "Erreur: Connexion au serveur interrompue. V�rifiez votre connection Internet, puis essayez de vous re-connecter.");
+						JOptionPane.showMessageDialog(thisObject, "Erreur: Connexion au serveur interrompue. Vérifiez votre connection Internet, puis essayez de vous re-connecter.");
 						return;
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(thisObject, "Erreur: Essayez de t�l�charger la nouvelle version de ce logiciel.");
+						JOptionPane.showMessageDialog(thisObject, "Erreur: Essayez de télécharger la nouvelle version de ce logiciel.");
 						return;
 					}
 				}
@@ -143,7 +143,7 @@ public abstract class SimulationSelectionGUI extends JPanel implements SessionSp
 		add(resultsList, gbc_resultsList);
 		
 		// Select button
-		selectButton = new JButton("S�lectionner");
+		selectButton = new JButton("Sélectionner");
 		selectButton.setEnabled(false);
 		GridBagConstraints gbc_selectButton = new GridBagConstraints();
 		gbc_selectButton.anchor = GridBagConstraints.EAST;
