@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import model.query.*;
 import model.response.*;
+import model.response.GetLoanServerResponse.RateList;
 import model.response.GetSimsServerResponse.SimulationIdentifier;
 
 import org.apache.log4j.Logger;
@@ -306,6 +307,71 @@ public abstract class MessageHandler {
 			ConnectionPool.release(databaseConnection);
 		}
 	}
+
+
+
+/**
+	 * Get loan list. 
+	 * @return the server's response to the query. 
+	 * Typically an AuthenticationServerResponse, but can also be an ErrorServerResponse.
+	 */
+
+public static ServerResponse handleGetRatesQuery(GetLoanQuery query) {
+		logger.trace("Entering MessageHandler.handleGetRatesQuery");
+		
+		String SQLquery = "SELECT * FROM LOAN_TYPES WHERE LOAN_TYPE_ID<>'" + query.getRate_id() + "'";
+		 
+		Connection databaseConnection;
+		try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (Exception e) {
+			logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+		
+		try {
+			Statement statement = databaseConnection.createStatement();
+
+			
+			// DetermineTheMountOFInterestRate
+			try {
+				ResultSet results = statement.executeQuery(SQLquery);
+				
+				GetLoanServerResponse response = new GetLoanServerResponse();
+				while(results.next()) {
+					response.getRate_list().add(new RateList(results.getString("Loan_Type_Id"), results.getString("Name"), results.getFloat("Max_Duration")));
+				}
+				
+				 System.out.println(results);
+				logger.trace("Exiting MessageHandler.handleGetLoanQuery");
+				return response;
+			} catch (SQLException e) {
+				throw e;
+			} finally {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			logger.warn("SQLException caught", e);
+			logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+			return new ErrorServerResponse("Database error");
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+			ConnectionPool.release(databaseConnection);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+	
 
 	/**
 	 * Searches for one simulation in particular

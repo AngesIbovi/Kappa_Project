@@ -10,6 +10,7 @@ import model.SessionInformation;
 import model.query.AuthenticationQuery;
 import model.query.GetAccountsQuery;
 import model.query.GetAllSimsQuery;
+import model.query.GetLoanQuery;
 import model.query.GetSimQuery;
 import model.query.GetSimsQuery;
 import model.query.SearchAccountsQuery;
@@ -198,6 +199,16 @@ public class Session extends Thread {
 				GetSimQuery getSimQuery = JsonImpl.fromJson(content, GetSimQuery.class);
 				response = MessageHandler.handleGetSimQuery(getSimQuery);
 				break;
+
+
+  case "GetLoanQuery":
+				 
+				GetLoanQuery GetLoanQuery = JsonImpl.fromJson(content, GetLoanQuery.class);
+				response = MessageHandler.handleGetRatesQuery(GetLoanQuery);
+				System.out.println(response);
+				break;
+				
+
 			default:
 				response = new ErrorServerResponse("Unknown prefix");
 			}
@@ -207,6 +218,7 @@ public class Session extends Thread {
 		} catch(Exception e) {
 			logger.trace("Exiting Session.handleMessage");
 			logger.debug("Unknown format error. Message was : " + message);
+//			e.printStackTrace();
 			return new ErrorServerResponse("Unknown format error");
 		}
 	}

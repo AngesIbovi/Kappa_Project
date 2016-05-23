@@ -39,14 +39,14 @@ import util.KappaProperties;
  * @Author Kappa-V 
  */
 @SuppressWarnings("serial") // Is not going to be serialized
-public class MainResultGUI extends JFrame {
+public class MainGUIclass extends JFrame {
 	//private JTable tblPayment;
 	private JTable tblRepay;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
  
 	
-	public MainResultGUI() throws ClassNotFoundException, SQLException, NumberFormatException, UnknownHostException, IOException { 
-		final MainResultGUI thisObject = this;
+	public MainGUIclass() throws ClassNotFoundException, SQLException, NumberFormatException, UnknownHostException, IOException { 
+		final MainGUIclass thisObject = this;
 		// Initializing tools
 				try {
 					KappaProperties.init();
@@ -578,10 +578,10 @@ public class MainResultGUI extends JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-            	MainResultGUI mr = null;
+            	MainGUIclass mr = null;
 				try {
 					try {
-						mr = new MainResultGUI();
+						mr = new MainGUIclass();
 					} catch (NumberFormatException | IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
