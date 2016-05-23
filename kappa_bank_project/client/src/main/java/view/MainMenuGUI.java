@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import comparison.ComparisonGUI;
+import loanClient.ihm;
 import model.SessionInformation;
 import util.JsonImpl;
 import util.KappaProperties;
@@ -140,6 +141,9 @@ public class MainMenuGUI extends JDialog implements SessionSpecific { // JDialog
 		
 		Tab t = new ComparisonGUI();
 		tabs.add(t);
+		
+		Tab fixRateTab = new ihm(); // Mohamed
+		tabs.add(fixRateTab);
 		
 		launch(tabs);
 	}
