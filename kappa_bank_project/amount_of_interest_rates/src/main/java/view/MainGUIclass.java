@@ -158,7 +158,7 @@ public class MainGUIclass extends JFrame {
 
 
 
-		JLabel lblNiveauDeRisque = new JLabel("Niveau de risque");
+		JLabel lblNiveauDeRisque = new JLabel("Niveau des risques");
 		lblNiveauDeRisque.setBounds(23, 187, 100, 14); 
 		panel3.add(lblNiveauDeRisque); 
 		panel3.add(textField);
