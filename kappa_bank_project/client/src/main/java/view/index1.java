@@ -319,10 +319,10 @@ public class index1 extends javax.swing.JFrame {
         jButtonResult.setText("CLIQUEZ POUR ACCEDER AU MODULE S.V.P");
         jButtonResult.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	MainResultGUI frame = null;
+            	AuthGUI frame = null;
 				try {
-					frame = new MainResultGUI();
-				} catch (NumberFormatException | ClassNotFoundException | SQLException | IOException e) {
+					frame = new AuthGUI(null);
+				} catch (NumberFormatException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

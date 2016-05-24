@@ -50,9 +50,9 @@ public class BarChartResult extends ApplicationFrame {
  * @throws UnknownHostException 
  * @throws NumberFormatException 
     */
-   public BarChartResult(String args,String title) throws NumberFormatException, UnknownHostException, IOException {
+   public BarChartResult(final Socket socket, String args,String title) throws NumberFormatException, UnknownHostException, IOException {
        super(title);
-       CategoryDataset dataset = createDataset(args);
+       CategoryDataset dataset = createDataset(socket, args);
        JFreeChart chart = createChart(dataset);
        ChartPanel chartPanel = new ChartPanel(chart, false);
        chartPanel.setPreferredSize(new Dimension(1240, 680));
@@ -68,7 +68,7 @@ public class BarChartResult extends ApplicationFrame {
  * @throws UnknownHostException 
  * @throws NumberFormatException 
     */
-   private static CategoryDataset createDataset(String args) throws NumberFormatException, UnknownHostException, IOException {
+   private static CategoryDataset createDataset(Socket socket,String args) throws NumberFormatException, UnknownHostException, IOException {
        
        // row keys...
        String series1 = "Capital";
@@ -84,8 +84,8 @@ public class BarChartResult extends ApplicationFrame {
 
 		Properties prop = KappaProperties.getInstance();
 		final Socket connection = new Socket(prop.getProperty("SERVER_IP"), Integer.parseInt(prop.getProperty("SERVER_PORT")));
-		final PrintWriter out = new PrintWriter(connection.getOutputStream(), true);
-		final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		final PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+		final BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		// TODO: check if on successful login, when the auth window gets disposed, this listener is called
 		 
 		 
@@ -228,7 +228,7 @@ public class BarChartResult extends ApplicationFrame {
    * @param args  ignored.
  * @throws IOException 
   */
- public static void main(final String args) throws IOException {
+ public static void main(Socket socket, final String args) throws IOException {
 	 try {
 			KappaProperties.init();
 			JsonImpl.init();
@@ -238,7 +238,7 @@ public class BarChartResult extends ApplicationFrame {
 		}
      BarChartResult demo = null;
 	try {
-		demo = new BarChartResult(args,"Dashboard");
+		demo = new BarChartResult(socket,args,"Dashboard");
 	} catch (NumberFormatException | IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

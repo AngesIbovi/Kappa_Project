@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import org.view_print_results_loan.MainResultGUI;
+
 import comparison.ComparisonGUI;
 import model.SessionInformation;
 import util.JsonImpl;
@@ -137,10 +139,12 @@ public class MainMenuGUI extends JDialog implements SessionSpecific { // JDialog
 	 */
 	public static void main(String[] args) {
 		Set<Tab> tabs = new HashSet<>();
-		
-		Tab t = new ComparisonGUI();
-		tabs.add(t);
-		
+
+		Tab t2 = new MainResultGUI();
+		Tab t = new ComparisonGUI(); 
+		tabs.add(t2); 
+		tabs.add(t); 
+		System.out.println(tabs);
 		launch(tabs);
 	}
 }
