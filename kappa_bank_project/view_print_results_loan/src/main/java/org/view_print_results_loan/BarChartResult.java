@@ -15,6 +15,8 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Properties;
 
+import javax.swing.JFrame;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -40,7 +42,7 @@ import util.KappaProperties;
 /**
 * A simple demonstration application showing how to create a bar chart.
 */
-public class BarChartResult extends ApplicationFrame {
+public class BarChartResult extends JFrame {
 
    /**
     * Creates a new demo instance.
@@ -58,6 +60,8 @@ public class BarChartResult extends ApplicationFrame {
        chartPanel.setPreferredSize(new Dimension(1240, 680));
        setSize(1240, 680);
        setContentPane(chartPanel);
+		// Cleanup planning  
+       setDefaultCloseOperation(ApplicationFrame.DISPOSE_ON_CLOSE);
    }
 
    /**

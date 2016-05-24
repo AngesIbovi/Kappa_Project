@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -133,6 +134,7 @@ public class MainResultGUI extends Tab {
 		cbScenChoice.setEditable(true);
 		cbScenChoice.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel.add(cbScenChoice);
+		
 		
 		final JLabel lblParamtres = new JLabel("Paramètres");
 		lblParamtres.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -311,7 +313,23 @@ public class MainResultGUI extends Tab {
 		lblNomDuScenario.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNomDuScenario.setBounds(10, 42, 147, 22);
 		this.add(lblNomDuScenario);
-		
+
+		//we precise if the scenario is real or not
+		JLabel lblIsReal = new JLabel("Est Réel ?");
+		lblIsReal.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblIsReal.setBounds(480, -110, 100, 322);
+		this.add(lblIsReal);
+		final JRadioButton btnIsReal = new JRadioButton("OUI");    
+		final JRadioButton btnIsNotReal = new JRadioButton("NON");    
+		  //... Create a button group and add the buttons.
+        ButtonGroup bgroup = new ButtonGroup();
+        btnIsReal.setBounds(580, 15, 70, 70);
+        btnIsNotReal.setBounds(660, 15, 70, 70);
+        bgroup.add(btnIsReal);
+        bgroup.add(btnIsNotReal); 
+        //... Arrange buttons vertically in a panel
+        this.add(btnIsReal);
+        this.add(btnIsNotReal);  
 		tblRepay = new JTable();
 		tblRepay.setBounds(27, 272, 700, 422);
 		this.add(tblRepay);
@@ -580,6 +598,7 @@ public class MainResultGUI extends Tab {
 											List<Repayment> listrepay=  response.getRepayments();   
 											System.out.print(listrepay.toString());
 											String amort = amortization.toString();
+											String real=response.getIs_reel();
 											float total_insurance=0;
 											float total_capital=0; 
 											float total_interest=0;
@@ -615,6 +634,12 @@ public class MainResultGUI extends Tab {
 												amort="CONSTANT";
 											}else if(amort=="degressive") {
 												amort="DEGRESSIF";
+											}
+											
+											if (Objects.equals(real, new String("Y"))){
+												btnIsReal.setSelected(true); 
+											}else if (Objects.equals(real, new String("N"))){
+													btnIsNotReal.setSelected(true); 
 											}
 											System.out.println(response);
 											lblTitle.setText(response.getName());
