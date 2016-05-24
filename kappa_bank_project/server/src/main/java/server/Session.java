@@ -9,9 +9,13 @@ import java.net.Socket;
 import model.SessionInformation;
 import model.query.AuthenticationQuery;
 import model.query.GetAccountsQuery;
+import model.query.GetAllAccountsQuery;
+import model.query.GetAllLoanTypeQuery;
 import model.query.GetAllSimsQuery;
+import model.query.GetLoanQuery;
 import model.query.GetSimQuery;
 import model.query.GetSimsQuery;
+import model.query.GetValueOfRateQuery;
 import model.query.SearchAccountsQuery;
 import model.response.AuthenticationServerResponse;
 import model.response.ErrorServerResponse;
@@ -197,7 +201,48 @@ public class Session extends Thread {
 				}
 				GetSimQuery getSimQuery = JsonImpl.fromJson(content, GetSimQuery.class);
 				response = MessageHandler.handleGetSimQuery(getSimQuery);
+				break; 
+
+
+			case "GetLoanQuery":
+				 
+				GetLoanQuery GetLoanQuery = JsonImpl.fromJson(content, GetLoanQuery.class);
+				response = MessageHandler.handleGetRatesQuery(GetLoanQuery);
+				System.out.println(response);
 				break;
+				 
+			case "getAllAccounts":
+				GetAllAccountsQuery accountsquery = JsonImpl.fromJson(content,GetAllAccountsQuery.class);
+				System.out.println(accountsquery.toString());
+				try {
+					response=MessageHandler.handleGetAllAccountQuery();
+				}catch(Exception e){
+				}
+				response=MessageHandler.handleGetAllAccountQuery();
+				break;
+				
+			case "getAllLoanType":
+				
+				GetAllLoanTypeQuery loantypequry = JsonImpl.fromJson(content,GetAllLoanTypeQuery.class);
+				System.out.println(loantypequry.toString());
+				try {
+					response=MessageHandler.handleGetAllLoanTypeQuery();
+				}catch(Exception e){
+				}
+				response=MessageHandler.handleGetAllLoanTypeQuery();
+				break;
+				
+            case "GetValueOfRate":
+				
+				GetValueOfRateQuery ValueOfRatequery = JsonImpl.fromJson(content,GetValueOfRateQuery.class);
+				System.out.println(ValueOfRatequery.toString());
+				try {
+					response=MessageHandler.handleGetrateQuery();
+				}catch(Exception e){
+				}
+				response=MessageHandler.handleGetrateQuery();
+				break; 
+
 			default:
 				response = new ErrorServerResponse("Unknown prefix");
 			}
@@ -207,6 +252,7 @@ public class Session extends Thread {
 		} catch(Exception e) {
 			logger.trace("Exiting Session.handleMessage");
 			logger.debug("Unknown format error. Message was : " + message);
+//			e.printStackTrace();
 			return new ErrorServerResponse("Unknown format error");
 		}
 	}

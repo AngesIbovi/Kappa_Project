@@ -2,14 +2,19 @@ package comparison.elements;
 
 
 import java.awt.GridBagLayout;
-import javax.swing.JLabel;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
+
 import javax.swing.JScrollPane;
+
 import java.awt.Insets;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ScrollPaneConstants;
@@ -27,35 +32,13 @@ import javax.swing.JTable;
  */
 @SuppressWarnings("serial") // Is not going to be serialized
 public class SimulationListElement extends SimulationComparisonElement {
-	private List<GetSimServerResponse> simulations=new ArrayList<>();
+	private final JTable table;
 	
 	@Override
-	public void setSimulations(List<GetSimServerResponse> simulations) {
-		this.simulations = simulations;
-	}
+	public void setSimulations(final List<GetSimServerResponse> simulations) {
 
-	/**
-	 * Create the panel, and positions the swing components
-	 */
-	public SimulationListElement() {
-		Dimension maxDimensions = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize();
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{15, (int)(maxDimensions.getWidth() -30), 0};
-		gridBagLayout.rowHeights = new int[]{14, 100, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		setLayout(gridBagLayout);
-		
-		JLabel titleLabel = new JLabel("Liste des simulations compar�es");
-		GridBagConstraints gbc_titleLabel = new GridBagConstraints();
-		gbc_titleLabel.anchor = GridBagConstraints.WEST;
-		gbc_titleLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_titleLabel.gridx = 1;
-		gbc_titleLabel.gridy = 0;
-		add(titleLabel, gbc_titleLabel);
-		
-		AbstractTableModel tableModel = new AbstractTableModel() {
-			private final String[] headers = {"Nom de la simulation", "Type de pr�t", "Actions"};
+		table.setModel(new AbstractTableModel() {
+			private final String[] headers = {"Nom de la simulation", "Type de prêt", "Actions"};
 			
 			@Override
 			public String getColumnName(int columnIndex){
@@ -80,16 +63,39 @@ public class SimulationListElement extends SimulationComparisonElement {
 				case 0: // Name
 					return simulation.getName();
 				case 1: // Loan Type
-					return "TODO"; // TODO
-				case 2: //
-					return "TODO"; // TODO
+					return simulation.getTypeSim();
+				case 2: // Actions
+					JPanel pane = new JPanel();
+					pane.setBackground(Color.BLUE);
+					return pane; // TODO
 				default:
 					return null; // Normally doesn't happen
 				}
 			}
-		};
+		});
+	}
+
+	/**
+	 * Create the panel, and positions the swing components
+	 */
+	public SimulationListElement() {
+		Dimension maxDimensions = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize();
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{15, (int)(maxDimensions.getWidth() -30), 0};
+		gridBagLayout.rowHeights = new int[]{14, 100, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		setLayout(gridBagLayout);
 		
-		JTable table = new JTable(tableModel);
+		JLabel titleLabel = new JLabel("Liste des simulations comparées");
+		GridBagConstraints gbc_titleLabel = new GridBagConstraints();
+		gbc_titleLabel.anchor = GridBagConstraints.WEST;
+		gbc_titleLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_titleLabel.gridx = 1;
+		gbc_titleLabel.gridy = 0;
+		add(titleLabel, gbc_titleLabel);
+		
+		table = new JTable();
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setPreferredSize(new Dimension(gridBagLayout.columnWidths[1], gridBagLayout.rowHeights[1]));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

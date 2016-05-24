@@ -13,6 +13,8 @@ import java.sql.SQLException;
 
 import javax.swing.SwingConstants;
 
+import org.view_print_results_loan.MainResultGUI;
+
 /**
  *
  * @author user

@@ -53,7 +53,7 @@ public abstract class AdvisorLoginChoiceGUI extends AccountSelectionGUI {
 		currentCard = login;
 		
 		// Buttons, and event listeners to switch between cards
-		JButton advancedButton = new JButton("Recherche avanc�e");
+		JButton advancedButton = new JButton("Recherche avancée");
 		GridBagConstraints gbc_advancedButton = new GridBagConstraints();
 		gbc_advancedButton.anchor = GridBagConstraints.WEST;
 		gbc_advancedButton.insets = new Insets(0, 0, 0, 5);

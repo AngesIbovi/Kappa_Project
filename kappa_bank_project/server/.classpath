@@ -26,5 +26,6 @@
 	<classpathentry kind="lib" path="/commons/lib/log4j-1.2.17/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="/commons/lib/ojdbc6/ojdbc6.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commons"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

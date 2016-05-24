@@ -58,7 +58,7 @@ public abstract class CustomerChoiceGUI extends AccountSelectionGUI {
 		add(lastNameField, gbc_lastNameField);
 		lastNameField.setColumns(10);
 		
-		JLabel firstNameLabel = new JLabel("Pr�nom :");
+		JLabel firstNameLabel = new JLabel("Prénom :");
 		GridBagConstraints gbc_firstNameLabel = new GridBagConstraints();
 		gbc_firstNameLabel.anchor = GridBagConstraints.EAST;
 		gbc_firstNameLabel.insets = new Insets(0, 0, 5, 5);
@@ -127,7 +127,7 @@ public abstract class CustomerChoiceGUI extends AccountSelectionGUI {
 		add(resultsList, gbc_resultsList);
 		
 		
-		JButton button_1 = new JButton("S�lectionner");
+		JButton button_1 = new JButton("Sélectionner");
 		setSelectButton(button_1);
 		getSelectButton().setEnabled(false);
 		GridBagConstraints gbc_1 = new GridBagConstraints();

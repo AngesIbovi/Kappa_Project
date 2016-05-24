@@ -64,11 +64,11 @@ public class MainVolumesElement extends SimulationComparisonElement {
 		}
 	}
 	
-	private List<Row> rows = new ArrayList<>();
+	private final JTable table;
 	
 	@Override
 	public void setSimulations(List<GetSimServerResponse> simulations) {
-		List<Row> newRows = new ArrayList<>();
+		final List<Row> rows = new ArrayList<>();
 		for(GetSimServerResponse simulation : simulations) {
 			// Measurement
 			double totalInsurance = 0;
@@ -80,35 +80,12 @@ public class MainVolumesElement extends SimulationComparisonElement {
 			double total = simulation.getCapital() + totalInsurance + totalInterests;
 			
 			// Generating the row object
-			newRows.add(new Row(simulation.getName(), simulation.getCapital(), 
+			rows.add(new Row(simulation.getName(), simulation.getCapital(), 
 					totalInsurance, totalInterests, total));
 		}
 		
-		rows = newRows;
-	}
-
-	/**
-	 * Create the panel, and positions the swing components
-	 */
-	public MainVolumesElement() {
-		Dimension maxDimensions = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize();
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{15, (int)(maxDimensions.getWidth() -30), 0};
-		gridBagLayout.rowHeights = new int[]{14, 100, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		setLayout(gridBagLayout);
-		
-		JLabel titleLabel = new JLabel("Volumes principaux");
-		GridBagConstraints gbc_titleLabel = new GridBagConstraints();
-		gbc_titleLabel.anchor = GridBagConstraints.WEST;
-		gbc_titleLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_titleLabel.gridx = 1;
-		gbc_titleLabel.gridy = 0;
-		add(titleLabel, gbc_titleLabel);
-		
 		AbstractTableModel tableModel = new AbstractTableModel() {
-			private final String[] headers = {"Nom de la simulation", "Capital", "Total assurance", "Total int�r�ts", "Total g�n�ral"};
+			private final String[] headers = {"Nom de la simulation", "Capital", "Total assurance", "Total intérêts", "Total général"};
 			
 			@Override
 			public String getColumnName(int columnIndex){
@@ -145,8 +122,30 @@ public class MainVolumesElement extends SimulationComparisonElement {
 				}
 			}
 		};
+		table.setModel(tableModel);
+	}
+
+	/**
+	 * Create the panel, and positions the swing components
+	 */
+	public MainVolumesElement() {
+		Dimension maxDimensions = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize();
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{15, (int)(maxDimensions.getWidth() -30), 0};
+		gridBagLayout.rowHeights = new int[]{14, 100, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		setLayout(gridBagLayout);
 		
-		JTable table = new JTable(tableModel);
+		JLabel titleLabel = new JLabel("Volumes principaux");
+		GridBagConstraints gbc_titleLabel = new GridBagConstraints();
+		gbc_titleLabel.anchor = GridBagConstraints.WEST;
+		gbc_titleLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_titleLabel.gridx = 1;
+		gbc_titleLabel.gridy = 0;
+		add(titleLabel, gbc_titleLabel);
+		
+		table = new JTable();
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setPreferredSize(new Dimension(gridBagLayout.columnWidths[1], gridBagLayout.rowHeights[1]));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

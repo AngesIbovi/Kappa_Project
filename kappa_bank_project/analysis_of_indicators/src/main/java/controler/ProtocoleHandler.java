@@ -63,6 +63,7 @@ public class ProtocoleHandler {
 		AuthenticationServerResponse autentificaiton = gson.fromJson(content, AuthenticationServerResponse.class);
 	
 		statut = autentificaiton.getStatus();
+		if(statut==null)statut = statut.KO;
 	return statut.name();
 	}
 
