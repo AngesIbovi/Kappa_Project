@@ -621,7 +621,7 @@ public abstract class MessageHandler {
 					response.setLoanTypeId(results.getString("LOAN_TYPE_ID")); 
 					response.setAccountNum(results.getString("Account_Num"));
 					response.setTypeSim(results.getString("Loan_Type"));
-					response.setIs_reel(results.getString("Is_Real"));
+					response.setIs_reel("Y".equals(results.getString("Is_Real")));
 					response.setAge((results.getString("AGE")));
 					response.setInsurance((results.getInt("Insurance")));
 					response.setProcessing_fee((results.getInt("PROCESSING_FEE")));

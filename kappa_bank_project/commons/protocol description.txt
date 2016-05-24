@@ -57,6 +57,11 @@ Authorization levels :
 										|		"amortizationType":steady/degressive,	|										|																|
 										|		"repaymentConstant":float}				|										|																|
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	signLoan {"sim_id": STRING,			|	OK {"status": OK/KO}						|					2					|	Transforms a simulation into an actual loan.				|
+		"password": STRING}				|												|										|	For added security, the user has to enter his or her		|
+										|												|										|	password once again. That way, if the customer is handling	|
+										|												|										|	his or her advisor's computer, he or she can't sign a loan.	|
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 If the client uses one of these requests without being authenticated, or without having the required authorization level, the server will answer with this:
 						UNAUTHORIZED {"connected": BOOLEAN, "your_authorization_level": NUMBER, "required_authorization_level": NUMBER}

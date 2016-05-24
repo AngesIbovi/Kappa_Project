@@ -475,7 +475,7 @@ public class MainGUIclass extends JFrame {
 											// De-serialization
 											GetSimServerResponse response = JsonImpl.fromJson(content, GetSimServerResponse.class);
 											AmortizationType amortization = response.getAmortizationType(); 
-											String state = response.getIs_reel(); 
+											boolean state = response.getIs_reel(); 
 											List<Repayment> listrepay=  response.getRepayments();   
 											//System.out.print(response);
 											String amort = amortization.toString();  
@@ -516,11 +516,11 @@ public class MainGUIclass extends JFrame {
 													tblRepay.setFillsViewportHeight(true);
 													// Create the scroll pane and add the table to it. 
 													// Add the scroll pane to this panel. 
-											if (Objects.equals(state.toUpperCase(), new String("Y"))){ 
+											if (state){ 
 												//System.out.print(state.toUpperCase()); 
 												//JOptionPane.showMessageDialog(thisObject, state.toUpperCase());
 													rdbtnOui.setSelected(true);
-												}else if (Objects.equals(state.toUpperCase(), new String("N"))){
+												}else if (!state){
 													rdbtnNon.setSelected(true);
 											}
 											if (amort=="steady"){

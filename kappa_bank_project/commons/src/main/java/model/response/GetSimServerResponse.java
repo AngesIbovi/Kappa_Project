@@ -27,7 +27,7 @@ public class GetSimServerResponse extends ServerResponse {
 	private String user_login;
 	private String account_num;
 	private String type_sim;
-	private String is_reel;
+	private boolean is_reel;
 	private float insurance;
 	private float processing_fee;
 	
@@ -72,7 +72,7 @@ public class GetSimServerResponse extends ServerResponse {
 	/* Getters and setters */
 	
 	
-	public String getIs_reel() {
+	public boolean getIs_reel() {
 		return is_reel;
 	}
 
@@ -92,7 +92,7 @@ public class GetSimServerResponse extends ServerResponse {
 		this.processing_fee = processing_fee;
 	}
 
-	public void setIs_reel(String is_reel) {
+	public void setIs_reel(boolean is_reel) {
 		this.is_reel = is_reel;
 	}
 	
