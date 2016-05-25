@@ -209,6 +209,7 @@ public class AuthGUI extends JFrame {
 										// Prefix identification
 										switch(prefix) {
 										case "ERR":
+											System.out.println(message);
 											JOptionPane.showMessageDialog(thisObject, "Format error. Try downloading the newest version.");
 											break;
 										

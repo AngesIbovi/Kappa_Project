@@ -1,10 +1,17 @@
 package view;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 
 import authentificationmanager.ProtocoleHandler;
+import comparison.ComparisonGUI;
+import model.SessionInformation;
+import model.response.AuthenticationServerResponse;
+import util.JsonImpl;
+import util.KappaProperties;
 
 /*To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,11 +23,14 @@ import authentificationmanager.ProtocoleHandler;
  * @author ndiaye
  */
 public class AuthentificationGui extends javax.swing.JFrame {
-
+	
+	private final SessionSpecific onSuccessfulLogin;
+	
     /**
      * Creates new form NewJFrame
      */
-    public AuthentificationGui() {
+    public AuthentificationGui(SessionSpecific onSuccessfulLogin) {
+    	this.onSuccessfulLogin= onSuccessfulLogin;
         initComponents();
     }
 
@@ -269,19 +279,32 @@ public class AuthentificationGui extends javax.swing.JFrame {
 			System.out.println(login.getText());
 			System.out.println(login.getText());
 			
-			reponseautentification = new ProtocoleHandler().authentification(login.getText(), password.getPassword());
-			System.out.println(reponseautentification);
-			if(reponseautentification=="KO")jLabel10.setForeground(new java.awt.Color(153, 0, 0));
-			if(reponseautentification=="OK"){
+			ProtocoleHandler handler = new ProtocoleHandler();
+			AuthenticationServerResponse response  = handler.authentification(login.getText(), password.getPassword());
+			if(response.getStatus()==AuthenticationServerResponse.Status.KO) {
+				jLabel10.setForeground(new java.awt.Color(153, 0, 0));
+			} else {
 				jLabel10.setForeground(new java.awt.Color(51, 0, 51));
 				
-				new index().setVisible(true);
-				this.setVisible(false);
+				SessionInformation sessionInformation = new SessionInformation(response.getYour_authorization_level(),login.getText(), handler.getSocket());
+				onSuccessfulLogin.setSessionInformation(sessionInformation);
+				this.dispose();
 			}
 			
-			if(reponseautentification=="ERR"){
-				System.out.println("erreur survenue");
-			}
+			
+//			System.out.println(reponseautentification);
+//			if(reponseautentification=="KO")
+//			if(reponseautentification=="OK"){
+//				jLabel10.setForeground(new java.awt.Color(51, 0, 51));
+//				
+//				SessionInformation sessionInformation = new SessionInformation();
+//				onSuccessfulLogin.setSessionInformation(sessionInformation);
+//				this.dispose();
+//			}
+//			
+//			if(reponseautentification=="ERR"){
+//				System.out.println("erreur survenue");
+//			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -324,10 +347,29 @@ public class AuthentificationGui extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
+        // Tools initialization
+ 		try {
+ 			KappaProperties.init();
+ 		} catch (IOException e1) {
+ 			e1.printStackTrace();
+ 			return;
+ 		}
+ 		JsonImpl.init();
+        
+        /* Tabs definition */
+        Set<Tab> tabs = new HashSet<>();
+        
+		Tab t = new ComparisonGUI();
+		tabs.add(t);
+
+		Tab t3 = new VariableLoanGUI();
+		tabs.add(t3);
+        
+		// GUI definition and launch
+        final AuthentificationGui gui = new AuthentificationGui(new MainMenuGUI(tabs));
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AuthentificationGui().setVisible(true);
+                gui.setVisible(true);
             }
         });
     }
