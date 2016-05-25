@@ -16,7 +16,12 @@ import java.util.Properties;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
- 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.data.general.DefaultPieDataset;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -412,14 +417,23 @@ public class MainResultGUI extends Tab {
 		btnNewButton.setEnabled(false);
 
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnNewButton.setBounds(10, 356, 246, 67);
+		btnNewButton.setBounds(10, 336, 246, 67);
 		this.add(btnNewButton);
 		
 		final JButton btnDashboard = new JButton("DASHBOARD");
 		btnDashboard.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnDashboard.setEnabled(false);
-		btnDashboard.setBounds(293, 356, 246, 67);
+		btnDashboard.setBounds(293, 336, 246, 67);
 		this.add(btnDashboard);
+
+		//Camember
+		final DefaultPieDataset pieDataset = new DefaultPieDataset();
+	    JFreeChart chart = ChartFactory.createPieChart3D("", pieDataset, true, true, true);
+		//PiePlot3D P = (PiePlot3D)chart.getPlot();
+		final ChartPanel cpanel = new ChartPanel(chart);  
+		cpanel.setBounds(105, 422, 280, 210);
+		this.add(cpanel); 
+		cpanel.setVisible(false);
 		
 		
 		btnNewButton.addActionListener(new ActionListener() {
@@ -598,7 +612,7 @@ public class MainResultGUI extends Tab {
 											List<Repayment> listrepay=  response.getRepayments();   
 											System.out.print(listrepay.toString());
 											String amort = amortization.toString();
-											String real=response.getIs_reel();
+											boolean real=response.getIs_reel();
 											float total_insurance=0;
 											float total_capital=0; 
 											float total_interest=0;
@@ -636,10 +650,12 @@ public class MainResultGUI extends Tab {
 												amort="DEGRESSIF";
 											}
 											
-											if (Objects.equals(real, new String("Y"))){
+											if (Objects.equals(real, true)){
 												btnIsReal.setSelected(true); 
-											}else if (Objects.equals(real, new String("N"))){
+												btnIsNotReal.setEnabled(false);
+											}else if (Objects.equals(real, false)){
 													btnIsNotReal.setSelected(true); 
+												    btnIsReal.setEnabled(false);
 											}
 											System.out.println(response);
 											lblTitle.setText(response.getName());
@@ -663,7 +679,10 @@ public class MainResultGUI extends Tab {
 											lblTotalInsurance.setText(Float.toString(total_insurance));
 											btnNewButton.setEnabled(true);
 											btnDashboard.setEnabled(true);
-											
+										    pieDataset.setValue("Capital", total_capital);
+										    pieDataset.setValue("Assurance", total_insurance);
+										    pieDataset.setValue("Intérêt", total_interest); 
+										    cpanel.setVisible(true);
 											break;
 										
 										default:
@@ -682,6 +701,7 @@ public class MainResultGUI extends Tab {
 			}
 			
 		});
+		
 	}
 
 	public static void main(String[] args) {
