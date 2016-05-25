@@ -4,7 +4,7 @@ public class Information {
 	/* type of credit floating rate*/
 	 float amount_orrowed;
 	private  int duration;
-	private  String periodicity;
+	private  int periodicity;
 	private  int value_insurance;
 	/*frequency variable rate review*/
 	private  int First_time, All_other_times;
@@ -21,7 +21,7 @@ public class Information {
 	}
 
 
-	public Information(float amount_orrowed, int duration, String periodicity, int value_insurance, int first_time,
+	public Information(float amount_orrowed, int duration, int periodicity, int value_insurance, int first_time,
 			int all_other_times) {
 	
 		this.amount_orrowed = amount_orrowed;
@@ -49,11 +49,11 @@ public class Information {
 			this.duration = duration;
 		}
 
-		public String getPeriodicity() {
+		public int getPeriodicity() {
 			return periodicity;
 		}
 
-		public void setPeriodicity(String periodicity) {
+		public void setPeriodicity(int periodicity) {
 			this.periodicity = periodicity;
 		}
 

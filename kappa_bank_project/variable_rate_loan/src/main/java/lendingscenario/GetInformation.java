@@ -16,7 +16,7 @@ public class GetInformation {
 		System.out.println("Donnez la durée du prêt: ");
 		int duration = sc.nextInt();
 		System.out.println("Donnez la periodicité du prêt: ");
-		String periodicity = scanner2.nextLine();
+		int periodicity = scanner2.nextInt();
 		System.out.println("Donnez le pourcentage de l'assurance: ");
 		int value_insurance = sc.nextInt();
 		System.out.println("Donnez la fréquence de révision du taux pour la première fois: ");

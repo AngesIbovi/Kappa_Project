@@ -25,18 +25,17 @@ public class ServerCommunication {
 	static Properties properties = new Properties();
 	static String propFileName = "kappa.properties";
 	
-	public static ArrayList<String> getAllAcounts() {
+	public static ArrayList<String> getAllAcounts(Socket socket) {
 
 	//This function get all of account number into the arraylist	
 		ArrayList<String> array = new ArrayList<String>();
 
 		try {
-			FileInputStream inputStream = new FileInputStream(propFileName);
-			properties.load(inputStream);
-			String adress = properties.getProperty("SERVER_ADRESS");
-			int port = Integer.parseInt(properties.getProperty("SERVER_PORT"));
-
-			socket = new Socket(adress, port);
+//			FileInputStream inputStream = new FileInputStream(propFileName);
+//			properties.load(inputStream);
+//			String adress = properties.getProperty("SERVER_ADRESS");
+//			int port = Integer.parseInt(properties.getProperty("SERVER_PORT"));
+//			socket = new Socket(adress, port);
 
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -84,19 +83,18 @@ public class ServerCommunication {
 
 	}
 	
-	public static ArrayList<String> getAlltypeofLoan() {
+	public static ArrayList<String> getAlltypeofLoan(Socket socket) {
 		
 		ArrayList<String> array = new ArrayList<String>();
 		
 		try {
 			
-			FileInputStream inputStream = new FileInputStream(propFileName);
-			properties.load(inputStream);
-			String adress = properties.getProperty("SERVER_ADRESS");
-			int port = Integer.parseInt(properties.getProperty("SERVER_PORT"));
-
-			socket = new Socket(adress, port);
-			
+//			FileInputStream inputStream = new FileInputStream(propFileName);
+			//properties.load(inputStream);
+//			String adress = properties.getProperty("SERVER_ADRESS");
+//			int port = Integer.parseInt(properties.getProperty("SERVER_PORT"));
+//			socket = new Socket(adress, port);
+//			
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
