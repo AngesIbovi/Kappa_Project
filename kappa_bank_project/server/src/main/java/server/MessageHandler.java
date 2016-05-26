@@ -5,11 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.query.*;
 import model.response.*;
 import model.response.GetLoanServerResponse.RateList;
 import model.response.GetSimsServerResponse.SimulationIdentifier;
+import model.simulation.Event;
+import model.simulation.RateChange;
+import model.simulation.Repayment;
+import model.simulation.Simulation;
 
 import org.apache.log4j.Logger;
 
@@ -550,7 +555,8 @@ public abstract class MessageHandler {
 					+ "CONCAT (cust.FIRST_NAME ,' '|| cust.LAST_NAME) as User_login,"
 					+ "lo.LOAN_TYPE_ID,"
 					+ "Account_Num,"
-					+ "lt.NAME as Loan_Type "
+					+ "lt.NAME as Loan_Type,"
+					+ "RATE_NATURE "
 				+ "FROM "
 					+ "Loans lo, "
 					+ "Loan_Types lt,"
@@ -561,6 +567,10 @@ public abstract class MessageHandler {
 					+ "AND lo.LOAN_TYPE_ID=lt.LOAN_TYPE_ID "
 					+ "AND cust.CUSTOMER_ID=ac.CUSTOMER_ID "
 					+ "AND lo.Loan_Id='" + query.getSim_id() + "'";
+		String SQLquery4 = "SELECT LRH.CHANGE_DATE, LRH.VALUE "
+				 + "FROM LOANS INNER JOIN LOAN_RATE_HISTORY LRH ON LOANS.LOAN_TYPE_ID = LRH.LOAN_TYPE_ID "
+				 + "WHERE LOANS.Loan_Id = '" + query.getSim_id() + "' "
+				 + "ORDER BY LRH.CHANGE_DATE ASC";
 	
 		// Connection and treatment
 		Connection databaseConnection;
@@ -576,39 +586,46 @@ public abstract class MessageHandler {
 			Statement statement = databaseConnection.createStatement();
 	
 			try {
-				GetSimServerResponse response = new GetSimServerResponse();
+				Simulation response = new Simulation();
 	
 				/* Repayments */
 				ResultSet results = statement.executeQuery(SQLquery1);
 				while(results.next()) {
-					response.getRepayments().add(new GetSimServerResponse.Repayment(
+					response.getRepayments().add(new Repayment(
 						results.getDate("Date"),
 						results.getFloat("Capital"),
 						results.getFloat("Interest"),
 						results.getFloat("Insurance")
 					));
 				}
-	
-				
-				
 				
 				
 				/* Events */ 
-	//			results = statement.executeQuery(SQLquery2);
-	//			while(results.next()) {
-	//				response.getEvents().add(new GetSimServerResponse.Event(
-	//					GetSimServerResponse.Event.EventType.valueOf(results.getString("Type")),
-	//					results.getDate("StartDate"),
-	//					results.getDate("EndDate"),
-	//					results.getFloat("Value"),
-	//					results.getBoolean("Is_Real")
-	//				));
-	//			}
+				results = statement.executeQuery(SQLquery2);
+				while(results.next()) {
+					response.getEvents().add(new Event(
+						Event.EventType.valueOf(results.getString("Type")),
+						results.getDate("StartDate"),
+						results.getDate("EndDate"),
+						results.getFloat("Value"),
+						results.getBoolean("Is_Real")
+					));
+				}
+				
+				
+				/* Rate Changes */
+				results = statement.executeQuery(SQLquery4);
+				while(results.next()) {
+					response.getRateHistory().add(new RateChange(
+							results.getDate("CHANGE_DATE"),
+							results.getDouble("VALUE")
+					));
+				}
 				
 				/* Other attributes */
 				results = statement.executeQuery(SQLquery3);
 				if(results.next()) {
-					response.setAmortizationType(GetSimServerResponse.AmortizationType.valueOf(results.getString("Amortization_Type")));
+					response.setAmortizationType(Simulation.AmortizationType.valueOf(results.getString("Amortization_Type")));
 					response.setCapital(results.getFloat("Capital"));
 					response.setEffectiveDate(results.getDate("Effective_Date"));
 					response.setId(query.getSim_id());
@@ -624,6 +641,7 @@ public abstract class MessageHandler {
 					response.setIs_reel("Y".equals(results.getString("Is_Real")));
 					response.setAge((results.getString("AGE")));
 					response.setInsurance((results.getInt("Insurance")));
+					response.setProcessing_fee((results.getFloat("PROCESSING_FEE")));
 					response.setProcessing_fee((results.getInt("PROCESSING_FEE")));
 				}
 				
@@ -638,6 +656,127 @@ public abstract class MessageHandler {
 		} catch (SQLException e) { 
 			logger.warn("SQLException caught", e);
 			logger.trace("Exiting MessageHandler.handleGetSimQuery");
+			return new ErrorServerResponse("Database error");
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+			ConnectionPool.release(databaseConnection);
+		}
+	}
+
+
+	/**
+	 * Transforms a simulation into a real loan.
+	 * @param query : contains the simulation id.
+	 * @return the server's response to the query. Never null nor an exception.
+	 */
+	public static ServerResponse handleSignLoanQuery(SignLoanQuery query, String username) {
+		logger.trace("Entering MessageHandler.handleSignLoanQuery");
+		
+		String SQLquery1 = "SELECT \"LOGIN\" FROM USERS WHERE \"LOGIN\" LIKE '" + username + "' AND \"PASSWORD\" LIKE '" + query.getPassword() + "'";
+		
+		Connection databaseConnection;
+		try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (Exception e) {
+			logger.trace("Exiting MessageHandler.handleSignLoanQuery");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+		
+		// Verifying the user's identity
+		try {
+			Statement statement = databaseConnection.createStatement();
+			
+			try {
+				ResultSet results = statement.executeQuery(SQLquery1);
+				
+				if(!results.next()) {
+					logger.trace("Exiting MessageHandler.handleSignLoanQuery");
+					return new SignLoanServerResponse(SignLoanServerResponse.Status.KO, SignLoanServerResponse.Status.KO);
+				}
+			} catch (SQLException e) {
+				throw e;
+			} finally {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			logger.warn("SQLException caught", e);
+			logger.trace("Exiting MessageHandler.handleSignLoanQuery");
+			return new ErrorServerResponse("Database error");
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+			ConnectionPool.release(databaseConnection);
+		}
+		
+		
+		
+		
+		// Making the loan real in the database
+		ServerResponse getSimServerResponse = handleGetSimQuery(new GetSimQuery(query.getSimId()));
+		if(!(getSimServerResponse instanceof Simulation)) {
+			return getSimServerResponse;
+		}
+		
+		Simulation simulation = (Simulation) getSimServerResponse;
+		
+		List<Event> events = new ArrayList<>();
+		for(Event e : simulation.getEvents()) {
+			if(e.isReal()) {
+				events.add(e);
+			}
+		}
+		
+		simulation.setRepayments(new ArrayList<Repayment>());
+		simulation.calculateAmortizationTable();
+		
+		String SQLQuery2 = "DELETE FROM Repayments WHERE \"Loan_Id\"='" + query.getSimId() + "'";
+		String SQLQuery3 = "DELETE FROM EVENTS WHERE IS_REAL='N' AND LOAN_ID='" + query.getSimId() + "'";
+		String SQLQuery4 = "UPDATE ACCOUNTS SET BALANCE=BALANCE + " + simulation.getCapital() + " WHERE ACCOUNT_ID='" + simulation.getAccountId() + "'";
+		String SQLQuery5 = "UPDATE LOANS SET IS_REAL='Y' WHERE LOAN_ID='" + query.getSimId() + "'";
+		
+		try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (Exception e) {
+			logger.trace("Exiting MessageHandler.handleSignLoanQuery");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+		
+		// Verifying the user's identity
+		try {
+			Statement statement = databaseConnection.createStatement();
+			
+			try {
+				statement.executeUpdate(SQLQuery2);
+				statement.executeUpdate(SQLQuery3);
+				statement.executeUpdate(SQLQuery4);
+				statement.executeUpdate(SQLQuery5);
+				
+				for(Repayment repayment : simulation.getRepayments()) {
+					String repaymentSQLQuery = "INSERT INTO REPAYMENTS VALUES (REPAYMENTS_SEQ.NEXTVAL, "
+									 + "'" + query.getSimId() + "', "
+									 + "'" + repayment.getDate() + "', "
+									 + repayment.getCapital() + ", "
+									 + repayment.getInterest() + ", "
+									 + repayment.getInsurance() + ")";
+					
+					statement.executeUpdate(SQLQuery4);
+				}
+				
+				return new SignLoanServerResponse(SignLoanServerResponse.Status.OK, SignLoanServerResponse.Status.OK);
+			} catch (Exception e) {
+				throw e;
+			} finally {
+				statement.close();
+			}
+		} catch (Exception e) {
+			try {
+				databaseConnection.rollback(); // If anything -ANYTHING- bad happens, the changes to the tables are rolled back for security reasons.
+			} catch (SQLException e2) {
+				// Do nothing
+			}
+			logger.warn("SQLException caught", e);
+			logger.trace("Exiting MessageHandler.handleSignLoanQuery");
 			return new ErrorServerResponse("Database error");
 		} finally {
 			// Good practice : the cleanup code is in a finally block.

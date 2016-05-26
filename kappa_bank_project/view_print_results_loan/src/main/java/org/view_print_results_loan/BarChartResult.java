@@ -35,8 +35,8 @@ import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
 import model.query.GetSimQuery;
-import model.response.GetSimServerResponse;
-import model.response.GetSimServerResponse.Repayment;
+import model.simulation.Simulation;
+import model.simulation.Repayment;
 import util.JsonImpl;
 import util.KappaProperties;
 
@@ -125,7 +125,7 @@ public class BarChartResult extends JFrame {
 				
 				case "OK":
 					// De-serialization
-					GetSimServerResponse response = JsonImpl.fromJson(content, GetSimServerResponse.class);  
+					Simulation response = JsonImpl.fromJson(content, Simulation.class);  
 					List<Repayment> listrepay=  response.getRepayments();    
 					//String[][] datas = (String[][]) new String[listrepay.size()][6];
 					float restant=0;

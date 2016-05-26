@@ -39,9 +39,9 @@ import model.query.GetAllSimsQuery;
 import model.query.GetSimQuery;
 import model.response.GetAllSimsServerResponse;
 import model.response.GetAllSimsServerResponse.SimulationIdentifier;
-import model.response.GetSimServerResponse;
-import model.response.GetSimServerResponse.AmortizationType;
-import model.response.GetSimServerResponse.Repayment;
+import model.simulation.Simulation;
+import model.simulation.Simulation.AmortizationType;
+import model.simulation.Repayment;
 import util.KappaProperties;
 import util.JsonImpl; 
  
@@ -253,7 +253,7 @@ public class ChartResult extends JFrame {
 				
 				case "OK":
 					// De-serialization
-					GetSimServerResponse response = JsonImpl.fromJson(content, GetSimServerResponse.class);  
+					Simulation response = JsonImpl.fromJson(content, Simulation.class);  
 					List<Repayment> listrepay=  response.getRepayments();    
 					
 					//we prepare to bind data into our JTable

@@ -18,8 +18,8 @@ import java.util.List;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.AbstractTableModel;
 
-import model.response.GetSimServerResponse;
-import model.response.GetSimServerResponse.Repayment;
+import model.simulation.Simulation;
+import model.simulation.Repayment;
 
 import javax.swing.JTable;
 
@@ -45,7 +45,7 @@ public class AmortizationElement extends SimulationComparisonElement {
 		private int repaymentFrequency;
 		private int totalRepayments;
 		
-		public Row(GetSimServerResponse sim) {
+		public Row(Simulation sim) {
 			this.name = sim.getName();
 			switch(sim.getAmortizationType()) {
 			case degressive:
@@ -98,9 +98,9 @@ public class AmortizationElement extends SimulationComparisonElement {
 	private final JTable table;
 
 	@Override
-	public void setSimulations(List<GetSimServerResponse> simulations) {
+	public void setSimulations(List<Simulation> simulations) {
 		final List<Row> rows = new ArrayList<>();
-		for(GetSimServerResponse simulation : simulations) {
+		for(Simulation simulation : simulations) {
 			rows.add(new Row(simulation));
 		}
 		

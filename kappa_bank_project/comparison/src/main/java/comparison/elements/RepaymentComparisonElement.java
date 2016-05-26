@@ -2,14 +2,17 @@ package comparison.elements;
 
 import java.util.List;
 
-import model.response.GetSimServerResponse;
-import model.response.GetSimServerResponse.Repayment;
+import model.simulation.Simulation;
+import model.simulation.Repayment;
 
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
 
 import java.awt.GridBagConstraints;
+
 import javax.swing.JCheckBox;
+
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -112,12 +115,12 @@ public class RepaymentComparisonElement extends SimulationComparisonElement {
 	}
 
 	@Override
-	public void setSimulations(List<GetSimServerResponse> simulations) {
+	public void setSimulations(List<Simulation> simulations) {
 		// Chart generation
 		XYSeriesCollection defaultDataset = new XYSeriesCollection();
 		XYSeriesCollection normalizedDataset = new XYSeriesCollection();
 		
-		for(GetSimServerResponse simulation : simulations) {
+		for(Simulation simulation : simulations) {
 			XYSeries defaultSeries = new XYSeries(simulation.getName());
 			XYSeries normalizedSeries = new XYSeries(simulation.getName());
 			
