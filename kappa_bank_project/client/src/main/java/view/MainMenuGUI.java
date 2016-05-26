@@ -15,7 +15,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import org.view_print_results_loan.MainResultGUI;
+
 import comparison.ComparisonGUI;
+import loanClient.ihm;
 import model.SessionInformation;
 import util.JsonImpl;
 import util.KappaProperties;
@@ -136,16 +139,18 @@ public class MainMenuGUI extends JDialog implements SessionSpecific { // JDialog
 	 * @param args : not used
 	 */
 	public static void main(String[] args) {
-		Set<Tab> tabs = new HashSet<>();
+		Set<Tab> tabs = new HashSet<>(); 
 
-		Tab t = new ComparisonGUI();
+		Tab t = new ComparisonGUI(); //valentin
+		Tab t2 = new MainResultGUI(); // Marc
+		Tab fixRateTab = new ihm(); // Mohamed
+		Tab t3 = new VariableLoanGUI(); // Anges
+		Tab t4=new AnalyseOfIndicatorsGUI();//boubacar
+		tabs.add(fixRateTab); 
+		tabs.add(t2); 
 		tabs.add(t);
-
-		Tab t3 = new VariableLoanGUI();
 		tabs.add(t3);
-		
-		Tab t5 = new AnalyseOfIndicatorsGUI();
-		tabs.add(t5);
+		tabs.add(t4);
 		launch(tabs);
 	}
 }

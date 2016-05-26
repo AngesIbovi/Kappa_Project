@@ -24,7 +24,7 @@ public class TraitmentScenario {
 	
 	public float interest(int rate, int frequency)
 	{
-		
+		//System.out.println("------------Interêt----------");
 		int duration = delay * 12;
 		float crd;
 		float frequencyinterest = 0;
@@ -38,7 +38,7 @@ public class TraitmentScenario {
 				firstCRD = this.updateCRD(this.capital, 0);
 				frequencyinterest=((firstCRD*rate*0.01f)/12)*frequency;
 				
-				System.out.println(i+"  => "+firstCRD +" : "+frequencyinterest+" : "+insurance);
+			//	System.out.println(i+"  => "+firstCRD +" : "+frequencyinterest+" : "+insurance);
 				
 			}
 			else	{
@@ -46,43 +46,68 @@ public class TraitmentScenario {
 				
 				frequencyinterest=((crd*rate*0.01f)/12)*frequency;
 				
-				System.out.println(i+"  => "+crd +" : "+frequencyinterest+" : "+insurance);
+			//	System.out.println(i+"  => "+crd +" : "+frequencyinterest+" : "+insurance);
 			}
 			
 		}
-		
-		
 		
 		return frequencyinterest;
 	}
 	
 	
-	public float degressive(float capital)
+	public float digressive(float capital)
 	{
-		float amountDEG;
+		System.out.println("------------Dégréssive----------");
+		float principal=0;
 		this.delay=delay*12;
-		
-		amountDEG=capital/delay;
-		
-		return amountDEG;
+		for(int i=1; i<=delay; i++){
+		principal=capital/delay;
+		System.out.println("Mois "+i+" : "+principal);
+		}
+		return principal;	
 	}
 	
 	
+	public  void constants(float capital, int rate, int frequency){
+		
+		float insurance,interest;
+		this.delay=delay*12;
+		float principal=0, monthlyInstallment;
+		int variableRate=1+rate;
+			double pow=	Math.pow(variableRate, -delay);
+		//System.out.println("pow: "+ pow);
+		insurance = this.insurance(100, this.delay);
+
+		
+		
+		
+		
+		System.out.println("------------constant----------");
+		for(int i=1; i<=delay; i++)
+		{
+			//capital=this.updateCRD(capital, lastCRD);
+			monthlyInstallment=(float) ((capital*rate)/(1-pow));
+			
+			System.out.println(" montant mensuel constant:"+ monthlyInstallment);
+			interest=this.interest(rate, frequency);	
+		principal=monthlyInstallment;
+		//System.out.println("Mois "+ i+" : "+principal);
+		}
+		
+		//return principal;
+	}
 	
-//	public float constant(float capital,)
-//	{
-//		float amountDEG;
-//		this.delay=delay*12;
-//		
-//		amountDEG=capital/delay;
-//		
-//		return amountDEG;
-//	}
+	
+
 	public static void main(String[] args) {
 		TraitmentScenario ts = new TraitmentScenario();
 		ts.capital=18000;
 		ts.delay=2;
-		ts.interest(5, 1);
+		//ts.interest(5, 1);
+//	ts.digressive(ts.capital);
+		ts.constants(ts.capital, 5, 1);
+		
+		
 		
 	}
 }
