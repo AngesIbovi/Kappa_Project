@@ -1,8 +1,8 @@
-INFO  2016-05-22 18:33:42 at Server:201 :		 Server initialized.
-INFO  2016-05-22 18:35:14 at Server:154 :		 Connection received
-INFO  2016-05-22 18:35:15 at Server:154 :		 Connection received
-INFO  2016-05-22 18:35:15 at Server:154 :		 Connection received
-ERROR 2016-05-22 18:35:40 at Session:109 :		 Session : IOException caught
+INFO  2016-05-26 17:58:29 at Server:201 :		 Server initialized.
+INFO  2016-05-26 17:58:47 at Server:154 :		 Connection received
+INFO  2016-05-26 17:58:56 at Session:166 :		 Marc logged in successfully.
+INFO  2016-05-26 17:58:57 at Server:154 :		 Connection received
+ERROR 2016-05-26 18:00:15 at Session:109 :		 Session : IOException caught
 java.net.SocketException: Connection reset
 	at java.net.SocketInputStream.read(Unknown Source)
 	at java.net.SocketInputStream.read(Unknown Source)
@@ -14,8 +14,7 @@ java.net.SocketException: Connection reset
 	at java.io.BufferedReader.readLine(Unknown Source)
 	at java.io.BufferedReader.readLine(Unknown Source)
 	at server.Session.run(Session.java:90)
-INFO  2016-05-22 18:35:40 at Session:117 :		 Connection terminated
-ERROR 2016-05-22 18:35:40 at Session:109 :		 Session : IOException caught
+ERROR 2016-05-26 18:00:15 at Session:109 :		 Session : IOException caught
 java.net.SocketException: Connection reset
 	at java.net.SocketInputStream.read(Unknown Source)
 	at java.net.SocketInputStream.read(Unknown Source)
@@ -27,101 +26,7 @@ java.net.SocketException: Connection reset
 	at java.io.BufferedReader.readLine(Unknown Source)
 	at java.io.BufferedReader.readLine(Unknown Source)
 	at server.Session.run(Session.java:90)
-ERROR 2016-05-22 18:35:40 at Session:109 :		 Session : IOException caught
-java.net.SocketException: Connection reset
-	at java.net.SocketInputStream.read(Unknown Source)
-	at java.net.SocketInputStream.read(Unknown Source)
-	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
-	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
-	at sun.nio.cs.StreamDecoder.read(Unknown Source)
-	at java.io.InputStreamReader.read(Unknown Source)
-	at java.io.BufferedReader.fill(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at server.Session.run(Session.java:90)
-INFO  2016-05-22 18:35:40 at Session:117 :		 Connection terminated
-INFO  2016-05-22 18:35:40 at Session:117 :		 Connection terminated
-INFO  2016-05-22 18:36:05 at Server:154 :		 Connection received
-INFO  2016-05-22 18:36:06 at Server:154 :		 Connection received
-INFO  2016-05-22 18:36:06 at Server:154 :		 Connection received
-ERROR 2016-05-22 18:36:20 at Session:109 :		 Session : IOException caught
-java.net.SocketException: Connection reset
-	at java.net.SocketInputStream.read(Unknown Source)
-	at java.net.SocketInputStream.read(Unknown Source)
-	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
-	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
-	at sun.nio.cs.StreamDecoder.read(Unknown Source)
-	at java.io.InputStreamReader.read(Unknown Source)
-	at java.io.BufferedReader.fill(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at server.Session.run(Session.java:90)
-INFO  2016-05-22 18:36:20 at Session:117 :		 Connection terminated
-ERROR 2016-05-22 18:36:20 at Session:109 :		 Session : IOException caught
-java.net.SocketException: Connection reset
-	at java.net.SocketInputStream.read(Unknown Source)
-	at java.net.SocketInputStream.read(Unknown Source)
-	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
-	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
-	at sun.nio.cs.StreamDecoder.read(Unknown Source)
-	at java.io.InputStreamReader.read(Unknown Source)
-	at java.io.BufferedReader.fill(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at server.Session.run(Session.java:90)
-ERROR 2016-05-22 18:36:20 at Session:109 :		 Session : IOException caught
-java.net.SocketException: Connection reset
-	at java.net.SocketInputStream.read(Unknown Source)
-	at java.net.SocketInputStream.read(Unknown Source)
-	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
-	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
-	at sun.nio.cs.StreamDecoder.read(Unknown Source)
-	at java.io.InputStreamReader.read(Unknown Source)
-	at java.io.BufferedReader.fill(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at server.Session.run(Session.java:90)
-INFO  2016-05-22 18:36:20 at Session:117 :		 Connection terminated
-INFO  2016-05-22 18:36:20 at Session:117 :		 Connection terminated
-INFO  2016-05-22 18:47:24 at Server:154 :		 Connection received
-INFO  2016-05-22 18:47:24 at Server:154 :		 Connection received
-INFO  2016-05-22 18:47:24 at Server:154 :		 Connection received
-ERROR 2016-05-22 18:47:33 at Session:109 :		 Session : IOException caught
-java.net.SocketException: Connection reset
-	at java.net.SocketInputStream.read(Unknown Source)
-	at java.net.SocketInputStream.read(Unknown Source)
-	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
-	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
-	at sun.nio.cs.StreamDecoder.read(Unknown Source)
-	at java.io.InputStreamReader.read(Unknown Source)
-	at java.io.BufferedReader.fill(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at server.Session.run(Session.java:90)
-ERROR 2016-05-22 18:47:33 at Session:109 :		 Session : IOException caught
-java.net.SocketException: Connection reset
-	at java.net.SocketInputStream.read(Unknown Source)
-	at java.net.SocketInputStream.read(Unknown Source)
-	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
-	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
-	at sun.nio.cs.StreamDecoder.read(Unknown Source)
-	at java.io.InputStreamReader.read(Unknown Source)
-	at java.io.BufferedReader.fill(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at server.Session.run(Session.java:90)
-INFO  2016-05-22 18:47:33 at Session:117 :		 Connection terminated
-ERROR 2016-05-22 18:47:33 at Session:109 :		 Session : IOException caught
-java.net.SocketException: Connection reset
-	at java.net.SocketInputStream.read(Unknown Source)
-	at java.net.SocketInputStream.read(Unknown Source)
-	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
-	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
-	at sun.nio.cs.StreamDecoder.read(Unknown Source)
-	at java.io.InputStreamReader.read(Unknown Source)
-	at java.io.BufferedReader.fill(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at server.Session.run(Session.java:90)
-INFO  2016-05-22 18:47:33 at Session:117 :		 Connection terminated
-INFO  2016-05-22 18:47:33 at Session:117 :		 Connection terminated
+INFO  2016-05-26 18:00:15 at Session:117 :		 Connection terminated
+INFO  2016-05-26 18:00:15 at Session:117 :		 Connection terminated
+INFO  2016-05-26 18:00:22 at Server:160 :		 Server shutdown signal received.
+INFO  2016-05-26 18:00:22 at Server:222 :		 Server shut down.

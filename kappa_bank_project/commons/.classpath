@@ -16,7 +16,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="H:/PDS/KappaProject/Kappa_Project/kappa_bank_project/server/lib/gson-2.5/gson-2.5.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/ojdbc6/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.23.jar"/>
@@ -28,5 +27,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/gson-2.5/gson-2.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
