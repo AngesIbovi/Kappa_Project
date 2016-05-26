@@ -61,23 +61,6 @@ public class MainMenuGUI extends JDialog implements SessionSpecific { // JDialog
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		// Necessary because setDefaultCloseOperation doesn't exist for JDialogs
-		addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                if(socket != null) {
-                	if(!socket.isClosed()) {
-                		try {
-                			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                			out.println("BYE");
-                			socket.close();
-                		} catch (IOException e) {
-                			// Do nothing
-                		}
-                	}
-                }
-            }
-        });
-		
 		// full screen parameters
 		setSize(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize());
 		setResizable(false);
