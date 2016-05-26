@@ -29,7 +29,7 @@
 	<classpathentry kind="lib" path="/commons/lib/DateChooser.jar"/>
 	<classpathentry kind="lib" path="/commons/lib/log4j-1.2.17/log4j-1.2.17.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/comparison"/>
-	<classpathentry kind="lib" path="/commons/lib/gson-2.5/gson-2.5.jar"/>
+	<classpathentry kind="lib" path="H:/PDS/KappaProject/Kappa_Project/kappa_bank_project/server/lib/gson-2.5/gson-2.5.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/fixed_rate_loan"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
