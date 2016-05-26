@@ -4,6 +4,7 @@ package org.view_print_results_loan;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 import java.io.BufferedReader;
@@ -62,6 +63,7 @@ public class BarChartResult extends JFrame {
        setContentPane(chartPanel);
 		// Cleanup planning  
        setDefaultCloseOperation(ApplicationFrame.DISPOSE_ON_CLOSE);
+ 
    }
 
    /**
@@ -85,9 +87,7 @@ public class BarChartResult extends JFrame {
       // create the dataset...
       DefaultCategoryDataset dataset = new DefaultCategoryDataset();
   
-
-		Properties prop = KappaProperties.getInstance();
-		final Socket connection = new Socket(prop.getProperty("SERVER_IP"), Integer.parseInt(prop.getProperty("SERVER_PORT")));
+ 
 		final PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 		final BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		// TODO: check if on successful login, when the auth window gets disposed, this listener is called

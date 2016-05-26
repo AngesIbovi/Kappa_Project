@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 import java.io.BufferedReader;
@@ -70,6 +71,9 @@ public class ChartResult extends JFrame {
 		// Cleanup planning  
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+		
+		 
+		
 	 
 		
 		JPanel chartPanel = createChartPanel(socket,args);
@@ -251,7 +255,7 @@ public class ChartResult extends JFrame {
 					// De-serialization
 					GetSimServerResponse response = JsonImpl.fromJson(content, GetSimServerResponse.class);  
 					List<Repayment> listrepay=  response.getRepayments();    
-					//String[][] datas = (String[][]) new String[listrepay.size()][6]; 
+					
 					//we prepare to bind data into our JTable
 					for(int i=0 ; i < listrepay.size() ; i++) { 
 						series1.add(i+1, listrepay.get(i).getCapital());
@@ -312,13 +316,7 @@ public class ChartResult extends JFrame {
 	
 
 	public static void main(final Socket socket, final String args) throws IOException {
-		try {
-			KappaProperties.init();
-			JsonImpl.init();
-		} catch(IOException e) {
-			System.out.print("Exiting Client.");
-			throw e;
-		}
+		 
 
 		/* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

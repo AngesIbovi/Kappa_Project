@@ -83,22 +83,11 @@ public class MainResultGUI extends Tab {
 						e1.printStackTrace();
 					}
 				}
-		/* Network connection */
-		// Socket initialization
-		Properties prop = KappaProperties.getInstance();
-		//System.out.print(prop);
-		Socket connection = null;
-		try {
-			connection = new Socket(prop.getProperty("SERVER_IP"), Integer.parseInt(prop.getProperty("SERVER_PORT")));
-		} catch (NumberFormatException | IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} 
+	
 
 		//this.setSessionInformation(sessionInformation);
 		PrintWriter out = null;
-		try {
-			//out = new PrintWriter(connection.getOutputStream(), true);
+		try { 
 			out = new PrintWriter(socket.getOutputStream(), true);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
@@ -128,6 +117,19 @@ public class MainResultGUI extends Tab {
 		final JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 742, 31);
 		this.add(panel);
+		
+
+
+		JLabel lblChoixDuClient = new JLabel("Choisir le client :");
+		lblChoixDuClient.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel.add(lblChoixDuClient);
+
+		//final JComboBox<SimulationIdentifier> cbScenChoice = new JComboBox<SimulationIdentifier>();
+		final JComboBox<Account> cbListName = new JComboBox<Account>();
+		cbListName.setToolTipText("Veuillez choisir le client");
+		cbListName.setEditable(true);
+		cbListName.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		panel.add(cbListName);
 		
 		JLabel lblChoixDuScenario = new JLabel("Sélectionner le scenario :");
 		lblChoixDuScenario.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -307,6 +309,9 @@ public class MainResultGUI extends Tab {
 		//We define the home choice of ComboBox
 		String lblChoix = "- Choisir -";
 		cbScenChoice.setSelectedItem(lblChoix);  
+ 
+		cbListName.setSelectedItem(lblChoix);  
+		
 		
 		final JLabel lblTitle = new JLabel("");
 		lblTitle.setForeground(Color.BLUE);
@@ -322,14 +327,14 @@ public class MainResultGUI extends Tab {
 		//we precise if the scenario is real or not
 		JLabel lblIsReal = new JLabel("Est Réel ?");
 		lblIsReal.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblIsReal.setBounds(480, -110, 100, 322);
+		lblIsReal.setBounds(480, -105, 100, 322);
 		this.add(lblIsReal);
 		final JRadioButton btnIsReal = new JRadioButton("OUI");    
 		final JRadioButton btnIsNotReal = new JRadioButton("NON");    
 		  //... Create a button group and add the buttons.
         ButtonGroup bgroup = new ButtonGroup();
-        btnIsReal.setBounds(580, 15, 70, 70);
-        btnIsNotReal.setBounds(660, 15, 70, 70);
+        btnIsReal.setBounds(580, 30, 70, 50);
+        btnIsNotReal.setBounds(660, 30, 70, 50);
         bgroup.add(btnIsReal);
         bgroup.add(btnIsNotReal); 
         //... Arrange buttons vertically in a panel
@@ -426,7 +431,7 @@ public class MainResultGUI extends Tab {
 		btnDashboard.setBounds(293, 336, 246, 67);
 		this.add(btnDashboard);
 
-		//Camember
+		//Adding of 3D-Chart to materialized the total amount of each fee
 		final DefaultPieDataset pieDataset = new DefaultPieDataset();
 	    JFreeChart chart = ChartFactory.createPieChart3D("", pieDataset, true, true, true);
 		//PiePlot3D P = (PiePlot3D)chart.getPlot();
@@ -509,7 +514,11 @@ public class MainResultGUI extends Tab {
 				//System.out.println(listSims.toArray()[i]);
 				cbScenChoice.addItem((SimulationIdentifier) listSims.toArray()[i]); 
 			    } 
-				//System.out.println(listSims.toArray().length); 
+
+				GetAccountsServerResponse response2 = JsonImpl.fromJson(content, GetAccountsServerResponse.class);;
+
+				final Vector<Account> accounts = new Vector<>(response2.getAccounts()); 
+				System.out.println(accounts);  
 				 
  				//System.out.println(theList);
 				//for(int i=0; i<=theList.length;i++){
@@ -555,25 +564,8 @@ public class MainResultGUI extends Tab {
 							public void run() {
 								PrintWriter out;
 								BufferedReader in; 
-								Socket connections = null;
-								Properties prop = KappaProperties.getInstance();
-								try {
-									connections = new Socket(prop.getProperty("SERVER_IP"), Integer.parseInt(prop.getProperty("SERVER_PORT")));
-								} catch (NumberFormatException | IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								try {
-									new PrintWriter(connections.getOutputStream(), true);
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								try { 
-									
-									//out = new PrintWriter(connections.getOutputStream(), true); 
+								try {  
 									out = new PrintWriter(socket.getOutputStream(), true);
-									//in = new BufferedReader(new InputStreamReader(connections.getInputStream()));
 									in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 								} catch (Exception e1) { // Reached if an IO exception occurs, or if the socket is not connected anymore
 									JOptionPane.showMessageDialog(thisObject, "Erreur: connection au serveur interrompue. V�rifiez votre connection Internet, puis essayez de vous re-connecter.");
