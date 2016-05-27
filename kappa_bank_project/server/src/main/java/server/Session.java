@@ -12,6 +12,7 @@ import model.query.GetAccountsQuery;
 import model.query.GetAllAccountsQuery;
 import model.query.GetAllLoanTypeQuery;
 import model.query.GetAllSimsQuery;
+import model.query.GetCustomersQuery;
 import model.query.GetLoanQuery;
 import model.query.GetSimQuery;
 import model.query.GetSimsQuery;
@@ -243,6 +244,16 @@ public class Session extends Thread {
 				response=MessageHandler.handleGetrateQuery();
 				break; 
 
+            case "getCustomers":
+				
+				GetCustomersQuery Customerquery = JsonImpl.fromJson(content,GetCustomersQuery.class);
+				System.out.println(Customerquery.toString());				 
+				try {
+					response=MessageHandler.handleGetCustomersQuery(Customerquery);
+				}catch(Exception e){
+				}
+				response=MessageHandler.handleGetCustomersQuery(Customerquery);
+				break; 
 			default:
 				response = new ErrorServerResponse("Unknown prefix");
 			}
