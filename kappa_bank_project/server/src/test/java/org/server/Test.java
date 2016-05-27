@@ -54,23 +54,18 @@ public class Test {
 		Properties props = KappaProperties.getInstance();
 		
 		
-		System.out.println("TEST 1");
-		
 		try {
 			// Connection
 			Socket S = new Socket("localhost", Integer.parseInt(props.getProperty("SERVER_PORT")));
 
-			System.out.println("TEST 2");
 			// Streams
 			PrintWriter out = new PrintWriter(S.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(S.getInputStream()));
 
-			System.out.println("TEST 3");
 			// Test loop
 			for(String query : queries) {
 				out.println(query);
 				String response = in.readLine();
-				System.out.println("TEST 4");
 				System.out.println(query + " -> " + response);
 				System.out.println();
 			}

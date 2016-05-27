@@ -211,7 +211,7 @@ public class Session extends Thread {
 				}
 				SignLoanQuery signLoanQuery = JsonImpl.fromJson(content, SignLoanQuery.class);
 				response = MessageHandler.handleSignLoanQuery(signLoanQuery, sessionInformation.getUser_id());
-
+				break;
 			case "sendLoans":
 				if(this.sessionInformation.getAuthorization_level() < 2) {
 					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id() == null), this.sessionInformation.getAuthorization_level(), 1);

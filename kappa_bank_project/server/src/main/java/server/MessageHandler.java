@@ -714,7 +714,6 @@ public abstract class MessageHandler {
 					response.setAge((results.getString("AGE")));
 					response.setInsurance((results.getInt("Insurance")));
 					response.setProcessing_fee((results.getFloat("PROCESSING_FEE")));
-					response.setProcessing_fee((results.getInt("PROCESSING_FEE")));
 				}
 				
 				/* Return */
@@ -823,7 +822,7 @@ public abstract class MessageHandler {
 		
 		String SQLQuery2 = "DELETE FROM Repayments WHERE \"Loan_Id\"='" + query.getSimId() + "'";
 		String SQLQuery3 = "DELETE FROM EVENTS WHERE IS_REAL='N' AND LOAN_ID='" + query.getSimId() + "'";
-		String SQLQuery4 = "UPDATE ACCOUNTS SET BALANCE=BALANCE + " + simulation.getCapital() + " WHERE ACCOUNT_ID='" + simulation.getAccountId() + "'";
+		String SQLQuery4 = "UPDATE ACCOUNTS SET BALANCE=BALANCE+" + simulation.getCapital() + " WHERE ACCOUNT_NUM='" + simulation.getAcountNum() + "'";
 		String SQLQuery5 = "UPDATE LOANS SET IS_REAL='Y' WHERE LOAN_ID='" + query.getSimId() + "'";
 		
 		try {
@@ -847,14 +846,15 @@ public abstract class MessageHandler {
 				for(Repayment repayment : simulation.getRepayments()) {
 					String repaymentSQLQuery = "INSERT INTO REPAYMENTS VALUES (REPAYMENTS_SEQ.NEXTVAL, "
 									 + "'" + query.getSimId() + "', "
-									 + "'" + repayment.getDate() + "', "
+									 + "TO_DATE('" + repayment.getDate() + "','yyyy-mm-dd'), "
 									 + repayment.getCapital() + ", "
 									 + repayment.getInterest() + ", "
 									 + repayment.getInsurance() + ")";
 					
-					statement.executeUpdate(SQLQuery4);
+					statement.executeUpdate(repaymentSQLQuery);
 				}
 				
+				databaseConnection.commit();
 				return new SignLoanServerResponse(SignLoanServerResponse.Status.OK, SignLoanServerResponse.Status.OK);
 			} catch (Exception e) {
 				throw e;
