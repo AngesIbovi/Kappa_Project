@@ -27,7 +27,6 @@
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/gson-2.5/gson-2.5.jar"/>
+	</classpathentry> 
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

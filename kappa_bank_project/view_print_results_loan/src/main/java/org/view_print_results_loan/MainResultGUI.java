@@ -3,12 +3,16 @@ package org.view_print_results_loan;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.awt.print.PrinterException;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.sql.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,7 +65,8 @@ import view.Tab;
 @SuppressWarnings("serial") // Is not going to be serialized
 public class MainResultGUI extends Tab {
 	private JTable tblRepay;
-	private JButton sendQueryButton;
+	private JButton sendQueryButton; 
+	final JLabel lblTitle = new JLabel("");
 	private Socket socket;
 	final JComboBox<SimulationIdentifier> cbScenChoice = new JComboBox<SimulationIdentifier>();
 	PrintWriter out = null;
@@ -150,7 +155,15 @@ public class MainResultGUI extends Tab {
 		cbScenChoice.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		cbScenChoice.setBounds(900, 5, 300, 22);
 		this.add(cbScenChoice);
+		
 
+		final JButton btnPrint = new JButton("IMPRIMER");
+		btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnPrint.setEnabled(false);
+		btnPrint.setBounds(1224, 35, 120, 25);
+		this.add(btnPrint);
+		
+		
 		final JLabel lblParamtres = new JLabel("Paramètres");
 		lblParamtres.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblParamtres.setBounds(10, 74, 87, 22);
@@ -320,7 +333,6 @@ public class MainResultGUI extends Tab {
 
 		cbListName.setSelectedItem(lblChoix);
 
-		final JLabel lblTitle = new JLabel("");
 		lblTitle.setForeground(Color.BLUE);
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblTitle.setBounds(167, 42, 473, 14);
@@ -382,6 +394,13 @@ public class MainResultGUI extends Tab {
 		lblTotalDeL.setBounds(684, 601, 370, 14);
 		this.add(lblTotalDeL);
 
+		JLabel lblTotalLoan = new JLabel("TOTAL DU PRÊT:");
+		lblTotalLoan.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTotalLoan.setForeground(Color.BLUE);
+		lblTotalLoan.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTotalLoan.setBounds(684, 637, 370, 14);
+		this.add(lblTotalLoan);
+		
 		JLabel label_1 = new JLabel("(hors mis assurance)");
 		label_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		label_1.setBounds(1238, 531, 114, 14);
@@ -410,6 +429,13 @@ public class MainResultGUI extends Tab {
 		lblTotalInsurance.setBounds(1056, 603, 155, 14);
 		this.add(lblTotalInsurance);
 
+		final JLabel lblTotalLoanPrice = new JLabel("");
+		lblTotalLoanPrice.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTotalLoanPrice.setForeground(new Color(155, 59, 0));
+		lblTotalLoanPrice.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblTotalLoanPrice.setBounds(1056, 639, 155, 14);
+		this.add(lblTotalLoanPrice);
+
 		JLabel label_2 = new JLabel("€");
 		label_2.setFont(new Font("Tahoma", Font.BOLD, 12));
 		label_2.setBounds(1221, 562, 87, 22);
@@ -425,6 +451,11 @@ public class MainResultGUI extends Tab {
 		label_4.setBounds(1221, 529, 17, 22);
 		this.add(label_4);
 
+		JLabel label_t = new JLabel("€");
+		label_t.setFont(new Font("Tahoma", Font.BOLD, 12));
+		label_t.setBounds(1221, 634, 17, 22);
+		this.add(label_t);
+		
 		final JButton btnNewButton = new JButton("GRAPHE DES RESULTATS");
 		btnNewButton.setEnabled(false);
 
@@ -437,7 +468,7 @@ public class MainResultGUI extends Tab {
 		btnDashboard.setEnabled(false);
 		btnDashboard.setBounds(293, 336, 246, 67);
 		this.add(btnDashboard);
-
+ 
 		// Adding of 3D-Chart to materialized the total amount of each fee
 		final DefaultPieDataset pieDataset = new DefaultPieDataset();
 		JFreeChart chart = ChartFactory.createPieChart3D("", pieDataset, true, true, true);
@@ -474,6 +505,20 @@ public class MainResultGUI extends Tab {
 				}
 				frame.setVisible(true);
 				// jButton4ActionPerformed(evt);
+			}
+		});
+
+		btnPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO add your handling code here:
+		         MessageFormat header = new MessageFormat("Tableau amortissement :" + lblTitle.getText());
+		         MessageFormat footer = new MessageFormat("Page{0,number,integer}");
+		    try {
+		    	tblRepay.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+		    } catch (java.awt.print.PrinterAbortException e1) {
+		    } catch (PrinterException ex) {
+		        Logger.getLogger("ERREUR D'IMPRESSION");
+		    }
 			}
 		});
 		
@@ -547,25 +592,38 @@ public class MainResultGUI extends Tab {
 				// TODO Auto-generated method stub
 				// TODO Auto-generated method stub
 				EventQueue.invokeLater(new Runnable() {  
-					public void run() {
-						new Thread(new Runnable() {  
-							public void run() {
-								cbScenChoice.removeAllItems();;
+					public void run() { 
+			           Thread thread1=new  Thread(new Runnable(){
+							public void run(){
+								cbScenChoice.removeAllItems();
+								}
+							});
+			           Thread thread2=new  Thread(new Runnable(){
+			        	   public void run() {
 								//System.out.println(((Customers) cbListName.getSelectedItem()).getAccount_id());
 								//cbScenChoice.setSelectedItem(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
+								try {
+									Thread.sleep(10);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 								bindComboScen(((Customers) cbListName.getSelectedItem()).getAccount_id());
 							}
-							}).start();
+							}); 
+			           thread1.setPriority(Thread.MAX_PRIORITY); //setting thread1 priority to the max
+			           thread2.setPriority(Thread.MIN_PRIORITY);  //setting thread2 priority to the min such that how bindComboScen fonction work without exception.
+			           thread1.start(); 
+			           thread2.start();
 						}
 					});
 			} 
 		});
 		
-		// Action on select item in combox list of scenario
+		// Action on select item in combox list of scenario 
 		cbScenChoice.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println(e);
 				// TODO Auto-generated method stub
 				EventQueue.invokeLater(new Runnable() { // Starting a thread is
 														// long, so we need to
@@ -596,8 +654,7 @@ public class MainResultGUI extends Tab {
 									return;
 								}
 								try {
-									// Sending the loan_id over to the server
-									
+									// Sending the loan_id over to the server 
 									String id_sim = ((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId();
 									GetSimQuery query = new GetSimQuery(id_sim);
 									out.println(query.toString());
@@ -700,7 +757,7 @@ public class MainResultGUI extends Tab {
 											lblNumAccount.setText(response.getAcountNum());
 											lblRepaymentConstant.setText(amort);
 											lblRepaymentAmount.setText(Float.toString(response.getRepaymentConstant()));
-											lblLoanRate.setText("0.5");
+											lblLoanRate.setText(Float.toString((total_interest)/response.getCapital()));
 											lblInsuranceRate.setText(Float.toString(total_insurance / total_capital));
 											lblTotalCreditCost.setText(
 													Float.toString(total_capital + total_interest + total_insurance));
@@ -712,6 +769,8 @@ public class MainResultGUI extends Tab {
 											lblTotalCapital.setText(Float.toString(total_capital));
 											lblTotalInterest.setText(Float.toString(total_interest));
 											lblTotalInsurance.setText(Float.toString(total_insurance));
+											lblTotalLoanPrice.setText(Float.toString(total_capital + total_interest + total_insurance));
+											btnPrint.setEnabled(true);
 											btnNewButton.setEnabled(true);
 											btnDashboard.setEnabled(true);
 											pieDataset.setValue("Capital", total_capital);
@@ -731,6 +790,8 @@ public class MainResultGUI extends Tab {
 									JOptionPane.showMessageDialog(thisObject,
 											"Unable to connect to the server. Please try again later.");
 								}
+							} else {
+								
 							}
 							}}).start();
 					}

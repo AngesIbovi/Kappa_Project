@@ -3,7 +3,9 @@ package view;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.ImageIcon;
@@ -338,18 +340,18 @@ public class AuthentificationGui extends javax.swing.JFrame {
  		}
  		JsonImpl.init();
  		
-		Set<Tab> tabs = new HashSet<>(); 
+		List<Tab> tabs = new ArrayList<>(); 
 		
-		Tab t = new ComparisonGUI(); //valentin
-		Tab t2 = new MainResultGUI(); // Marc
-		Tab fixRateTab = new ihm(); // Mohamed
-		Tab t3 = new VariableLoanGUI(); // Anges
-		Tab t4=new AnalyseOfIndicatorsGUI();//boubacar
-		tabs.add(fixRateTab); 
-		tabs.add(t2); 
-		tabs.add(t);
-		tabs.add(t3);
-		tabs.add(t4);
+		Tab comparison = new ComparisonGUI(); //valentin
+		Tab resultprintview = new MainResultGUI(); // Marc
+		Tab fixratesimulation = new ihm(); // Mohamed
+		Tab variablesimulation = new VariableLoanGUI(); // Anges
+		Tab analyseofindicator=new AnalyseOfIndicatorsGUI();//boubacar
+		tabs.add(fixratesimulation); 
+		tabs.add(variablesimulation); 
+		tabs.add(resultprintview);
+		tabs.add(comparison);
+		tabs.add(analyseofindicator);
         
 		MainMenuGUI mainMenu = new MainMenuGUI(tabs);
 		final AuthentificationGui authGUI = new AuthentificationGui(mainMenu);

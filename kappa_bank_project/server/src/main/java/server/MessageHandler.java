@@ -753,7 +753,7 @@ public abstract class MessageHandler {
 		logger.trace("Exiting MessageHandler.handleGetCustomersQuery");
 		return handleGetOrSearchHandleQuery(SQLquery);
 	}
-}
+
  
 
 	/**
@@ -875,5 +875,4 @@ public abstract class MessageHandler {
 			ConnectionPool.release(databaseConnection);
 		}
 	}
-}
->>>>>>> origin/master
+} 
