@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import model.query.GetAllAccountsQuery;
 import model.query.GetAllLoanTypeQuery;
 import model.query.GetValueOfRateQuery;
+import model.query.LoansQuery;
 import model.response.GetAllAcountsServerResponse;
 import model.response.GetAllLoanTypeServerReponse;
 import model.response.GetValueOfRateServerResponse;
@@ -31,11 +33,6 @@ public class ServerCommunication {
 		ArrayList<String> array = new ArrayList<String>();
 
 		try {
-//			FileInputStream inputStream = new FileInputStream(propFileName);
-//			properties.load(inputStream);
-//			String adress = properties.getProperty("SERVER_ADRESS");
-//			int port = Integer.parseInt(properties.getProperty("SERVER_PORT"));
-//			socket = new Socket(adress, port);
 
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -87,14 +84,7 @@ public class ServerCommunication {
 		
 		ArrayList<String> array = new ArrayList<String>();
 		
-		try {
-			
-//			FileInputStream inputStream = new FileInputStream(propFileName);
-			//properties.load(inputStream);
-//			String adress = properties.getProperty("SERVER_ADRESS");
-//			int port = Integer.parseInt(properties.getProperty("SERVER_PORT"));
-//			socket = new Socket(adress, port);
-//			
+		try {		
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
@@ -104,18 +94,18 @@ public class ServerCommunication {
 			GetAllLoanTypeQuery allaccounts = new GetAllLoanTypeQuery(name);
 			Gson gson = new Gson();
 			String query = "getAllLoanType " + gson.toJson(allaccounts);
-			System.out.println(query);
+			
 			out.println(query);
 
 			
 			String response = in.readLine();
 
-			System.out.println(response);
+		
 
 			int prefixEnd = response.indexOf(' ');
 
 			String prefix = response.substring(0, prefixEnd);
-			System.out.println(prefix);
+		
 
 			String content = response.substring(prefixEnd + 1);
 
@@ -129,29 +119,19 @@ public class ServerCommunication {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		
-		
-		
+	
 		return array;
-		
 	
 	}
 	
 	
-	public static float getrate(){
+	public static float getrate(Socket socket){
 		
 		float value=0;
 		
 		try {
 			
-			FileInputStream inputStream = new FileInputStream(propFileName);
-			properties.load(inputStream);
-			String adress = properties.getProperty("SERVER_ADRESS");
-			int port = Integer.parseInt(properties.getProperty("SERVER_PORT"));
-
-			socket = new Socket(adress, port);
-			
+	
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
@@ -161,18 +141,14 @@ public class ServerCommunication {
 			GetValueOfRateQuery allaccounts = new GetValueOfRateQuery(rate);
 			Gson gson = new Gson();
 			String query = "GetValueOfRate " + gson.toJson(allaccounts);
-			System.out.println(query);
 			out.println(query);
 
 			
 			String response = in.readLine();
 
-			System.out.println("reponse "+response);
-
 			int prefixEnd = response.indexOf(' ');
 
 			String prefix = response.substring(0, prefixEnd);
-			System.out.println(prefix);
 
 			String content = response.substring(prefixEnd + 1);
 
@@ -188,12 +164,39 @@ public class ServerCommunication {
 		
 		return value;
 		
+	}	
+	
+	public void sendLoans(LoansQuery loans, Socket socket)
+	{
+		try {
+		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		
+		String query = "sendLoans " + gson.toJson(loans);
+		out.println(query);
+		
+		//to read the response
+		String response="";
+		
+			response += in.readLine() + '\n';
+		
+		System.out.println(response);
+
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+			
+		}
+		
 	}
 
 	public static void main(String[] args) {
 		ServerCommunication comm = new ServerCommunication();
 		//comm.getAllAcounts();
 		//comm.getAlltypeofLoan();
-		comm.getrate();
+		//comm.getrate();
 	}
 }

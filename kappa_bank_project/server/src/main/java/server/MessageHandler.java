@@ -120,6 +120,81 @@ public abstract class MessageHandler {
 		return handleGetOrSearchHandleQuery(SQLquery);
 	}
 	
+	
+	
+	
+	public static ServerResponse handleLoansQuery( LoansQuery loans){
+		
+		Connection databaseConnection;
+				
+				try {
+					databaseConnection = ConnectionPool.acquire();
+				} catch (IllegalStateException | ClassNotFoundException | SQLException e) {
+					logger.trace("Exiting MessageHandler.handleAuthQuery");
+					logger.warn("Can't acquire a connection from the pool", e);
+					return new ErrorServerResponse("Server-side error. Please retry later.");
+				}
+				
+				try {
+					String SQLQuery = 
+							"Insert into PDS.LOANS (LOAN_ID,IS_REAL,ACCOUNT_ID,LOAN_TYPE_ID,EFFECTIVE_DATE,"
+							+ "CAPITAL,REMAININGOWEDCAPITAL,REPAYMENT_FREQUENCY,REMAINING_REPAYMENTS,"
+							+ "REPAYMENT_CONSTANT,RATE_NATURE,AMORTIZATION_TYPE,NAME,INSURANCE,"
+							+ "PROCESSING_FEE,DURATION) "
+							
+							+ " values "
+							
+							+"( LOANS_SEQ.NEXTVAL ,'"
+							+loans.getIs_real()+"',"
+							+" (select account_id from accounts where account_num='"+loans.getAccount_id()+"'),"
+							+"(select loan_type_id from loan_types where name= '"+loans.getLoan_type()+"'),'"
+							+loans.getEffective_date()+"',"
+							+loans.getCapital()+","
+							+loans.getRemaining_repayment()+","
+							+loans.getRepayment_frequency()+","
+							+loans.getRemaining_repayment()+","
+							+loans.getRepayment_constant()+",'"
+							+loans.getRate_nature()+"','"
+							+loans.getAmortization_type()+"','"
+							+loans.getName()+"',"
+							+loans.getInsurance()+","
+							+loans.getProgressing_fee()+","
+							+loans.getDuration()+")";
+							
+							
+							
+							
+					
+					Statement statement = databaseConnection.createStatement();
+					System.out.println(SQLQuery);
+					try {
+						int results = statement.executeUpdate(SQLQuery);
+						
+						
+						LoansResponse loansresponse = new LoansResponse();
+						
+						
+						logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+						return loansresponse;
+					} catch (SQLException e) {
+						logger.warn("SQLException caught", e);
+						throw e;
+					} finally {
+						statement.close();
+					}
+				} catch (SQLException e) {
+					logger.warn("SQLException caught", e);
+					logger.trace("Exiting MessageHandler.handleAuthQuery");
+					return new ErrorServerResponse("Database error");
+				} finally {
+					// Good practice : the cleanup code is in a finally block.
+					ConnectionPool.release(databaseConnection);
+				}
+				}
+				
+	
+	
+	
 	/**
 	 * Searches for accounts.
 	 * @param query : contains optional search parameters:</br>
@@ -386,23 +461,23 @@ public abstract class MessageHandler {
 		}
 		
 		try {
-			String SQLQuery = "select  MAX(value) as value from loan_rate_history where change_date like (current_date)";
-			System.out.println(SQLQuery);
+			String SQLQuery = "select  * from  loan_rate_history where lrh_id=(select max(lrh_id) from loan_rate_history)";
+
 			Statement statement = databaseConnection.createStatement();
 			
 			try {
 				ResultSet results = statement.executeQuery(SQLQuery);
-				//double value=0;
+				float value=0;
 				
 				while(results.next()){
-				//	value = results.getDouble("value");
+					value = results.getFloat("value");
 					System.out.println("resultat "+results.getFloat("value"));
 				}
 				
 				
 				
 				GetValueOfRateServerResponse getvalueofrate = new GetValueOfRateServerResponse ();
-				//getvalueofrate.setRate(value);
+				getvalueofrate.setRate(value);
 				
 				logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
 				return getvalueofrate;
@@ -420,11 +495,8 @@ public abstract class MessageHandler {
 			// Good practice : the cleanup code is in a finally block.
 			ConnectionPool.release(databaseConnection);
 		}
-		
-	}
-	
+		}
 
-	
 	
 	/**
 	 * Get a list of account number of customer and send this to GUI of variable loan
