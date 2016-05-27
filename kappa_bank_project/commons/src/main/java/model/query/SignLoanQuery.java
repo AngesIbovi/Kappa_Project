@@ -2,6 +2,11 @@ package model.query;
 
 import util.JsonImpl;
 
+/**
+ * Communication class. See the protocol's documentation for more details.
+ * @version R3 sprint 4 - 24/05/2016
+ * @author Kappa-V
+ */
 public class SignLoanQuery implements ClientQuery {
 	private final String simId;
 	private final String password;

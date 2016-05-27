@@ -1,12 +1,15 @@
 package comparison.elements;
 
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
 
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
+
 import javax.swing.JScrollPane;
+
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +17,8 @@ import java.util.List;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.AbstractTableModel;
 
-import model.response.GetSimServerResponse;
-import model.response.GetSimServerResponse.Repayment;
+import model.simulation.Simulation;
+import model.simulation.Repayment;
 
 import javax.swing.JTable;
 
@@ -67,9 +70,9 @@ public class MainVolumesElement extends SimulationComparisonElement {
 	private final JTable table;
 	
 	@Override
-	public void setSimulations(List<GetSimServerResponse> simulations) {
+	public void setSimulations(List<Simulation> simulations) {
 		final List<Row> rows = new ArrayList<>();
-		for(GetSimServerResponse simulation : simulations) {
+		for(Simulation simulation : simulations) {
 			// Measurement
 			double totalInsurance = 0;
 			double totalInterests = 0;

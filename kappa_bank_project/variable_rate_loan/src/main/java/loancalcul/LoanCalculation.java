@@ -15,11 +15,11 @@ public class LoanCalculation {
 	}
 	
 	
-	public float restCapital(float capital,int nbr_month){
+	public float restCapital(float capital,int delay){
 		float rest;
 		float payment=0;
 		
-		payment=(float)capital/(nbr_month);
+		payment=(float)capital/(delay*12);
 		
 		
 		return (capital-payment*12);

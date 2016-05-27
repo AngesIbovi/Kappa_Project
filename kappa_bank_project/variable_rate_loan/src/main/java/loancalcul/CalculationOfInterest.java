@@ -7,11 +7,11 @@ import lendingscenario.Information;
 public class CalculationOfInterest {
 	
 	
-	public float interest(float amount, int rate)
+	public float repayment(float amount, float rateValue)
 	{
 		float interest;
-	System.out.println("montant"+amount+"\n taux:"+ rate);
-		interest= (float) (amount*((rate*0.01)/12));
+	System.out.println("montant"+amount+"\n taux:"+ rateValue);
+		interest= (float) (amount*((rateValue*0.01)/12));
 		
 		return interest;
 	}

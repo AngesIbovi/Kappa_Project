@@ -26,9 +26,9 @@ import model.query.GetSimsQuery;
 import model.response.AuthenticationServerResponse;
 import model.response.GetAllSimsServerResponse;
 import model.response.GetAllSimsServerResponse.SimulationIdentifier;
-import model.response.GetSimServerResponse;
-import model.response.GetSimServerResponse.AmortizationType;
-import model.response.GetSimServerResponse.Repayment;
+import model.simulation.Simulation;
+import model.simulation.Simulation.AmortizationType;
+import model.simulation.Repayment;
 import model.response.GetSimsServerResponse;
 import util.JsonImpl;
 import util.KappaProperties;    
@@ -473,7 +473,7 @@ public class MainGUIclass extends JFrame {
 										
 										case "OK":
 											// De-serialization
-											GetSimServerResponse response = JsonImpl.fromJson(content, GetSimServerResponse.class);
+											Simulation response = JsonImpl.fromJson(content, Simulation.class);
 											AmortizationType amortization = response.getAmortizationType(); 
 											boolean state = response.getIs_reel(); 
 											List<Repayment> listrepay=  response.getRepayments();   

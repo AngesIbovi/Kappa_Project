@@ -17,7 +17,9 @@ import model.query.GetLoanQuery;
 import model.query.GetSimQuery;
 import model.query.GetSimsQuery;
 import model.query.GetValueOfRateQuery;
+import model.query.LoansQuery;
 import model.query.SearchAccountsQuery;
+import model.query.SignLoanQuery;
 import model.response.AuthenticationServerResponse;
 import model.response.ErrorServerResponse;
 import model.response.ServerResponse;
@@ -203,8 +205,20 @@ public class Session extends Thread {
 				GetSimQuery getSimQuery = JsonImpl.fromJson(content, GetSimQuery.class);
 				response = MessageHandler.handleGetSimQuery(getSimQuery);
 				break; 
+			case "signLoan":
+				if(this.sessionInformation.getAuthorization_level() < 2) {
+					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id()==null), this.sessionInformation.getAuthorization_level(), 2);
+				}
+				SignLoanQuery signLoanQuery = JsonImpl.fromJson(content, SignLoanQuery.class);
+				response = MessageHandler.handleSignLoanQuery(signLoanQuery, sessionInformation.getUser_id());
 
-
+			case "sendLoans":
+				if(this.sessionInformation.getAuthorization_level() < 2) {
+					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id() == null), this.sessionInformation.getAuthorization_level(), 1);
+				}
+				LoansQuery loans = JsonImpl.fromJson(content, LoansQuery.class);
+				response = MessageHandler.handleLoansQuery(loans);
+				break;
 			case "GetLoanQuery":
 				 
 				GetLoanQuery GetLoanQuery = JsonImpl.fromJson(content, GetLoanQuery.class);

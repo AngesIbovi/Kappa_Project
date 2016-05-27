@@ -32,8 +32,8 @@ import javax.swing.table.AbstractTableModel;
 
 import model.SessionInformation;
 import model.query.SignLoanQuery;
-import model.response.GetSimServerResponse;
 import model.response.SignLoanServerResponse;
+import model.simulation.Simulation;
 import util.JsonImpl;
 import view.SessionSpecific;
 
@@ -49,11 +49,10 @@ import javax.swing.JTable;
 public class SimulationListElement extends SimulationComparisonElement implements SessionSpecific {
 	private final SimulationListElement thisObject = this;
 	private final JTable table;
-	private final JButton selectButton;
-	private List<GetSimServerResponse> simulations;
+	private List<Simulation> simulations;
 	
 	@Override
-	public void setSimulations(final List<GetSimServerResponse> simulations) {
+	public void setSimulations(final List<Simulation> simulations) {
 		this.simulations = simulations;
 		
 		table.setModel(new AbstractTableModel() {
@@ -76,7 +75,7 @@ public class SimulationListElement extends SimulationComparisonElement implement
 
 			@Override
 			public Object getValueAt(int rowIndex, int columnIndex) {
-				GetSimServerResponse simulation = simulations.get(rowIndex);
+				Simulation simulation = simulations.get(rowIndex);
 				
 				switch(columnIndex) {
 				case 0: // Name
@@ -121,18 +120,24 @@ public class SimulationListElement extends SimulationComparisonElement implement
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 1;
 		add(scrollPane, gbc_scrollPane);
+	}
+
+	@Override
+	public void setSessionInformation(final SessionInformation sessionInformation) {
+		// Checking if the user has sufficient privileges
+		if(sessionInformation.getAuthorization_level() < 2)
+			return;
 		
-		selectButton = new JButton("Valider une simulation");
+		// Layout implementation
+		JButton selectButton = new JButton("Valider une simulation");
 		GridBagConstraints gbc_selectButton = new GridBagConstraints();
 		gbc_selectButton.anchor = GridBagConstraints.WEST;
 		gbc_selectButton.insets = new Insets(0, 0, 5, 0);
 		gbc_selectButton.gridx = 1;
 		gbc_selectButton.gridy = 2;
 		add(selectButton, gbc_selectButton);
-	}
-
-	@Override
-	public void setSessionInformation(final SessionInformation sessionInformation) {
+		
+		// Listener
 		selectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Checking the JTable for a valid selection
@@ -146,7 +151,7 @@ public class SimulationListElement extends SimulationComparisonElement implement
 				}
 				
 				// Extracting the simId while handling all possible exceptions
-				GetSimServerResponse sim;
+				Simulation sim;
 				try {
 					sim = simulations.get(selectedRows[0]);
 					
@@ -224,7 +229,14 @@ public class SimulationListElement extends SimulationComparisonElement implement
 									JOptionPane.showMessageDialog(thisObject, "Demande de prêt effectuée avec succès.");
 									break;
 								case KO:
-									wrongPasswordLabel.setVisible(true);
+									switch(response.getPassword()) {
+									case OK:
+										JOptionPane.showMessageDialog(thisObject, "Erreur: Essayez de télécharger la nouvelle version de ce logiciel.");
+										break;
+									case KO:
+										wrongPasswordLabel.setVisible(true);
+										break;
+									}
 									break;
 								}
 							}
@@ -235,6 +247,14 @@ public class SimulationListElement extends SimulationComparisonElement implement
 		});
 	}
 	
+	/**
+	 * A method used by the select button's listener. It is in a seperate method so as to make the code clearer.</br>
+	 * It creates and displays a JDialog prompting the user to enter his or her password.
+	 * @param sendButton : the button you want to add a listener to.
+	 * @param passwordField : the password field from which you wish to extract the password the user is going to enter.
+	 * @param wrongPasswordLabel : the "wrong password" label you want to set visible in the button's listener, if the password was incorrect.
+	 * @return
+	 */
 	private JDialog generateEnterPasswordDialog(JPasswordField passwordField, JLabel wrongPasswordLabel, JButton sendButton) {
 		final JDialog passwordDialog = new JDialog();
 		Dimension maxDimensions = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize();
@@ -243,7 +263,6 @@ public class SimulationListElement extends SimulationComparisonElement implement
 		passwordDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		Container pane = passwordDialog.getContentPane();
 		
-
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{118, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};

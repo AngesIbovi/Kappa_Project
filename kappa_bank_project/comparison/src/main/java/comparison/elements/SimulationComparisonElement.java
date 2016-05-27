@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import model.response.GetSimServerResponse;
+import model.simulation.Simulation;
 
 /**
  * Abstract class for the various elements viewed in the SimulationComparisonGUI.
@@ -14,5 +14,5 @@ import model.response.GetSimServerResponse;
  */
 @SuppressWarnings("serial")
 public abstract class SimulationComparisonElement extends JPanel {
-	public abstract void setSimulations(List<GetSimServerResponse> simulations);
+	public abstract void setSimulations(List<Simulation> simulations);
 }

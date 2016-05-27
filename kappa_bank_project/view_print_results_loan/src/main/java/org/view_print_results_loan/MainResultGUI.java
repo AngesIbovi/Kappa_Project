@@ -41,14 +41,12 @@ import model.query.GetSimsQuery;
 import model.response.AuthenticationServerResponse;
 import model.response.GetAccountsServerResponse;
 import model.response.GetAllSimsServerResponse;
-import model.response.GetAllSimsServerResponse.SimulationIdentifier;
+import model.response.GetAllSimsServerResponse.SimulationIdentifier; 
 import model.response.GetCustomersServerResponse;
-import model.response.GetCustomersServerResponse.Customers;
-import model.response.GetSimServerResponse;
-import model.response.GetSimServerResponse.AmortizationType;
-import model.response.GetSimServerResponse.Repayment;
-import model.response.GetSimsServerResponse;
-import model.response.GetAccountsServerResponse.Account;
+import model.response.GetCustomersServerResponse.Customers;   
+import model.simulation.Simulation;
+import model.simulation.Simulation.AmortizationType;
+import model.simulation.Repayment;   
 import model.response.GetAllAcountsServerResponse;
 import util.JsonImpl;
 import util.KappaProperties;
@@ -629,11 +627,11 @@ public class MainResultGUI extends Tab {
 
 										case "OK":
 											// De-serialization
-											GetSimServerResponse response = JsonImpl.fromJson(content,
-													GetSimServerResponse.class);
-											AmortizationType amortization = response.getAmortizationType();
-											List<Repayment> listrepay = response.getRepayments();
-											//System.out.print(listrepay.toString());
+ 
+											Simulation response = JsonImpl.fromJson(content, Simulation.class);
+											AmortizationType amortization = response.getAmortizationType(); 
+											List<Repayment> listrepay=  response.getRepayments();   
+											System.out.print(listrepay.toString());
 											String amort = amortization.toString();
 											boolean real = response.getIs_reel();
 											float total_insurance = 0;
