@@ -269,7 +269,7 @@ public abstract class MessageHandler {
 	public static ServerResponse handleGetAllSimsQuery(GetAllSimsQuery query) {
 		logger.trace("Entering MessageHandler.handleGetSimsQuery");
 		
-		String SQLquery = "SELECT Loan_Id, Name FROM Loans WHERE Account_Id<>'" + query.getAccount_id() + "'";
+		String SQLquery = "SELECT Loan_Id, Name FROM Loans WHERE Account_Id='" + query.getAccount_id() + "'";
 		
 		Connection databaseConnection;
 		try {
@@ -644,4 +644,23 @@ public abstract class MessageHandler {
 			ConnectionPool.release(databaseConnection);
 		}
 	}
+
+	/**
+	 * Searches for accounts.
+	 * @param getAccountsQuery : contains the login of the customer whose accounts this method is supposed to return.
+	 * @return the server's response to the query. Never null nor an exception
+	 */
+	public static ServerResponse handleGetCustomersQuery(GetCustomersQuery getCustQuery) {
+		logger.trace("Entering MessageHandler.handleGetCustomersQuery");
+		
+		// Constructing the SQL query
+		String SQLquery = "SELECT A.Account_Id, A.Account_Num, C.First_Name, C.Last_Name FROM ACCOUNTS A"
+				+ " INNER JOIN CUSTOMERS C ON A.Customer_Id=C.Customer_Id"
+				+ " WHERE C.User_login<>'" + getCustQuery.getCust_login() + "'";
+		
+
+		logger.trace("Exiting MessageHandler.handleGetCustomersQuery");
+		return handleGetOrSearchHandleQuery(SQLquery);
+	}
 }
+
