@@ -24,5 +24,8 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="/commons/lib/gson-2.5/gson-2.5.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/commons"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/comparison"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/server"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/variable_rate_loan"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
