@@ -346,7 +346,7 @@ public class AuthentificationGui extends javax.swing.JFrame {
 		Tab resultprintview = new MainResultGUI(); // Marc
 		Tab fixratesimulation = new ihm(); // Mohamed
 		Tab variablesimulation = new VariableLoanGUI(); // Anges
-		Tab analyseofindicator=new AnalyseOfIndicatorsGUI();//boubacar
+		Tab analyseofindicator=new AnalyseOfIndicatorsGui();//boubacar
 		tabs.add(fixratesimulation); 
 		tabs.add(variablesimulation); 
 		tabs.add(resultprintview);
