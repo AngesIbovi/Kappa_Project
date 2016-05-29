@@ -3,55 +3,34 @@ package org.view_print_results_loan;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
 import java.awt.print.PrinterException;
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.sql.*;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
-import java.util.Vector;
 
 import org.apache.log4j.Logger;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
-
-import com.google.gson.Gson;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import model.SessionInformation;
-import model.query.ClientQuery;
-import model.query.GetAccountsQuery;
-import model.query.GetAllAccountsQuery;
 import model.query.GetAllSimsQuery;
 import model.query.GetCustomersQuery;
 import model.query.GetSimQuery;
-import model.query.GetSimsQuery;
-import model.response.AuthenticationServerResponse;
-import model.response.GetAccountsServerResponse;
 import model.response.GetAllSimsServerResponse;
-import model.response.GetAllSimsServerResponse.SimulationIdentifier; 
+import model.response.GetAllSimsServerResponse.SimulationIdentifier;
 import model.response.GetCustomersServerResponse;
-import model.response.GetCustomersServerResponse.Customers;   
+import model.response.GetCustomersServerResponse.Customers;
 import model.simulation.Simulation;
 import model.simulation.Simulation.AmortizationType;
-import model.simulation.Repayment;   
-import model.response.GetAllAcountsServerResponse;
+import model.simulation.Repayment;
 import util.JsonImpl;
 import util.KappaProperties;
 import view.Tab;
@@ -60,12 +39,11 @@ import view.Tab;
  * A Main Jframe used for the displaying results.
  * 
  * @version R3 Sprint 3 - 06/05/2016
- * @Author Kappa-V
+ * @Author Kappa-M
  */
 @SuppressWarnings("serial") // Is not going to be serialized
 public class MainResultGUI extends Tab {
 	private JTable tblRepay;
-	private JButton sendQueryButton; 
 	final JLabel lblTitle = new JLabel("");
 	private Socket socket;
 	final JComboBox<SimulationIdentifier> cbScenChoice = new JComboBox<SimulationIdentifier>();
@@ -77,8 +55,7 @@ public class MainResultGUI extends Tab {
 		super("Résultat des scenarios", 2);
 
 	}
-	
-	
+
 	/**
 	 * calls the launch method on a set of demo Tabs.
 	 * 
@@ -87,7 +64,6 @@ public class MainResultGUI extends Tab {
 	 */
 	public void setSessionInformation(final SessionInformation sessionInformation) {
 		this.socket = sessionInformation.getSocket();
-
 
 		// Initializing tools
 		try {
@@ -155,15 +131,13 @@ public class MainResultGUI extends Tab {
 		cbScenChoice.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		cbScenChoice.setBounds(900, 5, 300, 22);
 		this.add(cbScenChoice);
-		
 
 		final JButton btnPrint = new JButton("IMPRIMER");
 		btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnPrint.setEnabled(false);
 		btnPrint.setBounds(1224, 35, 120, 25);
 		this.add(btnPrint);
-		
-		
+
 		final JLabel lblParamtres = new JLabel("Paramètres");
 		lblParamtres.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblParamtres.setBounds(10, 74, 87, 22);
@@ -400,7 +374,7 @@ public class MainResultGUI extends Tab {
 		lblTotalLoan.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblTotalLoan.setBounds(684, 637, 370, 14);
 		this.add(lblTotalLoan);
-		
+
 		JLabel label_1 = new JLabel("(hors mis assurance)");
 		label_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		label_1.setBounds(1238, 531, 114, 14);
@@ -455,7 +429,7 @@ public class MainResultGUI extends Tab {
 		label_t.setFont(new Font("Tahoma", Font.BOLD, 12));
 		label_t.setBounds(1221, 634, 17, 22);
 		this.add(label_t);
-		
+
 		final JButton btnNewButton = new JButton("GRAPHE DES RESULTATS");
 		btnNewButton.setEnabled(false);
 
@@ -468,7 +442,7 @@ public class MainResultGUI extends Tab {
 		btnDashboard.setEnabled(false);
 		btnDashboard.setBounds(293, 336, 246, 67);
 		this.add(btnDashboard);
- 
+
 		// Adding of 3D-Chart to materialized the total amount of each fee
 		final DefaultPieDataset pieDataset = new DefaultPieDataset();
 		JFreeChart chart = ChartFactory.createPieChart3D("", pieDataset, true, true, true);
@@ -482,7 +456,8 @@ public class MainResultGUI extends Tab {
 			public void actionPerformed(ActionEvent e) {
 				ChartResult frame = null;
 				try {
-					//System.out.print(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
+					// System.out.print(((SimulationIdentifier)
+					// cbScenChoice.getSelectedItem()).getId());
 					frame = new ChartResult(socket, ((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
 				} catch (NumberFormatException | ClassNotFoundException | SQLException | IOException e1) {
 					// TODO Auto-generated catch block
@@ -496,7 +471,8 @@ public class MainResultGUI extends Tab {
 			public void actionPerformed(ActionEvent e) {
 				BarChartResult frame = null;
 				try {
-					//System.out.print(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
+					// System.out.print(((SimulationIdentifier)
+					// cbScenChoice.getSelectedItem()).getId());
 					frame = new BarChartResult(socket, ((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId(),
 							"");
 				} catch (NumberFormatException | IOException e1) {
@@ -511,29 +487,29 @@ public class MainResultGUI extends Tab {
 		btnPrint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO add your handling code here:
-		         MessageFormat header = new MessageFormat("Tableau amortissement :" + lblTitle.getText());
-		         MessageFormat footer = new MessageFormat("Page{0,number,integer}");
-		    try {
-		    	tblRepay.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-		    } catch (java.awt.print.PrinterAbortException e1) {
-		    } catch (PrinterException ex) {
-		        Logger.getLogger("ERREUR D'IMPRESSION");
-		    }
+				MessageFormat header = new MessageFormat("Tableau amortissement :" + lblTitle.getText());
+				MessageFormat footer = new MessageFormat("Page{0,number,integer}");
+				try {
+					tblRepay.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+				} catch (java.awt.print.PrinterAbortException e1) {
+				} catch (PrinterException ex) {
+					Logger.getLogger("ERREUR D'IMPRESSION");
+				}
 			}
 		});
-		
+
 		bindComboScen("");
-		
+
 		String message2 = null;
 		// Sending the account_id over to the server
 		GetCustomersQuery query2 = new GetCustomersQuery("-1");
 		out.println(query2.toString());
-	 
+
 		// Receiving the server's response
 
 		try {
 			message2 = in.readLine();
-			//System.out.print(message);
+			// System.out.print(message);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -551,7 +527,7 @@ public class MainResultGUI extends Tab {
 			String prefix2 = message2.substring(0, prefixEnd2);
 			String content2 = message2.substring(prefixEnd2 + 1);
 
-			//System.out.print(message);
+			// System.out.print(message);
 			// Prefix identification
 			switch (prefix2) {
 			case "ERR":
@@ -565,15 +541,15 @@ public class MainResultGUI extends Tab {
 				List<Customers> listCust = response2.getAccounts();
 				for (int i = 0; i < listCust.toArray().length; i++) {
 					// System.out.println(listSims.toArray()[i]);
-					cbListName.addItem((Customers) listCust.toArray()[i]); 
-				} 
-				 System.out.println("eeeee"+response2);
+					cbListName.addItem((Customers) listCust.toArray()[i]);
+				}
+				System.out.println("eeeee" + response2);
 				// for(int i=0; i<=theList.length;i++){
 				// System.out.println(theList[i]);
 				// }
 				// cbScenChoice.setModel(response);
 				break;
-			case "UNAUTHORIZED": 
+			case "UNAUTHORIZED":
 				break;
 
 			default:
@@ -585,23 +561,24 @@ public class MainResultGUI extends Tab {
 					"Unknown response format. Please try again later or download the newest version.");
 		}
 
-		
-		cbListName.addActionListener(new ActionListener() { 
+		cbListName.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				// TODO Auto-generated method stub
-				EventQueue.invokeLater(new Runnable() {  
-					public void run() { 
-			           Thread thread1=new  Thread(new Runnable(){
-							public void run(){
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						Thread thread1 = new Thread(new Runnable() {
+							public void run() {
 								cbScenChoice.removeAllItems();
-								}
-							});
-			           Thread thread2=new  Thread(new Runnable(){
-			        	   public void run() {
-								//System.out.println(((Customers) cbListName.getSelectedItem()).getAccount_id());
-								//cbScenChoice.setSelectedItem(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
+							}
+						});
+						Thread thread2 = new Thread(new Runnable() {
+							public void run() {
+								// System.out.println(((Customers)
+								// cbListName.getSelectedItem()).getAccount_id());
+								// cbScenChoice.setSelectedItem(((SimulationIdentifier)
+								// cbScenChoice.getSelectedItem()).getId());
 								try {
 									Thread.sleep(10);
 								} catch (InterruptedException e) {
@@ -610,17 +587,31 @@ public class MainResultGUI extends Tab {
 								}
 								bindComboScen(((Customers) cbListName.getSelectedItem()).getAccount_id());
 							}
-							}); 
-			           thread1.setPriority(Thread.MAX_PRIORITY); //setting thread1 priority to the max
-			           thread2.setPriority(Thread.MIN_PRIORITY);  //setting thread2 priority to the min such that how bindComboScen fonction work without exception.
-			           thread1.start(); 
-			           thread2.start();
-						}
-					});
-			} 
+						});
+						thread1.setPriority(Thread.MAX_PRIORITY); // setting
+																	// thread1
+																	// priority
+																	// to the
+																	// max
+						thread2.setPriority(Thread.MIN_PRIORITY); // setting
+																	// thread2
+																	// priority
+																	// to the
+																	// min such
+																	// that how
+																	// bindComboScen
+																	// fonction
+																	// work
+																	// without
+																	// exception.
+						thread1.start();
+						thread2.start();
+					}
+				});
+			}
 		});
-		
-		// Action on select item in combox list of scenario 
+
+		// Action on select item in combox list of scenario
 		cbScenChoice.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -638,162 +629,178 @@ public class MainResultGUI extends Tab {
 													// onSuccessfulLogin
 													// callable
 							public void run() {
-								if (cbScenChoice.getItemCount()!=0){ 
-								PrintWriter out;
-								BufferedReader in;
-								try {
-									out = new PrintWriter(socket.getOutputStream(), true);
-									in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-								} catch (Exception e1) { // Reached if an IO
-															// exception occurs,
-															// or if the socket
-															// is not connected
-															// anymore
-									JOptionPane.showMessageDialog(thisObject,
-											"Erreur: connection au serveur interrompue. V�rifiez votre connection Internet, puis essayez de vous re-connecter.");
-									return;
-								}
-								try {
-									// Sending the loan_id over to the server 
-									String id_sim = ((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId();
-									GetSimQuery query = new GetSimQuery(id_sim);
-									out.println(query.toString());
-									System.out.println(((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
-									// Receiving the server's response
-									String message = in.readLine();
-
-									// Treating the server's response
+								if (cbScenChoice.getItemCount() != 0) {
+									PrintWriter out;
+									BufferedReader in;
 									try {
-										// Prefix and content detection
-										int prefixEnd = message.indexOf(' ');
-
-										if (prefixEnd == -1) {
-											throw new Exception("No prefix");
-										}
-
-										String prefix = message.substring(0, prefixEnd);
-										String content = message.substring(prefixEnd + 1);
-
-										// Prefix identification
-										switch (prefix) {
-										case "ERR":
-											JOptionPane.showMessageDialog(thisObject,
-													"Format error. Try downloading the newest version.");
-
-											break;
-
-										case "OK":
-											// De-serialization
- 
-											Simulation response = JsonImpl.fromJson(content, Simulation.class);
-											AmortizationType amortization = response.getAmortizationType(); 
-											List<Repayment> listrepay=  response.getRepayments();   
-											System.out.print(listrepay.toString());
-											String amort = amortization.toString();
-											boolean real = response.getIs_reel();
-											float total_insurance = 0;
-											float total_capital = 0;
-											float total_interest = 0;
-
-											String[][] datas = (String[][]) new String[listrepay.size()][6];
-
-											for (int i = 0; i < listrepay.size(); i++) {
-												// We get the total amount of
-												// each part of the credit
-												total_insurance = total_insurance + listrepay.get(i).getInsurance();
-												total_capital = total_capital + listrepay.get(i).getCapital();
-												total_interest = total_interest + listrepay.get(i).getInterest();
-												datas[i][0] = Integer.toString(i + 1);
-												datas[i][1] = listrepay.get(i).getDate().toString();
-												datas[i][2] = Float.toString(listrepay.get(i).getCapital());
-												datas[i][3] = Float.toString(listrepay.get(i).getInterest());
-												datas[i][4] = Float.toString(listrepay.get(i).getInsurance());
-												datas[i][5] = Float.toString(
-														listrepay.get(i).getInsurance() + listrepay.get(i).getCapital()
-																+ listrepay.get(i).getInterest());
-
-											}
-											String col[] = { "ECHEANCE", "DATE", "MENSUALITE", "DONT INTERETS",
-													"ASSURANCE", "MENSUALITE TOTAL" }; // Header
-																						// of
-																						// the
-																						// amortization
-																						// table
-											// The TableModel of the
-											// amortization Table
-											DefaultTableModel model = new DefaultTableModel(datas, col){
-												//We disable the editing option on the JTable.
-											    @Override
-											    public boolean isCellEditable(int i, int i1) {
-											        return false; 
-											    }
-
-											   };
-											tblRepay.setModel(model);
-											// Create the scroll pane and add
-											// the table to it.
-											tblRepay.setFillsViewportHeight(true);
-											// We verify if the scenario is constant or not.
-											if (amort == "steady") {
-												amort = "CONSTANT";
-											} else if (amort == "degressive") {
-												amort = "DEGRESSIF";
-											}
-
-											// We verify if the scenario is real or not.
-											if (Objects.equals(real, true)) {
-												btnIsReal.setSelected(true);
-												btnIsNotReal.setEnabled(false);
-											} else if (Objects.equals(real, false)) {
-												btnIsNotReal.setSelected(true);
-												btnIsReal.setEnabled(false);
-											}
-											// We bind the label result and the amortization table
-											lblTitle.setText(response.getName());
-											lblCustomer.setText(response.getAccountId());
-											lblAge.setText(response.getAge());
-											lblCapital.setText(Float.toString(response.getCapital()));
-											lblTypeLoan.setText(response.getTypeSim());
-											lblNumAccount.setText(response.getAcountNum());
-											lblRepaymentConstant.setText(amort);
-											lblRepaymentAmount.setText(Float.toString(response.getRepaymentConstant()));
-											lblLoanRate.setText(Float.toString((total_interest)/response.getCapital()));
-											lblInsuranceRate.setText(Float.toString(total_insurance / total_capital));
-											lblTotalCreditCost.setText(
-													Float.toString(total_capital + total_interest + total_insurance));
-											lblInterest.setText(Float.toString(total_interest));
-											// lblInsurance.setText(Float.toString(response.getInsurance()));
-											lblInsurance.setText(Float.toString(total_insurance));
-											lblApplicationFee.setText(Float.toString(response.getProcessing_fee()));
-											// textPane.setText(listrepay.toString());
-											lblTotalCapital.setText(Float.toString(total_capital));
-											lblTotalInterest.setText(Float.toString(total_interest));
-											lblTotalInsurance.setText(Float.toString(total_insurance));
-											lblTotalLoanPrice.setText(Float.toString(total_capital + total_interest + total_insurance));
-											btnPrint.setEnabled(true);
-											btnNewButton.setEnabled(true);
-											btnDashboard.setEnabled(true);
-											pieDataset.setValue("Capital", total_capital);
-											pieDataset.setValue("Assurance", total_insurance);
-											pieDataset.setValue("Intérêt", total_interest);
-											cpanel.setVisible(true);  
-											break;
-
-										default:
-											throw new Exception("Unknown prefix");
-										}
-									} catch (Exception e1) {
+										out = new PrintWriter(socket.getOutputStream(), true);
+										in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+									} catch (Exception e1) { // Reached if an IO
+																// exception
+																// occurs,
+																// or if the
+																// socket
+																// is not
+																// connected
+																// anymore
 										JOptionPane.showMessageDialog(thisObject,
-												"Unknown response format. Please try again later or download the newest version.");
+												"Erreur: connection au serveur interrompue. V�rifiez votre connection Internet, puis essayez de vous re-connecter.");
+										return;
 									}
-								} catch (IOException e1) {
-									JOptionPane.showMessageDialog(thisObject,
-											"Unable to connect to the server. Please try again later.");
+									try {
+										// Sending the loan_id over to the
+										// server
+										String id_sim = ((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId();
+										GetSimQuery query = new GetSimQuery(id_sim);
+										out.println(query.toString());
+										System.out.println(
+												((SimulationIdentifier) cbScenChoice.getSelectedItem()).getId());
+										// Receiving the server's response
+										String message = in.readLine();
+
+										// Treating the server's response
+										try {
+											// Prefix and content detection
+											int prefixEnd = message.indexOf(' ');
+
+											if (prefixEnd == -1) {
+												throw new Exception("No prefix");
+											}
+
+											String prefix = message.substring(0, prefixEnd);
+											String content = message.substring(prefixEnd + 1);
+
+											// Prefix identification
+											switch (prefix) {
+											case "ERR":
+												JOptionPane.showMessageDialog(thisObject,
+														"Format error. Try downloading the newest version.");
+
+												break;
+
+											case "OK":
+												// De-serialization
+
+												Simulation response = JsonImpl.fromJson(content, Simulation.class);
+												AmortizationType amortization = response.getAmortizationType();
+												List<Repayment> listrepay = response.getRepayments();
+												System.out.print(listrepay.toString());
+												String amort = amortization.toString();
+												boolean real = response.getIs_reel();
+												float total_insurance = 0;
+												float total_capital = 0;
+												float total_interest = 0;
+
+												String[][] datas = (String[][]) new String[listrepay.size()][6];
+
+												for (int i = 0; i < listrepay.size(); i++) {
+													// We get the total amount
+													// of
+													// each part of the credit
+													total_insurance = total_insurance + listrepay.get(i).getInsurance();
+													total_capital = total_capital + listrepay.get(i).getCapital();
+													total_interest = total_interest + listrepay.get(i).getInterest();
+													datas[i][0] = Integer.toString(i + 1);
+													datas[i][1] = listrepay.get(i).getDate().toString();
+													datas[i][2] = Float.toString(listrepay.get(i).getCapital());
+													datas[i][3] = Float.toString(listrepay.get(i).getInterest());
+													datas[i][4] = Float.toString(listrepay.get(i).getInsurance());
+													datas[i][5] = Float.toString(listrepay.get(i).getInsurance()
+															+ listrepay.get(i).getCapital()
+															+ listrepay.get(i).getInterest());
+
+												}
+												String col[] = { "ECHEANCE", "DATE", "MENSUALITE", "DONT INTERETS",
+														"ASSURANCE", "MENSUALITE TOTAL" }; // Header
+																							// of
+																							// the
+																							// amortization
+																							// table
+												// The TableModel of the
+												// amortization Table
+												DefaultTableModel model = new DefaultTableModel(datas, col) {
+													// We disable the editing
+													// option on the JTable.
+													@Override
+													public boolean isCellEditable(int i, int i1) {
+														return false;
+													}
+
+												};
+												tblRepay.setModel(model);
+												// Create the scroll pane and
+												// add
+												// the table to it.
+												tblRepay.setFillsViewportHeight(true);
+												// We verify if the scenario is
+												// constant or not.
+												if (amort == "steady") {
+													amort = "CONSTANT";
+												} else if (amort == "degressive") {
+													amort = "DEGRESSIF";
+												}
+
+												// We verify if the scenario is
+												// real or not.
+												if (Objects.equals(real, true)) {
+													btnIsReal.setSelected(true);
+													btnIsNotReal.setEnabled(false);
+												} else if (Objects.equals(real, false)) {
+													btnIsNotReal.setSelected(true);
+													btnIsReal.setEnabled(false);
+												}
+												// We bind the label result and
+												// the amortization table
+												lblTitle.setText(response.getName());
+												lblCustomer.setText(response.getAccountId());
+												lblAge.setText(response.getAge());
+												lblCapital.setText(Float.toString(response.getCapital()));
+												lblTypeLoan.setText(response.getTypeSim());
+												lblNumAccount.setText(response.getAcountNum());
+												lblRepaymentConstant.setText(amort);
+												lblRepaymentAmount
+														.setText(Float.toString(response.getRepaymentConstant()));
+												lblLoanRate.setText(
+														Float.toString((total_interest) / response.getCapital()));
+												lblInsuranceRate
+														.setText(Float.toString(total_insurance / total_capital));
+												lblTotalCreditCost.setText(Float
+														.toString(total_capital + total_interest + total_insurance));
+												lblInterest.setText(Float.toString(total_interest));
+												// lblInsurance.setText(Float.toString(response.getInsurance()));
+												lblInsurance.setText(Float.toString(total_insurance));
+												lblApplicationFee.setText(Float.toString(response.getProcessing_fee()));
+												// textPane.setText(listrepay.toString());
+												lblTotalCapital.setText(Float.toString(total_capital));
+												lblTotalInterest.setText(Float.toString(total_interest));
+												lblTotalInsurance.setText(Float.toString(total_insurance));
+												lblTotalLoanPrice.setText(Float
+														.toString(total_capital + total_interest + total_insurance));
+												btnPrint.setEnabled(true);
+												btnNewButton.setEnabled(true);
+												btnDashboard.setEnabled(true);
+												pieDataset.setValue("Capital", total_capital);
+												pieDataset.setValue("Assurance", total_insurance);
+												pieDataset.setValue("Intérêt", total_interest);
+												cpanel.setVisible(true);
+												break;
+
+											default:
+												throw new Exception("Unknown prefix");
+											}
+										} catch (Exception e1) {
+											JOptionPane.showMessageDialog(thisObject,
+													"Unknown response format. Please try again later or download the newest version.");
+										}
+									} catch (IOException e1) {
+										JOptionPane.showMessageDialog(thisObject,
+												"Unable to connect to the server. Please try again later.");
+									}
+								} else {
+
 								}
-							} else {
-								
 							}
-							}}).start();
+						}).start();
 					}
 				});
 			}
@@ -802,25 +809,24 @@ public class MainResultGUI extends Tab {
 
 	}
 
-	
 	/**
 	 * Method to load data into the combox.
 	 * 
 	 * @param args
-	 *          
+	 * 
 	 */
-	private void bindComboScen(String id){
+	private void bindComboScen(String id) {
 
 		String message = null;
 		// Sending the account_id over to the server
 		GetAllSimsQuery query = new GetAllSimsQuery(id);
 		out.println(query.toString());
-		
+
 		// Receiving the server's response
 
 		try {
 			message = in.readLine();
-			//System.out.print(id);
+			// System.out.print(id);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -848,15 +854,13 @@ public class MainResultGUI extends Tab {
 			case "OK":
 				// De-serialization
 				GetAllSimsServerResponse response = JsonImpl.fromJson(content, GetAllSimsServerResponse.class);
-				System.out.print(response.getSimulations());
+				// System.out.print(response.getSimulations());
 				// System.out.println(response.getSimulations());
 				List<SimulationIdentifier> listSims = response.getSimulations();
 				for (int i = 0; i < listSims.toArray().length; i++) {
 					// System.out.println(listSims.toArray()[i]);
-					cbScenChoice.addItem((SimulationIdentifier) listSims.toArray()[i]); 
+					cbScenChoice.addItem((SimulationIdentifier) listSims.toArray()[i]);
 				}
- 
-
 
 				// System.out.println(theList);
 				// for(int i=0; i<=theList.length;i++){
@@ -864,7 +868,7 @@ public class MainResultGUI extends Tab {
 				// }
 				// cbScenChoice.setModel(response);
 				break;
-			case "UNAUTHORIZED": 
+			case "UNAUTHORIZED":
 				break;
 
 			default:
@@ -876,10 +880,8 @@ public class MainResultGUI extends Tab {
 					"Unknown response format. Please try again later or download the newest version.");
 		}
 
-		
 	}
-	
-	
+
 	public static void main(String[] args) {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {

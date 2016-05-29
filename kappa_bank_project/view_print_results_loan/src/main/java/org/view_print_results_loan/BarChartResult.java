@@ -41,7 +41,7 @@ import util.JsonImpl;
 import util.KappaProperties;
 
 /**
-* A simple demonstration application showing how to create a bar chart.
+* We create a bar chart.
 */
 public class BarChartResult extends JFrame {
 

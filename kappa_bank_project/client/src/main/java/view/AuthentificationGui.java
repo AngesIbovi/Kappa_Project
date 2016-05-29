@@ -96,7 +96,7 @@ public class AuthentificationGui extends javax.swing.JFrame {
         jLabel1.setMinimumSize(new java.awt.Dimension(50, 50));
 
         login.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        login.setText("Pseudo");
+        login.setText("");
         login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -137,7 +137,7 @@ public class AuthentificationGui extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(51, 0, 51));
         jLabel10.setText("Incorrect : Login, Password");
 
-        password.setText("Mot de passe");
+        password.setText("");
         password.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jPasswordField1FocusLost(evt);
