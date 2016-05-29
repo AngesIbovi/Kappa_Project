@@ -29,7 +29,7 @@ import serverCommunication.ServerCommunication;
  * @author ndiaye
  */
 
-public class AnalyseOfIndicatorsGui extends Tab {
+public class AnalyseOfIndicatorsGUI extends Tab {
 
 	/**
 	 * Creates new form IndexAnalyseOfIndicator
@@ -37,7 +37,7 @@ public class AnalyseOfIndicatorsGui extends Tab {
 
 	Socket socket = null;
 
-	public AnalyseOfIndicatorsGui() {
+	public AnalyseOfIndicatorsGUI() {
 		super("Analyse des indicateurs", 3);
 
 	}
@@ -317,7 +317,7 @@ public class AnalyseOfIndicatorsGui extends Tab {
 		Validate.setText("Valider");
 		Validate.setActionCommand("valider");
 
-		erows.setText("Réunitialiser");
+		erows.setText("Réinitialiser");
 
 		messageError.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
 		messageError.setForeground(new java.awt.Color(102, 0, 0));
@@ -483,16 +483,16 @@ public class AnalyseOfIndicatorsGui extends Tab {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(AnalyseOfIndicatorsGui.class.getName())
+			java.util.logging.Logger.getLogger(AnalyseOfIndicatorsGUI.class.getName())
 					.log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(AnalyseOfIndicatorsGui.class.getName())
+			java.util.logging.Logger.getLogger(AnalyseOfIndicatorsGUI.class.getName())
 					.log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(AnalyseOfIndicatorsGui.class.getName())
+			java.util.logging.Logger.getLogger(AnalyseOfIndicatorsGUI.class.getName())
 					.log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(AnalyseOfIndicatorsGui.class.getName())
+			java.util.logging.Logger.getLogger(AnalyseOfIndicatorsGUI.class.getName())
 					.log(java.util.logging.Level.SEVERE, null, ex);
 		}
 		// </editor-fold>
@@ -500,7 +500,7 @@ public class AnalyseOfIndicatorsGui extends Tab {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new AnalyseOfIndicatorsGui().setVisible(true);
+				new AnalyseOfIndicatorsGUI().setVisible(true);
 			}
 		});
 	}

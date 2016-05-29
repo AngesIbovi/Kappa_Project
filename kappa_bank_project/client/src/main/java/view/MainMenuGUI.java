@@ -130,7 +130,7 @@ public class MainMenuGUI extends JDialog implements SessionSpecific { // JDialog
 		Tab resultprintview = new MainResultGUI(); // Marc
 		Tab fixratesimulation = new ihm(); // Mohamed
 		Tab variablesimulation = new VariableLoanGUI(); // Anges
-		Tab analyseofindicator=new AnalyseOfIndicatorsGui();//boubacar
+		Tab analyseofindicator=new AnalyseOfIndicatorsGUI();//boubacar
 		tabs.add(fixratesimulation); 
 		tabs.add(variablesimulation); 
 		tabs.add(resultprintview);
