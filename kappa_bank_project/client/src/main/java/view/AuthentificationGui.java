@@ -29,13 +29,13 @@ import util.KappaProperties;
  *
  * @author KAPPA
  */
-public class AuthentificationGui extends javax.swing.JFrame {
+public class AuthentificationGUI extends javax.swing.JFrame {
 	private final SessionSpecific onSuccessfulLogin;
 	
     /**
      * Creates new form NewJFrame
      */
-    public AuthentificationGui(SessionSpecific onSuccessfulLogin) {
+    public AuthentificationGUI(SessionSpecific onSuccessfulLogin) {
         initComponents();
         this.onSuccessfulLogin = onSuccessfulLogin;
     }
@@ -320,13 +320,13 @@ public class AuthentificationGui extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AuthentificationGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AuthentificationGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AuthentificationGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AuthentificationGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AuthentificationGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AuthentificationGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AuthentificationGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AuthentificationGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -346,7 +346,7 @@ public class AuthentificationGui extends javax.swing.JFrame {
 		Tab resultprintview = new MainResultGUI(); // Marc
 		Tab fixratesimulation = new ihm(); // Mohamed
 		Tab variablesimulation = new VariableLoanGUI(); // Anges
-		Tab analyseofindicator=new AnalyseOfIndicatorsGui();//boubacar
+		Tab analyseofindicator=new AnalyseOfIndicatorsGUI();//boubacar
 		tabs.add(fixratesimulation); 
 		tabs.add(variablesimulation); 
 		tabs.add(resultprintview);
@@ -354,7 +354,7 @@ public class AuthentificationGui extends javax.swing.JFrame {
 		tabs.add(analyseofindicator);
         
 		MainMenuGUI mainMenu = new MainMenuGUI(tabs);
-		final AuthentificationGui authGUI = new AuthentificationGui(mainMenu);
+		final AuthentificationGUI authGUI = new AuthentificationGUI(mainMenu);
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
