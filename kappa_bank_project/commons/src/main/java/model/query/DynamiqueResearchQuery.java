@@ -13,6 +13,10 @@ public class DynamiqueResearchQuery {
 		this.ageRange = ageRange;
 		this.date = date;
 	}
+	@Override
+	public String toString() {
+		return "DynamiqueResearchQuery [typeOfLoans=" + typeOfLoans + ", ageRange=" + ageRange + ", date=" + date + "]";
+	}
 	public String getTypeOfLoans() {
 		return typeOfLoans;
 	}

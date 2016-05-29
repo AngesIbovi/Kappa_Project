@@ -1,0 +1,58 @@
+case "AverageDuration":
+				if (authorization_level < 3) {
+					return new UnauthorizedErrorServerResponse((this.user_id == null), this.authorization_level, 2);
+				}
+				AverageDurationQuery averageDurationQuery = JsonImpl.fromJson(content, AverageDurationQuery.class);
+				response = MessageHandler.handleAverage();
+				break;
+case "InterestBySegment":
+				if (authorization_level < 3) {
+					return new UnauthorizedErrorServerResponse((this.user_id == null), this.authorization_level, 2);
+				}
+				DynamiqueResearchQuery dynamiqueResearch = JsonImpl.fromJson(content,DynamiqueResearchQuery.class);
+				response=MessageHandler.handleInterestBySegment();
+				break;
+
+case "evolutionOfTheSimulations":
+				if (authorization_level < 3) {
+					return new UnauthorizedErrorServerResponse((this.user_id == null), this.authorization_level, 1);
+				}
+
+				evolutionOfTheSimulationsQuery evolution = JsonImpl.fromJson(content,
+						evolutionOfTheSimulationsQuery.class);
+				System.out.println(evolution.toString());
+				response = MessageHandler.handleEvolutionOfTheSimulation(evolution.getDate());
+
+				break;
+case "NumberOfLoanQuery":
+				if (authorization_level < 3) {
+					return new UnauthorizedErrorServerResponse((this.user_id == null), this.authorization_level, 1);
+				}
+				NumberOfLoanQuery numberOfLoan = JsonImpl.fromJson(content, NumberOfLoanQuery.class);
+				response = MessageHandler.handleNumberOfLoan(numberOfLoan.getDate());
+				break;
+
+
+
+case "MustSimulatedLoan":
+				if (authorization_level < 3) {
+					return new UnauthorizedErrorServerResponse((this.user_id == null), this.authorization_level, 1);
+				}
+
+				NumberOfLoanQuery numberOfLoanQuery = JsonImpl.fromJson(content, NumberOfLoanQuery.class);
+				System.out.println(numberOfLoanQuery.toString());
+				try {
+					response = MessageHandler.handleMustSimulatedLoanQuery();
+				} catch (Exception e) {
+
+				}
+				response = MessageHandler.handleMustSimulatedLoanQuery();
+				break;
+
+case "SumOfInterest":
+					if (authorization_level < 3) {
+						return new UnauthorizedErrorServerResponse((this.user_id == null), this.authorization_level, 1);
+					}
+					response = MessageHandler.handleSumofInterest();
+					
+					break;

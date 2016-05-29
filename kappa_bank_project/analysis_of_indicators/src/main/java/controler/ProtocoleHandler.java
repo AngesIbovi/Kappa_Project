@@ -12,12 +12,15 @@ import model.query.DynamiqueResearchQuery;
 import model.query.MustSimulatedLoanQuery;
 import model.query.evolutionOfTheSimulationsQuery;
 import model.response.AverageDurationResponse;
+import model.response.AverageDurationResponse.AverageClass;
 import model.response.DynamiqueResearchResponse;
 import model.response.DynamiqueResearchResponse.SumInterest;
 import model.response.MustSimulatedLoanResponse;
 import model.response.NumberOfLoanResponse;
 import model.response.SumOfInterestResponse;
+import model.response.SumOfInterestResponse.Interest;
 import model.response.evolutionOfTheSimulationsResponse;
+import model.response.evolutionOfTheSimulationsResponse.ListResult;
 
 
 
@@ -28,16 +31,17 @@ public class ProtocoleHandler {
 		ArrayList<SumInterest> array= new ArrayList<SumInterest>();
 		
 		
-		 DynamiqueResearchResponse DynResponse = null ;
+		 DynamiqueResearchResponse DynResponse = null  ;
 		try{
 
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			
-			InterestQuery = new model.query.DynamiqueResearchQuery();
+		
 			Gson gson = new Gson();
 			String query = "InterestBySegment " + gson.toJson(InterestQuery);
-		
+			System.out.print(query);
+		 System.out.println( InterestQuery.toString());
 			out.println(query);
 
 			
@@ -45,7 +49,7 @@ public class ProtocoleHandler {
 			
 			String response = in.readLine();
 
-			System.out.println(response);
+			System.out.println("reeponse "+response);
 
 			int prefixEnd = response.indexOf(' ');
 
@@ -56,18 +60,18 @@ public class ProtocoleHandler {
 			
 		
 			DynResponse= gson.fromJson(content, DynamiqueResearchResponse.class);
-			System.out.println(DynResponse.toString());
+			System.out.println("toc"+DynResponse.toString());
 			
 		}catch(Exception e){
 			e.toString();
 		}
-		DynResponse.setArray(array);
-		return array;
+		
+		return DynResponse.getArray();
 	}
 	
-	public void SumofInterest(Socket socket){
+	public ArrayList<Interest> SumofInterest(Socket socket){
 		
-		 SumOfInterestResponse sumResponse ;
+		 SumOfInterestResponse sumResponse = null ;
 		try{
 			
 
@@ -101,14 +105,15 @@ public class ProtocoleHandler {
 			
 		}catch(Exception e){
 			e.toString();
-		}	
+		}
+		return sumResponse.getArray();	
 	}
 	
-	public void AverageLoan(Socket socket){
+	public ArrayList<AverageClass> AverageLoan(Socket socket){
 
 	
 		
-		 AverageDurationResponse averageLoan ;
+		 AverageDurationResponse averageLoan = null ;
 		try{
 			
 
@@ -143,13 +148,14 @@ public class ProtocoleHandler {
 			
 		}catch(Exception e){
 			e.toString();
-		}	
+		}
+		return averageLoan.getArray();	
 	}
 	
-	public void NumberOfLoanQuery(String date,Socket socket){
+	public int NumberOfLoanQuery(String date,Socket socket){
 
 		
-		 NumberOfLoanResponse numberLoans ;
+		 NumberOfLoanResponse numberLoans = null ;
 		try{
 			
 			
@@ -187,13 +193,14 @@ public class ProtocoleHandler {
 		}catch(Exception e){
 			e.toString();
 		}
+		return numberLoans.getNumberOfLoans();
 		
 		
 	}
 	
-public void mustSimulatedLoan(Socket socket){
+public String mustSimulatedLoan(Socket socket){
 	
-	 MustSimulatedLoanResponse evolution ;
+	 MustSimulatedLoanResponse evolution = null ;
 	try{
 		
 	
@@ -205,7 +212,7 @@ public void mustSimulatedLoan(Socket socket){
 	//	System.out.println(	"evolution"+evSimulation.toString());
 		Gson gson = new Gson();
 		String query = "MustSimulatedLoan " + gson.toJson(loan);
-		
+		System.out.println(query);
 		
 		out.println(query);
 
@@ -225,17 +232,23 @@ public void mustSimulatedLoan(Socket socket){
 		
 	
 		 evolution = gson.fromJson(content, MustSimulatedLoanResponse.class);
-		System.out.println(evolution.toString());
+		 
+		System.out.println(content);
 		
 	}catch(Exception e){
 		e.toString();
-	}	
+	}
+	return evolution.getMessage();
+		
+	
+	
 	}
 
 	// evolution of the simulation year by year
-	public void evolutionOfTheSimulations(String date,Socket socket){
+	public ArrayList<ListResult> evolutionOfTheSimulations(String date,Socket socket){
 
-		 evolutionOfTheSimulationsResponse evolution ;
+		 evolutionOfTheSimulationsResponse evolution = null ;
+		 
 		try{
 			
 
@@ -246,9 +259,10 @@ public void mustSimulatedLoan(Socket socket){
 			evolutionOfTheSimulationsQuery evSimulation = new evolutionOfTheSimulationsQuery(date);
 		//	System.out.println(	"evolution"+evSimulation.toString());
 			Gson gson = new Gson();
+			evSimulation.setDate(date);
 			String query = "evolutionOfTheSimulations " + gson.toJson(evSimulation);
 			
-			
+			System.out.println(query);
 			out.println(query);
 
 			
@@ -256,7 +270,7 @@ public void mustSimulatedLoan(Socket socket){
 			
 			String response = in.readLine();
 
-			System.out.println(response);
+			System.out.println("reponse"+response);
 
 			int prefixEnd = response.indexOf(' ');
 
@@ -272,6 +286,7 @@ public void mustSimulatedLoan(Socket socket){
 		}catch(Exception e){
 			e.toString();
 		}
+		return evolution.getArray();
 		
 		
 	
