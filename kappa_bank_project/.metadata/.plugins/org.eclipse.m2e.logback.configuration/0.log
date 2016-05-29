@@ -1,0 +1,197 @@
+2016-05-27 23:04:49,200 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.java.kappa.project:analysis_of_indicators:0.0.1-SNAPSHOT @ C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\pom.xml.
+2016-05-27 23:04:49,779 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.java.kappa.project:variable_rate_loan:0.0.1-SNAPSHOT @ C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\variable_rate_loan\pom.xml.
+2016-05-27 23:04:49,927 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.java.kappa.project:view_print_results_loan:0.0.1-SNAPSHOT @ C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\view_print_results_loan\pom.xml.
+2016-05-27 23:04:50,048 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.java.kappa.project:server:0.0.1-SNAPSHOT @ C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\server\pom.xml.
+2016-05-27 23:04:50,401 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.java.kappa.project:client:0.0.1-SNAPSHOT @ C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\pom.xml.
+2016-05-27 23:04:50,524 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.java.kappa.project:commons:0.0.1-SNAPSHOP @ C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\commons\pom.xml.
+2016-05-27 23:04:50,772 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.java.kappa.project:comparison:0.0.1-SNAPSHOT @ C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\comparison\pom.xml.
+2016-05-27 23:04:50,879 [Worker-8] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.java.kappa.project:fixed_rate_loan:0.0.1-SNAPSHOT @ C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\fixed_rate_loan\pom.xml.
+2016-05-27 23:05:03,623 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /fixed_rate_loan/src/main/java
+2016-05-27 23:05:03,624 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /fixed_rate_loan/src/test/java
+2016-05-27 23:05:04,653 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /variable_rate_loan/src/main/java
+2016-05-27 23:05:04,656 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /variable_rate_loan/src/test/java
+2016-05-27 23:05:04,845 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /analysis_of_indicators/src/main/java
+2016-05-27 23:05:04,846 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /analysis_of_indicators/src/test/java
+2016-05-27 23:05:04,979 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /commons/src/main/java
+2016-05-27 23:05:04,980 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /commons/src/test/java
+2016-05-27 23:05:05,243 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /comparison/src/main/java
+2016-05-27 23:05:05,243 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /comparison/src/test/java
+2016-05-27 23:05:05,526 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /server/src/main/java
+2016-05-27 23:05:05,527 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /server/src/test/java
+2016-05-27 23:05:05,878 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /client/src/main/java
+2016-05-27 23:05:05,966 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /client/src/test/java
+2016-05-27 23:05:06,105 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /view_print_results_loan/src/main/java
+2016-05-27 23:05:06,106 [Worker-8] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /view_print_results_loan/src/test/java
+2016-05-27 23:05:06,472 [Worker-8] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 8 project(s) in 58 sec
+2016-05-27 23:05:30,981 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:05:30,983 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\commons\src\main\resources
+2016-05-27 23:05:31,011 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:05:31,019 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\commons\src\test\resources
+2016-05-27 23:05:33,997 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:05:34,006 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:05:34,019 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:05:34,029 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:05:39,806 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:05:39,807 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\comparison\src\main\resources
+2016-05-27 23:05:39,809 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:05:39,817 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\comparison\src\test\resources
+2016-05-27 23:05:40,695 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:05:40,700 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\fixed_rate_loan\src\main\resources
+2016-05-27 23:05:40,708 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:05:40,714 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\fixed_rate_loan\src\test\resources
+2016-05-27 23:05:47,711 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:05:47,711 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\server\src\main\resources
+2016-05-27 23:05:47,713 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:05:47,720 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\server\src\test\resources
+2016-05-27 23:06:01,243 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:06:01,244 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\variable_rate_loan\src\main\resources
+2016-05-27 23:06:01,283 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:06:01,295 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\variable_rate_loan\src\test\resources
+2016-05-27 23:06:07,762 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:06:07,762 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\view_print_results_loan\src\main\resources
+2016-05-27 23:06:07,763 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:06:07,770 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\view_print_results_loan\src\test\resources
+2016-05-27 23:06:11,287 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:06:11,289 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\main\resources
+2016-05-27 23:06:11,305 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:06:11,311 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\test\resources
+2016-05-27 23:08:19,405 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:08:19,405 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:08:19,406 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:08:19,411 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:08:51,647 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:08:51,648 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\main\resources
+2016-05-27 23:08:51,662 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:08:51,672 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\test\resources
+2016-05-27 23:09:15,469 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:09:15,470 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\commons\src\main\resources
+2016-05-27 23:09:15,472 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:09:15,478 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\commons\src\test\resources
+2016-05-27 23:09:31,059 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:09:31,066 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\comparison\src\main\resources
+2016-05-27 23:09:31,074 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:09:31,081 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\comparison\src\test\resources
+2016-05-27 23:09:52,909 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:09:52,910 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\fixed_rate_loan\src\main\resources
+2016-05-27 23:09:52,913 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:09:52,927 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\fixed_rate_loan\src\test\resources
+2016-05-27 23:10:23,637 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:10:23,650 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\server\src\main\resources
+2016-05-27 23:10:23,657 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:10:23,663 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\server\src\test\resources
+2016-05-27 23:10:50,907 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:10:50,907 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\view_print_results_loan\src\main\resources
+2016-05-27 23:10:50,909 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:10:50,916 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\view_print_results_loan\src\test\resources
+2016-05-27 23:11:03,218 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:03,226 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\variable_rate_loan\src\main\resources
+2016-05-27 23:11:03,236 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:03,244 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\variable_rate_loan\src\test\resources
+2016-05-27 23:11:44,362 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:44,362 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:11:44,363 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:44,377 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:11:47,607 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:47,621 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:11:47,641 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:47,652 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:11:50,475 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:50,475 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:11:50,477 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:50,487 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:11:53,287 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:53,295 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:11:53,305 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:53,312 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:11:55,225 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:55,225 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:11:55,226 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:11:55,229 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:12:02,065 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:12:02,079 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:12:02,087 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:12:02,094 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:12:04,164 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:12:04,164 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:12:04,167 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:12:04,183 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:12:13,164 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:12:13,179 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:12:13,190 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:12:13,198 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:12:13,336 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:12:13,336 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\main\resources
+2016-05-27 23:12:13,338 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:12:13,343 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\test\resources
+2016-05-27 23:14:25,244 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:25,244 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:14:25,246 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:25,254 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:14:56,208 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:56,233 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\commons\src\main\resources
+2016-05-27 23:14:56,244 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:56,256 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\commons\src\test\resources
+2016-05-27 23:14:56,291 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:56,292 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:14:56,293 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:56,302 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:14:56,498 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:56,498 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\comparison\src\main\resources
+2016-05-27 23:14:56,499 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:56,499 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\comparison\src\test\resources
+2016-05-27 23:14:56,819 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:56,820 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\fixed_rate_loan\src\main\resources
+2016-05-27 23:14:56,823 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:56,840 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\fixed_rate_loan\src\test\resources
+2016-05-27 23:14:57,053 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:57,054 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\server\src\main\resources
+2016-05-27 23:14:57,057 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:57,067 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\server\src\test\resources
+2016-05-27 23:14:57,257 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:57,260 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\variable_rate_loan\src\main\resources
+2016-05-27 23:14:57,261 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:57,268 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\variable_rate_loan\src\test\resources
+2016-05-27 23:14:57,443 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:57,444 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\view_print_results_loan\src\main\resources
+2016-05-27 23:14:57,445 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:57,446 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\view_print_results_loan\src\test\resources
+2016-05-27 23:14:57,627 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:57,627 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\main\resources
+2016-05-27 23:14:57,629 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:14:57,639 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\test\resources
+2016-05-27 23:15:46,671 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:15:46,671 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:15:46,672 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:15:46,673 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:15:56,587 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:15:56,587 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:15:56,588 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:15:56,593 [Worker-19] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:17:26,548 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:17:26,606 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:17:26,611 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:17:26,615 [Worker-25] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:18:45,528 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:18:45,529 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:18:45,531 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:18:45,541 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:22:04,420 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:22:04,421 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:22:04,444 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:22:04,452 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:23:55,406 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:23:55,406 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\main\resources
+2016-05-27 23:23:55,408 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:23:55,418 [Worker-26] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\analysis_of_indicators\src\test\resources
+2016-05-27 23:24:39,738 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:24:39,739 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\main\resources
+2016-05-27 23:24:39,743 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:24:39,746 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\test\resources
+2016-05-27 23:24:54,738 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:24:54,739 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\main\resources
+2016-05-27 23:24:54,739 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:24:54,745 [Worker-20] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\client\src\test\resources
+2016-05-27 23:26:59,161 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:26:59,190 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\server\src\main\resources
+2016-05-27 23:26:59,204 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2016-05-27 23:26:59,213 [Worker-21] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\ndiaye\Documents\GitHub\Kappa_Project\kappa_bank_project\server\src\test\resources
