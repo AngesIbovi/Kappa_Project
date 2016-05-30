@@ -73,7 +73,7 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 		jLabel7 = new javax.swing.JLabel();
 
 		setPreferredSize(new java.awt.Dimension(1400, 1200));
-		
+
 		jPanel1.setBackground(new java.awt.Color(153, 153, 255));
 		jPanel1.setPreferredSize(new java.awt.Dimension(1400, 1200));
 
@@ -87,73 +87,16 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 		jLabel2.setText("Selectionnez l'indicateur pour l'analyser: ");
 
 		DateCombo.setEditable(false);
+		
+
 		typeOfLoanCombo.addItem(" ");
-		messageError.setVisible(false);
+		// messageError.setVisible(false);
 
 		typeOfLoanCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "somme des interet",
-				"Nombre de simulation par mois", "Nombre de prêts contractés par ans",
-				"Le type de prêts le plus simulés", "Somme des intêrets percu par mois par type de prêt",
-				"Durée Moyenne des prêts par type de prêt", "Evolution mois par mois du nombre de prêt",
-				"Type de prêt le plus simulé","Recherche dynamique sur les intérêts"}));
+				"Le type de prêts le plus simulé", "Durée Moyenne des prêts par type de prêt",
+				"Evolution mois par mois du nombre de prêt", "Recherche dynamique sur les intérêts" }));
 		typeOfLoanCombo.scrollRectToVisible(new Rectangle(5, 5, 5, 5));
 		Validate.addActionListener(new java.awt.event.ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-					System.out.println("cc");
-					//validateActionPerformed(evt);
-					String choix = (String) typeOfLoanCombo.getSelectedItem();
-					ProtocoleHandler protocole = new ProtocoleHandler();
-					if(choix=="Recherche dynamique sur les intérêts"){
-						System.out.println("cc");
-					String date = (String)DateCombo.getSelectedItem();
-					String typeOfLan = (String)typeOfLoanCombobox.getSelectedItem();
-					String ageClass = (String)ageCombo.getSelectedItem();
-					DynamiqueResearchQuery  interest = null;
-					
-					if(ageClass=="inférieur à 25 ans"){
-						  interest = new DynamiqueResearchQuery(typeOfLan,25,date);
-						  
-					}
-				
-					if(ageClass=="entre 25 ans et 50 ans"){
-						interest = new DynamiqueResearchQuery(typeOfLan,50,date);	
-					}
-					else if(ageClass=="50 ans et plus"){
-						interest = new DynamiqueResearchQuery(typeOfLan,51,date);
-					}
-					
-				ArrayList<SumInterest> array = 	protocole.InterestBySegment(interest, socket);
-				System.out.println("array"+array.toString());
-					
-				for (SumInterest sum : array) {
-					System.out.println(sum.getDate());
-					
-				}
-					Object[][] object = new Object[100][100];
-					int t = 0;
-					if (array.size() != 0) {
-						for (SumInterest inte : array) {
-
-							object[t][0] = inte.getTypeOfLoans();
-							object[t][1] = inte.getDate();
-							object[t][2] = inte.getSum();
-							t++;
-
-						}
-
-					}
-					tableau.setModel(new DefaultTableModel(object, new String[] { "Type de prêt", "Année", "Somme des Inte", ""
-
-					}));
-					
-				}
-				
-			}
-		});
-		typeOfLoanCombo.addActionListener(new java.awt.event.ActionListener() {
-
 			public ArrayList<ListResult> getResultEvaluation(String date) {
 				ArrayList<ListResult> string = new ArrayList<ListResult>();
 				ProtocoleHandler protocole = new ProtocoleHandler();
@@ -166,24 +109,48 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 
 			}
 			
-			
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				
+			public void changeIndex() {
+				DateCombo.setSelectedIndex(0);
+				typeOfLoanCombo.setSelectedIndex(0);
+				ageCombo.setSelectedIndex(0);
+			}
+
+			public void remove() {
+				textAreaResultat.setText("");
+
+				Object[][] object = new Object[300][300];
+				ArrayList<String> array = new ArrayList<String>();
+				int t = 0;
+				if (array.size() != 0) {
+					for (String string : array) {
+
+						object[t][0] = "";
+						object[t][1] = "";
+
+						t++;
+
+					}
+
+				}else messageError.setText("Aucun Résultat");
+				tableau.setModel(new DefaultTableModel(object, new String[] { "Type de Prêt", "Moyenne", "", ""
+
+				}));
+
+			}
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				/////////////////////////////////////////////////////////////////////////////////
+
 				String choix = (String) typeOfLoanCombo.getSelectedItem();
 				ProtocoleHandler protocole = new ProtocoleHandler();
-				if(choix=="Recherche dynamique sur les intérêts"){
-				String date = (String)DateCombo.getSelectedItem();
-				String typeOfLan =(String)typeOfLoanCombo.getSelectedItem();
-				String ageClass = (String)ageCombo.getSelectedItem();
-				DynamiqueResearchQuery  interest;
-				
-			
-				}
-				
+
 				if (choix == "Evolution mois par mois du nombre de prêt") {
+					this.remove();
 					ArrayList<ListResult> array = new ArrayList<ListResult>();
-					array = getResultEvaluation((String)DateCombo.getSelectedItem());
-					if(array.isEmpty())messageError.setText("Aucun Résultat pour "+(String)DateCombo.getSelectedItem());
+					array = getResultEvaluation((String) DateCombo.getSelectedItem());
+					if (array.isEmpty())
+						messageError.setText("Aucun Résultat pour " + (String) DateCombo.getSelectedItem());
 					Object[][] object = new Object[100][100];
 					int t = 0;
 					if (array.size() != 0) {
@@ -196,23 +163,77 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 
 						}
 
-					}
+					}else messageError.setText("Aucun Résultat");
 					tableau.setModel(new DefaultTableModel(object, new String[] { "Type de Prêt", "Moyenne", "", ""
 
 					}));
 					typeOfLoanCombo.setSelectedIndex(0);
 				}
-				if (choix == "Le type de prêts le plus simulés") {
+
+				if (choix == "Recherche dynamique sur les intérêts") {
+					this.remove();
+					System.out.println("cc");
+					String date = (String) DateCombo.getSelectedItem();
+					String typeOfLan = (String) typeOfLoanCombobox.getSelectedItem();
+					String ageClass = (String) ageCombo.getSelectedItem();
+					DynamiqueResearchQuery interest = null;
+
+					if (ageClass == "inférieur à 25 ans") {
+						interest = new DynamiqueResearchQuery(typeOfLan, 25, date);
+
+					}
+
+					if (ageClass == "entre 25 ans et 50 ans") {
+						interest = new DynamiqueResearchQuery(typeOfLan, 50, date);
+					} else if (ageClass == "50 ans et plus") {
+						interest = new DynamiqueResearchQuery(typeOfLan, 51, date);
+					}
+					ArrayList<SumInterest> array=null ;
+					try{
+					 array = protocole.InterestBySegment(interest, socket);
+					}catch(Exception z){
+						System.out.println("Aucun résultat");
+					}
+					
+					System.out.println("array" + array.toString());
+
+					for (SumInterest sum : array) {
+						System.out.println(sum.getDate());
+
+					}
+					Object[][] object = new Object[100][100];
+					int t = 0;
+					if (array.size() != 0) {
+						for (SumInterest inte : array) {
+
+							object[t][0] = inte.getTypeOfLoans();
+							object[t][1] = inte.getDate();
+							object[t][2] = inte.getSum();
+							t++;
+
+						}
+
+					}else messageError.setText("Aucun Résultat");
+					tableau.setModel(
+							new DefaultTableModel(object, new String[] { "Type de prêt", "Année", "Somme des Inte", ""
+
+							}));
+					this.changeIndex();
+				}
+
+				else if (choix == "Le type de prêts le plus simulé") {
+					this.remove();
 					textAreaResultat.setText("");
-					 protocole = new ProtocoleHandler();
+					protocole = new ProtocoleHandler();
 					String reponse = protocole.mustSimulatedLoan(socket);
 					textAreaResultat.setFont(new Font("Serif", Font.PLAIN, 20));
 					textAreaResultat.append("Le type de prêt le plus simulé dans cette agence est : \n\n");
-					textAreaResultat.append(reponse);
-					typeOfLoanCombo.setSelectedIndex(0);
-					
+					textAreaResultat.setText(reponse);
+					this.changeIndex();
+
 				} else if (choix == "somme des interet") {
-					 protocole = new ProtocoleHandler();
+					this.remove();
+					protocole = new ProtocoleHandler();
 					ArrayList<Interest> array = new ArrayList<Interest>();
 
 					array = protocole.SumofInterest(socket);
@@ -232,9 +253,11 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 					tableau.setModel(new DefaultTableModel(object, new String[] { "Année", "Type de prêt", "Somme", ""
 
 					}));
+					this.changeIndex();
 				} else if (choix == "Durée Moyenne des prêts par type de prêt") {
+					this.remove();
 					ArrayList<AverageClass> average = new ArrayList<AverageClass>();
-					 protocole = new ProtocoleHandler();
+					protocole = new ProtocoleHandler();
 					average = protocole.AverageLoan(socket);
 					Object[][] object = new Object[100][100];
 					int t = 0;
@@ -248,22 +271,36 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 
 						}
 
-					}
+					}else messageError.setText("Aucun Résultat");
 					tableau.setModel(new DefaultTableModel(object, new String[] { "Type de Prêt", "Moyenne", "", ""
 
 					}));
-
+					this.changeIndex();
 				}
 			}
 
 		});
 
-		
 		validate.setText("valider");
 		validate.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-			System.out.println("bonsoir");
-				
+				System.out.println("bonsoir");
+
+				///////////////////////////////////////////////////////////////////////////////////
+
+			}
+
+			//////////////////////////////////////////////////////////////////////////////////////
+		});
+		typeOfLoanCombo.addActionListener(new java.awt.event.ActionListener() {
+
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				String whoChoose = (String) typeOfLoanCombo.getSelectedItem();
+				if (whoChoose == "Recherche dynamique sur les intérêts") {
+					messageError.setText("Renseignez Date / Type de prêt / Tranche d'âge ");
+				}  if (whoChoose == "Evolution mois par mois du nombre de prêt") {
+					messageError.setText("Veuillez renseigner la date");
+				}
 			}
 		});
 
@@ -272,14 +309,11 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 
 		// DateCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new
 		// String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-		
-		
+
+		DateCombo.addItem(" ");
 		for (int i = 2010; i <= 2020; i++) {
 			DateCombo.addItem("" + i);
 		}
-		DateCombo.setSelectedIndex(5);
-		typeOfLoanCombo.addItem("");
-		typeOfLoanCombo.setSelectedIndex(0);
 
 		ageCombo.addItem(" ");
 		ageCombo.setSelectedIndex(0);
@@ -298,11 +332,15 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 		// "Item 3", "Item 4" }));
 
 		ServerCommunication servercommunication = new ServerCommunication();
+		typeOfLoanCombobox.addItem(" ");
+
+		typeOfLoanCombobox.setSelectedIndex(0);
 		ArrayList<String> array = new ArrayList<String>();
 		array = servercommunication.getAlltypeofLoan(socket);
 		for (String string : array) {
 			typeOfLoanCombobox.addItem(string);
 		}
+
 		// ageCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]
 		// { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -321,7 +359,7 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 
 		messageError.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
 		messageError.setForeground(new java.awt.Color(102, 0, 0));
-		messageError.setText("Message d'erreur");
+		messageError.setText("");
 
 		textAreaResultat.setColumns(20);
 		textAreaResultat.setRows(5);
@@ -458,7 +496,7 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 	}
 
 	private void validateActionPerformed(java.awt.event.ActionEvent evt) {
-		
+
 	}
 
 	/**
