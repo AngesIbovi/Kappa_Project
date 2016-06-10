@@ -22,7 +22,7 @@ public class TraitmentScenario {
 		return crd;
 	}
 	
-	public float interest(int rate, int frequency)
+	public float interest(float rate, int frequency)
 	{
 		//System.out.println("------------Interêt----------");
 		int duration = delay * 12;

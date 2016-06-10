@@ -1,5 +1,4 @@
 package org.view_print_results_loan;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +33,7 @@ import model.simulation.Repayment;
 import util.JsonImpl;
 import util.KappaProperties;
 import view.Tab;
-
+ 
 /**
  * A Main Jframe used for the displaying results.
  * 
@@ -52,7 +51,7 @@ public class MainResultGUI extends Tab {
 	final MainResultGUI thisObject = this;
 
 	public MainResultGUI() {
-		super("Résultat des scenarios", 2);
+		super("Résultat des scenarios",2);
 
 	}
 
@@ -104,8 +103,11 @@ public class MainResultGUI extends Tab {
 
 		// JPanel dimensions and position
 		final JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 742, 31);
-		this.add(panel);
+		panel.setBounds(0, 0, 550, 31); 
+		this.add(panel); 
+		final JPanel panel2 = new JPanel();
+		panel2.setBounds(310, 0, 500, 800); 
+		this.add(panel2); 
 
 		JLabel lblChoixDuClient = new JLabel("Choisir le client :");
 		lblChoixDuClient.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -121,7 +123,7 @@ public class MainResultGUI extends Tab {
 
 		JLabel lblChoixDuScenario = new JLabel("Choix du scenario :");
 		lblChoixDuScenario.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblChoixDuScenario.setBounds(745, 5, 200, 22);
+		lblChoixDuScenario.setBounds(693, 9, 141, 22);
 		this.add(lblChoixDuScenario);
 
 		// final JComboBox<SimulationIdentifier> cbScenChoice = new
@@ -129,13 +131,13 @@ public class MainResultGUI extends Tab {
 		cbScenChoice.setToolTipText("Veuillez choisir le scénario");
 		cbScenChoice.setEditable(true);
 		cbScenChoice.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		cbScenChoice.setBounds(900, 5, 300, 22);
+		cbScenChoice.setBounds(844, 9, 300, 22);
 		this.add(cbScenChoice);
 
 		final JButton btnPrint = new JButton("IMPRIMER");
 		btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnPrint.setEnabled(false);
-		btnPrint.setBounds(1224, 35, 120, 25);
+		btnPrint.setBounds(910, 38, 120, 25);
 		this.add(btnPrint);
 
 		final JLabel lblParamtres = new JLabel("Paramètres");
@@ -249,7 +251,9 @@ public class MainResultGUI extends Tab {
 		final JLabel lblTauxDassurance = new JLabel("Taux d'assurance :");
 		lblTauxDassurance.setBounds(222, 259, 114, 14);
 		this.add(lblTauxDassurance);
+		
 
+		
 		final JLabel lblInsuranceRate = new JLabel("");
 		lblInsuranceRate.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInsuranceRate.setOpaque(true);
@@ -309,7 +313,7 @@ public class MainResultGUI extends Tab {
 
 		lblTitle.setForeground(Color.BLUE);
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTitle.setBounds(167, 42, 473, 14);
+		lblTitle.setBounds(138, 42, 473, 14);
 		this.add(lblTitle);
 
 		JLabel lblNomDuScenario = new JLabel("Nom du scenario :");
@@ -320,64 +324,65 @@ public class MainResultGUI extends Tab {
 		// we precise if the scenario is real or not
 		JLabel lblIsReal = new JLabel("Est Réel ?");
 		lblIsReal.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblIsReal.setBounds(480, -105, 100, 322);
+		lblIsReal.setBounds(562, 40, 74, 22);
 		this.add(lblIsReal);
 		final JRadioButton btnIsReal = new JRadioButton("OUI");
 		final JRadioButton btnIsNotReal = new JRadioButton("NON");
 		// ... Create a button group and add the buttons.
 		ButtonGroup bgroup = new ButtonGroup();
-		btnIsReal.setBounds(580, 30, 70, 50);
-		btnIsNotReal.setBounds(660, 30, 70, 50);
+		btnIsReal.setBounds(638, 41, 70, 22);
+		btnIsNotReal.setBounds(718, 41, 70, 22);
 		bgroup.add(btnIsReal);
 		bgroup.add(btnIsNotReal);
 		// ... Arrange buttons vertically in a panel
 		this.add(btnIsReal);
 		this.add(btnIsNotReal);
 		tblRepay = new JTable();
-		tblRepay.setBounds(27, 272, 700, 422);
+		tblRepay.setBounds(27, 272, 500, 422);
 		this.add(tblRepay);
 
-		JScrollPane scrollPane = new JScrollPane(tblRepay);
-		scrollPane.setBounds(550, 96, 802, 422);
-		this.add(scrollPane);
 
 		JLabel lblTableauDamortissement = new JLabel("TABLEAU D'AMORTISSEMENT");
 		lblTableauDamortissement.setForeground(Color.BLUE);
 		lblTableauDamortissement.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTableauDamortissement.setBounds(841, 74, 370, 14);
+		lblTableauDamortissement.setBounds(774, 77, 370, 14);
 		this.add(lblTableauDamortissement);
 
 		JLabel lblTotalDesMensualites = new JLabel("TOTAL DES MENSUALITES : ");
 		lblTotalDesMensualites.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTotalDesMensualites.setForeground(Color.BLUE);
 		lblTotalDesMensualites.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTotalDesMensualites.setBounds(596, 529, 458, 14);
+		lblTotalDesMensualites.setBounds(326, 529, 458, 14);
 		this.add(lblTotalDesMensualites);
 
 		JLabel lblTotalDesInterets = new JLabel("TOTAL DES INTERETS :");
 		lblTotalDesInterets.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTotalDesInterets.setForeground(Color.BLUE);
 		lblTotalDesInterets.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTotalDesInterets.setBounds(684, 565, 370, 14);
+		lblTotalDesInterets.setBounds(414, 565, 370, 14);
 		this.add(lblTotalDesInterets);
 
 		JLabel lblTotalDeL = new JLabel("TOTAL DE L ASSURANCE :");
 		lblTotalDeL.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTotalDeL.setForeground(Color.BLUE);
 		lblTotalDeL.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTotalDeL.setBounds(684, 601, 370, 14);
+		lblTotalDeL.setBounds(414, 601, 370, 14);
 		this.add(lblTotalDeL);
 
+		JScrollPane scrollPane2 = new JScrollPane(panel2, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane2.getVerticalScrollBar().setUnitIncrement(50);
+		this.add(scrollPane2, BorderLayout.CENTER);
+		
 		JLabel lblTotalLoan = new JLabel("TOTAL DU PRÊT:");
 		lblTotalLoan.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTotalLoan.setForeground(Color.BLUE);
 		lblTotalLoan.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTotalLoan.setBounds(684, 637, 370, 14);
+		lblTotalLoan.setBounds(414, 637, 370, 14);
 		this.add(lblTotalLoan);
 
 		JLabel label_1 = new JLabel("(hors mis assurance)");
 		label_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		label_1.setBounds(1238, 531, 114, 14);
+		label_1.setBounds(968, 531, 114, 14);
 		this.add(label_1);
 
 		final JLabel lblTotalCapital = new JLabel("");
@@ -385,7 +390,7 @@ public class MainResultGUI extends Tab {
 		lblTotalCapital.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTotalCapital.setForeground(new Color(0, 100, 0));
 		lblTotalCapital.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTotalCapital.setBounds(1056, 529, 155, 14);
+		lblTotalCapital.setBounds(786, 529, 155, 14);
 		this.add(lblTotalCapital);
 
 		final JLabel lblTotalInterest = new JLabel("");
@@ -393,41 +398,41 @@ public class MainResultGUI extends Tab {
 		lblTotalInterest.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTotalInterest.setForeground(new Color(0, 0, 128));
 		lblTotalInterest.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTotalInterest.setBounds(1056, 567, 155, 14);
+		lblTotalInterest.setBounds(786, 567, 155, 14);
 		this.add(lblTotalInterest);
 
 		final JLabel lblTotalInsurance = new JLabel("");
 		lblTotalInsurance.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTotalInsurance.setForeground(new Color(255, 69, 0));
 		lblTotalInsurance.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTotalInsurance.setBounds(1056, 603, 155, 14);
+		lblTotalInsurance.setBounds(786, 603, 155, 14);
 		this.add(lblTotalInsurance);
 
 		final JLabel lblTotalLoanPrice = new JLabel("");
 		lblTotalLoanPrice.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTotalLoanPrice.setForeground(new Color(155, 59, 0));
 		lblTotalLoanPrice.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTotalLoanPrice.setBounds(1056, 639, 155, 14);
+		lblTotalLoanPrice.setBounds(786, 639, 155, 14);
 		this.add(lblTotalLoanPrice);
 
 		JLabel label_2 = new JLabel("€");
 		label_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label_2.setBounds(1221, 562, 87, 22);
+		label_2.setBounds(951, 562, 87, 22);
 		this.add(label_2);
 
 		JLabel label_3 = new JLabel("€");
 		label_3.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label_3.setBounds(1221, 598, 87, 22);
+		label_3.setBounds(951, 598, 87, 22);
 		this.add(label_3);
 
 		JLabel label_4 = new JLabel("€");
 		label_4.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label_4.setBounds(1221, 529, 17, 22);
+		label_4.setBounds(951, 529, 17, 22);
 		this.add(label_4);
 
 		JLabel label_t = new JLabel("€");
 		label_t.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label_t.setBounds(1221, 634, 17, 22);
+		label_t.setBounds(951, 634, 17, 22);
 		this.add(label_t);
 
 		final JButton btnNewButton = new JButton("GRAPHE DES RESULTATS");
@@ -442,7 +447,11 @@ public class MainResultGUI extends Tab {
 		btnDashboard.setEnabled(false);
 		btnDashboard.setBounds(293, 336, 246, 67);
 		this.add(btnDashboard);
-
+ 
+		JScrollPane scrollPane = new JScrollPane(tblRepay);
+		scrollPane.setBounds(550, 96, 696, 422);
+		this.add(scrollPane);
+		
 		// Adding of 3D-Chart to materialized the total amount of each fee
 		final DefaultPieDataset pieDataset = new DefaultPieDataset();
 		JFreeChart chart = ChartFactory.createPieChart3D("", pieDataset, true, true, true);

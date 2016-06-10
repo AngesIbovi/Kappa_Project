@@ -1,10 +1,11 @@
 package serverCommunication;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import com.google.gson.Gson;
@@ -14,9 +15,11 @@ import model.query.GetAllAccountsQuery;
 import model.query.GetAllLoanTypeQuery;
 import model.query.GetValueOfRateQuery;
 import model.query.LoansQuery;
+import model.query.RepaymentQuery;
 import model.response.GetAllAcountsServerResponse;
 import model.response.GetAllLoanTypeServerReponse;
 import model.response.GetValueOfRateServerResponse;
+import model.simulation.Repayment;
 
 
 
@@ -27,11 +30,39 @@ public class ServerCommunication {
 	static Properties properties = new Properties();
 	static String propFileName = "kappa.properties";
 	
+	
+	
+	public void insertRepayment(ArrayList<Repayment> rep,Socket socket) throws InterruptedException{
+		Gson gson = new Gson();
+		
+		RepaymentQuery repayment = new RepaymentQuery();
+		repayment.setRepayments(rep);
+	String etiq= "sendRepayment " + gson.toJson(repayment);
+	System.out.println(etiq);
+	String reponse =null;
+		
+		try {
+			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			Thread.sleep(5);
+			out.println(etiq);
+			reponse=in.readLine();
+			System.out.println("reponse: "+reponse.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+	}
+	
 	public static ArrayList<String> getAllAcounts(Socket socket) {
 
 	//This function get all of account number into the arraylist	
 		ArrayList<String> array = new ArrayList<String>();
 
+		
+		
 		try {
 
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);

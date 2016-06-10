@@ -1,13 +1,11 @@
-ERROR 2016-05-29 03:19:30 at Session:133 :		 Session : IOException caught
-java.net.SocketException: Connection reset
-	at java.net.SocketInputStream.read(Unknown Source)
-	at java.net.SocketInputStream.read(Unknown Source)
-	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
-	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
-	at sun.nio.cs.StreamDecoder.read(Unknown Source)
-	at java.io.InputStreamReader.read(Unknown Source)
-	at java.io.BufferedReader.fill(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at java.io.BufferedReader.readLine(Unknown Source)
-	at server.Session.run(Session.java:109)
-INFO  2016-05-29 03:19:30 at Session:141 :		 Connection terminated
+FATAL 2016-05-30 16:41:20 at Server:196 :		 Can't initialize properly.
+java.net.BindException: Address already in use: JVM_Bind
+	at java.net.DualStackPlainSocketImpl.bind0(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketBind(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.bind(Unknown Source)
+	at java.net.PlainSocketImpl.bind(Unknown Source)
+	at java.net.ServerSocket.bind(Unknown Source)
+	at java.net.ServerSocket.<init>(Unknown Source)
+	at java.net.ServerSocket.<init>(Unknown Source)
+	at server.Server.initAll(Server.java:83)
+	at server.Server.main(Server.java:194)

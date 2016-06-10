@@ -1,12 +1,16 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.color.ColorSpace;
 import java.awt.event.ActionEvent;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import controler.ProtocoleHandler;
@@ -67,12 +71,18 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 		erows = new javax.swing.JButton();
 		messageError = new javax.swing.JLabel();
 		jScrollPane1 = new javax.swing.JScrollPane();
+		jScrollPaneR = new javax.swing.JScrollPane();
+		javax.swing.JScrollPane jScrollPane2 = new javax.swing.JScrollPane();
 		textAreaResultat = new javax.swing.JTextArea();
 		jScrollPane2 = new javax.swing.JScrollPane();
 		tableau = new javax.swing.JTable();
 		jLabel7 = new javax.swing.JLabel();
 
-		setPreferredSize(new java.awt.Dimension(1400, 1200));
+		//setPreferredSize(new java.awt.Dimension(1400, 1200));
+		
+		JScrollPane scrollPane = new JScrollPane(jPanel1, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(50);
+		
 
 		jPanel1.setBackground(new java.awt.Color(153, 153, 255));
 		jPanel1.setPreferredSize(new java.awt.Dimension(1400, 1200));
@@ -88,13 +98,13 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 
 		DateCombo.setEditable(false);
 		
-
+		
 		typeOfLoanCombo.addItem(" ");
 		// messageError.setVisible(false);
 
 		typeOfLoanCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "somme des interet",
 				"Le type de prêts le plus simulé", "Durée Moyenne des prêts par type de prêt",
-				"Evolution mois par mois du nombre de prêt", "Recherche dynamique sur les intérêts" }));
+				"Evolution mois par mois du nombre de prêt", "Recherche dynamique sur les intérêts","Le type de prêts le moin simulé"}));
 		typeOfLoanCombo.scrollRectToVisible(new Rectangle(5, 5, 5, 5));
 		Validate.addActionListener(new java.awt.event.ActionListener() {
 			public ArrayList<ListResult> getResultEvaluation(String date) {
@@ -118,7 +128,7 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 			public void remove() {
 				textAreaResultat.setText("");
 
-				Object[][] object = new Object[300][300];
+				Object[][] object = new Object[50][50];
 				ArrayList<String> array = new ArrayList<String>();
 				int t = 0;
 				if (array.size() != 0) {
@@ -137,6 +147,8 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 				}));
 
 			}
+			
+			
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -146,12 +158,12 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 				ProtocoleHandler protocole = new ProtocoleHandler();
 
 				if (choix == "Evolution mois par mois du nombre de prêt") {
-					this.remove();
+				//	this.remove();
 					ArrayList<ListResult> array = new ArrayList<ListResult>();
 					array = getResultEvaluation((String) DateCombo.getSelectedItem());
 					if (array.isEmpty())
 						messageError.setText("Aucun Résultat pour " + (String) DateCombo.getSelectedItem());
-					Object[][] object = new Object[100][100];
+					Object[][] object = new Object[60][60];
 					int t = 0;
 					if (array.size() != 0) {
 						for (ListResult inte : array) {
@@ -195,13 +207,13 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 						System.out.println("Aucun résultat");
 					}
 					
-					System.out.println("array" + array.toString());
+					
 
 					for (SumInterest sum : array) {
 						System.out.println(sum.getDate());
 
 					}
-					Object[][] object = new Object[100][100];
+					Object[][] object = new Object[40][40];
 					int t = 0;
 					if (array.size() != 0) {
 						for (SumInterest inte : array) {
@@ -231,13 +243,26 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 					textAreaResultat.setText(reponse);
 					this.changeIndex();
 
-				} else if (choix == "somme des interet") {
+				}
+				
+				else if (choix == "Le type de prêts le moin simulé") {
+					this.remove();
+					textAreaResultat.setText("");
+					protocole = new ProtocoleHandler();
+					String reponse = protocole.worseSimulatedLoan(socket);
+					textAreaResultat.setFont(new Font("Serif", Font.PLAIN, 20));
+					textAreaResultat.append("Le type de prêt le plus simulé dans cette agence est : \n\n");
+					textAreaResultat.setText(reponse);
+					this.changeIndex();
+
+				}
+				else if (choix == "somme des interet") {
 					this.remove();
 					protocole = new ProtocoleHandler();
 					ArrayList<Interest> array = new ArrayList<Interest>();
 
 					array = protocole.SumofInterest(socket);
-					Object[][] object = new Object[100][100];
+					Object[][] object = new Object[50][50];
 					int t = 0;
 					if (array.size() != 0) {
 						for (Interest inte : array) {
@@ -259,7 +284,7 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 					ArrayList<AverageClass> average = new ArrayList<AverageClass>();
 					protocole = new ProtocoleHandler();
 					average = protocole.AverageLoan(socket);
-					Object[][] object = new Object[100][100];
+					Object[][] object = new Object[10][10];
 					int t = 0;
 					if (average.size() != 0) {
 						for (AverageClass inte : average) {
@@ -297,9 +322,12 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				String whoChoose = (String) typeOfLoanCombo.getSelectedItem();
 				if (whoChoose == "Recherche dynamique sur les intérêts") {
-					messageError.setText("Renseignez Date / Type de prêt / Tranche d'âge ");
-				}  if (whoChoose == "Evolution mois par mois du nombre de prêt") {
-					messageError.setText("Veuillez renseigner la date");
+					messageError.setForeground(Color.green);
+					messageError.setText("Date/Type de prêt/Age");
+					
+				}  if (whoChoose == "Evolution mois par mois du nombre de prêt") {  
+					messageError.setForeground(Color.green);
+					messageError.setText("Renseigner la date");
 				}
 			}
 		});
@@ -314,7 +342,8 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 		for (int i = 2010; i <= 2020; i++) {
 			DateCombo.addItem("" + i);
 		}
-
+		
+		textAreaResultat.setMaximumSize(new Dimension(4, 5));
 		ageCombo.addItem(" ");
 		ageCombo.setSelectedIndex(0);
 		ageCombo.addItem("inférieur à 25 ans");
@@ -363,9 +392,9 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 
 		textAreaResultat.setColumns(20);
 		textAreaResultat.setRows(5);
+ 
 		jScrollPane1.setViewportView(textAreaResultat);
-
-		jScrollPane2.setViewportView(tableau);
+		jScrollPaneR.setViewportView(jPanel1);
 
 		jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 		jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -438,7 +467,8 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 												javax.swing.GroupLayout.PREFERRED_SIZE, 33,
 												javax.swing.GroupLayout.PREFERRED_SIZE))
 								.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								)
 						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 								.addGroup(jPanel1Layout.createSequentialGroup()
 										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -459,10 +489,7 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 										.addComponent(messageError, javax.swing.GroupLayout.PREFERRED_SIZE, 27,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(29, 29, 29)
-										.addGroup(jPanel1Layout
-												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(Validate).addComponent(erows))))
+										.addGap(29, 29, 29)))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 424, Short.MAX_VALUE)
 						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
@@ -480,15 +507,19 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 		this.setLayout(layout);
 		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addContainerGap()
-						.addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1116, Short.MAX_VALUE)
+						.addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
 						.addContainerGap()));
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addContainerGap()
-						.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1000,
+						.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 800,
 								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 
-		typeOfLoanCombo.setSize(new Dimension(20, 20));
+				.addGroup(jPanel1Layout
+						.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(Validate).addComponent(erows)));
+
+		//typeOfLoanCombo.setSize(new Dimension(20, 20));
 	}// </editor-fold>
 
 	private void typeOfLoanComboActionPerformed(java.awt.event.ActionEvent evt) {
@@ -557,7 +588,7 @@ public class AnalyseOfIndicatorsGUI extends Tab {
 	private javax.swing.JLabel jLabel7;
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JScrollPane jScrollPane2;
+	private javax.swing.JScrollPane jScrollPaneR;
 	private javax.swing.JLabel messageError;
 	private javax.swing.JTable tableau;
 	private javax.swing.JTextArea textAreaResultat;

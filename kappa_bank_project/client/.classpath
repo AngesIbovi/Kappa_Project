@@ -31,5 +31,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/comparison"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/fixed_rate_loan"/>
 	<classpathentry kind="lib" path="/commons/lib/gson-2.5/gson-2.5.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/amount_of_interest_rates"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

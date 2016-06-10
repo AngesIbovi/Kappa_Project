@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import org.view_print_results_loan.MainResultGUI;
 
+import Rates.InterestRateTab;
 import authentificationmanager.ProtocoleHandler;
 import comparison.ComparisonGUI;
 import loanClient.ihm;
@@ -341,12 +342,13 @@ public class AuthentificationGUI extends javax.swing.JFrame {
  		JsonImpl.init();
  		
 		List<Tab> tabs = new ArrayList<>(); 
-		
+		Tab rate = new InterestRateTab();//Lyndha
 		Tab comparison = new ComparisonGUI(); //valentin
 		Tab resultprintview = new MainResultGUI(); // Marc
 		Tab fixratesimulation = new ihm(); // Mohamed
 		Tab variablesimulation = new VariableLoanGUI(); // Anges
 		Tab analyseofindicator=new AnalyseOfIndicatorsGUI();//boubacar
+		tabs.add(rate); 
 		tabs.add(fixratesimulation); 
 		tabs.add(variablesimulation); 
 		tabs.add(resultprintview);

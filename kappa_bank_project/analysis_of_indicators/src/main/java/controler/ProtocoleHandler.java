@@ -21,6 +21,7 @@ import model.response.SumOfInterestResponse;
 import model.response.SumOfInterestResponse.Interest;
 import model.response.evolutionOfTheSimulationsResponse;
 import model.response.evolutionOfTheSimulationsResponse.ListResult;
+import model.response.worseSimulatedLoanResponse;
 
 
 
@@ -243,6 +244,55 @@ public String mustSimulatedLoan(Socket socket){
 	
 	
 	}
+
+
+public String worseSimulatedLoan(Socket socket){
+
+ worseSimulatedLoanResponse evolution = null ;
+try{
+	
+
+	PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+	BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+	
+
+	MustSimulatedLoanQuery loan = new MustSimulatedLoanQuery();
+//	System.out.println(	"evolution"+evSimulation.toString());
+	Gson gson = new Gson();
+	String query = "worseSimulatedLoan " + gson.toJson(loan);
+	System.out.println(query);
+	
+	out.println(query);
+
+	
+	// manage the response of the server
+	
+	String response = in.readLine();
+
+	System.out.println(response);
+
+	int prefixEnd = response.indexOf(' ');
+
+	String prefix = response.substring(0, prefixEnd);
+	
+
+	String content = response.substring(prefixEnd + 1);
+	
+
+	 evolution = gson.fromJson(content, 
+			 worseSimulatedLoanResponse.class);
+	 
+	System.out.println(content);
+	
+}catch(Exception e){
+	e.toString();
+}
+return evolution.getMessage();
+	
+
+
+}
+
 
 	// evolution of the simulation year by year
 	public ArrayList<ListResult> evolutionOfTheSimulations(String date,Socket socket){

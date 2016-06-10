@@ -32,6 +32,7 @@ import model.response.GetAllAcountsServerResponse;
 import model.response.GetAllLoanTypeServerReponse;
 import model.response.GetLoanServerResponse;
 import model.response.GetLoanServerResponse.RateList;
+import model.response.GetRepaymentServerResponse;
 import model.response.GetSimsServerResponse;
 import model.response.GetSimsServerResponse.SimulationIdentifier;
 import model.response.GetValueOfRateServerResponse;
@@ -1124,7 +1125,70 @@ public static ServerResponse handleSumofInterest(){
  }
 		
 
-
+public static ServerResponse handleSendRepaymentQuery( ArrayList<Repayment> repayment) throws SQLException
+	{
+		
+		Statement statement = null;
+		Connection databaseConnection;
+		GetRepaymentServerResponse repaymentserverreponse=new GetRepaymentServerResponse();
+		try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (IllegalStateException | ClassNotFoundException | SQLException e) {
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+	
+		try {
+			try{
+			
+			for(Repayment rep : repayment){
+				
+			
+			String SQLQuery = 
+					"Insert into PDS.REPAYMENTS (REPAYMENT_ID,Loan_Id,Date,CAPITAL,INTEREST,"
+					+"INSURANCE)"
+					+"values"
+					+"(SELECT REPAYMENTS_SEQ.NEXTVAL FROM DUAL),"
+					+"(select loan_type_id from loan_types where name= '"+rep.getId_loan()+"'),'"
+					+rep.getDate()+","
+					+rep.getCapital()+","
+					+rep.getInterest()+","
+					+rep.getInsurance()+")";
+			
+			
+			 statement = databaseConnection.createStatement();
+			System.out.println(SQLQuery);
+			
+			try {
+				boolean results = statement.execute(SQLQuery);
+				
+				if(results)System.out.println("insére");
+				databaseConnection.commit();
+				logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+				return repaymentserverreponse;
+			} catch (SQLException e) {
+	
+				logger.warn("SQLException caught", e);
+				throw e;
+				
+			
+			}
+			}
+		databaseConnection.commit();
+			}
+			catch(SQLException ete){
+				ete.toString();
+			}
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+			statement.close();
+			ConnectionPool.release(databaseConnection);
+		}
+		return repaymentserverreponse;
+		
+		
+}
 
 public static ServerResponse handleAverage(){
 	 {
