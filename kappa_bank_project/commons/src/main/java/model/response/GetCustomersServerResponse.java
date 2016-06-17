@@ -5,15 +5,9 @@ import java.util.List;
 
 /**
  * Communication class. See the protocol's documentation for more details.</br>
- * Contains the Account subclass.
  * @version R3 sprint 3 - 13/05/2016
- * @author Kappa-V
+ * @author Kappa-M
  * @changes
- * 		R3 sprint 2 -> R3 sprint 3:</br>
- * 			-Added a "name" attribute to the Account subclass</br>
- * 			-Added a copy method. It was needed in CustomerChoiceGUI.</br>
- * 			-Added an empty constructor to Account subclass</br>
- * 			-Implemented toString for the Account subclass</br>
  */
 public class GetCustomersServerResponse extends ServerResponse {
 	private List<Customers> accounts;

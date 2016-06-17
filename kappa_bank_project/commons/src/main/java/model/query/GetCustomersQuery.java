@@ -4,8 +4,8 @@ import util.JsonImpl;
 
 /**
  * Communication class. See the protocol's documentation for more details.
- * @author Kappa-V
- * @version R3 sprint 3 - 08/05/2016
+ * @author Kappa-M
+ * @version R3 sprint 3 - 20/05/2016
  */
 public class GetCustomersQuery implements ClientQuery {
 	// Attributes

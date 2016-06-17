@@ -45,3 +45,6 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.java
+kappa_bank_project/variable_rate_loan/src/main/java/loancalcul/VerificationFields.java
+kappa_bank_project/analysis_of_indicators/src/main/java/controler/ProtocoleHandler.java

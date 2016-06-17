@@ -41,7 +41,7 @@ import util.JsonImpl;
 import util.KappaProperties;
 
 /**
-* A simple demonstration application showing how to create a bar chart.
+* We create a bar chart.
 */
 public class BarChartResult extends JFrame {
 
@@ -129,14 +129,17 @@ public class BarChartResult extends JFrame {
 					List<Repayment> listrepay=  response.getRepayments();    
 					//String[][] datas = (String[][]) new String[listrepay.size()][6];
 					float restant=0;
-					//we prepare to bind data into our JTable
+					//we prepare to bind data to construct our graph
 					for(int i=0 ; i < listrepay.size() ; i++) { 
-						restant=restant+listrepay.get(i).getCapital();
 						dataset.addValue(listrepay.get(i).getCapital(), series1, Float.toString(i+1));
 						dataset.addValue(listrepay.get(i).getInsurance(), series2, Float.toString(i+1));
-						dataset.addValue(listrepay.get(i).getInterest(), series3, Float.toString(i+1));
-						dataset.addValue(response.getCapital()-restant, series4, Float.toString(i+1)); 
+						dataset.addValue(listrepay.get(i).getInterest(), series3, Float.toString(i+1)); 
 					}    
+					//we prepare to bind data to construct our bar of restant due
+					for(int i=0 ; i < listrepay.size()-1 ; i++) { 
+						restant=restant+listrepay.get(i).getCapital(); 
+						dataset.addValue(response.getCapital()-restant, series4, Float.toString(i+1)); 
+					} 
 					 
 					break;
 

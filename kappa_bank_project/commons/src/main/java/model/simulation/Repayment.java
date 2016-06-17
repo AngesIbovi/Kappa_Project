@@ -11,7 +11,29 @@ public class Repayment {
 	private float capital;
 	private float interest;
 	private float insurance;
+	private  String id_loan ;
+
 	
+	public String getId_loan() {
+		return id_loan;
+	}
+
+
+	public void setId_loan(String id_loan) {
+		this.id_loan = id_loan;
+	}
+
+
+	public Repayment(Date date, float capital, float interest, float insurance, String id_loan) {
+		super();
+		this.date = date;
+		this.capital = capital;
+		this.interest = interest;
+		this.insurance = insurance;
+		this.id_loan = id_loan;
+	}
+
+
 	public Repayment(Date date, float capital, float interest, float insurance) {
 		super();
 		this.date = date;
@@ -19,6 +41,7 @@ public class Repayment {
 		this.interest = interest;
 		this.insurance = insurance;
 	}
+
 
 	public Date getDate() {
 		return date;
@@ -48,11 +71,13 @@ public class Repayment {
 		return insurance;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "Repayment [date=" + date + ", capital=" + capital + ", interest=" + interest + ", insurance="
-				+ insurance + "]";
+				+ insurance + ", id_loan=" + id_loan + "]";
 	}
+
 
 	public void setInsurance(float insurance) {
 		this.insurance = insurance;

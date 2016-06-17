@@ -5,6 +5,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.PrintJob;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -12,6 +15,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -21,6 +25,16 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
 import javax.swing.*;
 
 import org.jfree.chart.ChartFactory;
@@ -52,13 +66,12 @@ import util.JsonImpl;
 */
 @SuppressWarnings("serial")
 public class ChartResult extends JFrame {
-	
+	JPanel chartPanel =new JPanel();
 
-	public ChartResult(final Socket socket, String args) throws ClassNotFoundException, SQLException, NumberFormatException, IOException  {
+	public ChartResult(final Socket socket, final String args) throws ClassNotFoundException, SQLException, NumberFormatException, IOException  {
 		super("Graphique des résultats");
 		final ChartResult thisObject = this;  
-		// Initializing tools 
-		System.out.println(args);
+		// Initializing tools  
 				/* Network connection */
 		
 		// Socket initialization
@@ -76,22 +89,34 @@ public class ChartResult extends JFrame {
 		
 	 
 		
-		JPanel chartPanel = createChartPanel(socket,args);
+		chartPanel = createChartPanel(socket,args);
 		add(chartPanel, BorderLayout.CENTER);
  
 		
 		final JComboBox<SimulationIdentifier> cbScenChoice = new JComboBox<SimulationIdentifier>();
 		cbScenChoice.setToolTipText("Veuillez choisir la simulation");
 		cbScenChoice.setEditable(true);
-		cbScenChoice.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		 
+		cbScenChoice.setFont(new Font("Tahoma", Font.PLAIN, 12)); 
 		cbScenChoice.setSelectedItem("- Choisir -");  		
 		setSize(1240, 680);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		
-
+		//Button to print the graph
+		JPanel pnBtn = new JPanel();
+		add(pnBtn, BorderLayout.NORTH);
+		JButton btnPrint = new JButton("Imprimer");
+		pnBtn.add(btnPrint);
 		// Sending the account_id over to the server
+		
+		 
+		btnPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		 
+					 printChart(); 
+			}
+		});
+		
 		GetAllSimsQuery query = new GetAllSimsQuery("-1");
 		out.println(query.toString());
 		// Receiving the server's response
@@ -172,7 +197,7 @@ public class ChartResult extends JFrame {
 	private JPanel createChartPanel(Socket socket, String args) throws NumberFormatException, UnknownHostException, IOException {
 		//System.out.print(args);
 		 
-		String chartTitle = "Graphiques de l'évolution sur la durée du prêt ";
+		String chartTitle = "Graphiques de l'évolution sur la durée du prêt - N°"+args;
 		String xAxisLabel = "ECHEANCES";
 		String yAxisLabel = "MONTANT";
 		
@@ -192,9 +217,9 @@ public class ChartResult extends JFrame {
 		customizeChart(chart);
 		
 		// saves the chart as an image files
-		File imageFile = new File("XYLineChart.png");
-		int width = 640;
-		int height = 480;
+		File imageFile = new File("XYLineChart"+args+".png");
+		int width = 940;
+		int height = 705;
 		
 		try {
 			ChartUtilities.saveChartAsPNG(imageFile, chart, width, height);
@@ -314,6 +339,14 @@ public class ChartResult extends JFrame {
 		
 	}
 	
+	private void printChart(){  
+		Toolkit tkp = chartPanel.getToolkit();
+	    PrintJob pjp = tkp.getPrintJob(this, null, null);
+	    Graphics g = pjp.getGraphics();
+	    chartPanel.print(g);
+	    g.dispose();
+	    pjp.end();
+	}
 
 	public static void main(final Socket socket, final String args) throws IOException {
 		 
