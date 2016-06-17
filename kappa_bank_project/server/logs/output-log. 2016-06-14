@@ -1,0 +1,97 @@
+INFO  2016-06-14 23:05:23 at Server:201 :		 Server initialized.
+INFO  2016-06-14 23:05:23 at Server:154 :		 Connection received
+INFO  2016-06-14 23:05:24 at Session:206 :		 DSI logged in successfully.
+WARN  2016-06-14 23:05:47 at MessageHandler:1014 :		 SQLException caught
+java.sql.SQLSyntaxErrorException: ORA-00936: missing expression
+
+	at oracle.jdbc.driver.SQLStateMapping.newSQLException(SQLStateMapping.java:91)
+	at oracle.jdbc.driver.DatabaseError.newSQLException(DatabaseError.java:133)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:206)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:455)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:413)
+	at oracle.jdbc.driver.T4C8Oall.receive(T4C8Oall.java:1034)
+	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:183)
+	at oracle.jdbc.driver.T4CStatement.executeForDescribe(T4CStatement.java:780)
+	at oracle.jdbc.driver.T4CStatement.executeMaybeDescribe(T4CStatement.java:855)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1186)
+	at oracle.jdbc.driver.OracleStatement.executeQuery(OracleStatement.java:1377)
+	at oracle.jdbc.driver.OracleStatementWrapper.executeQuery(OracleStatementWrapper.java:387)
+	at server.MessageHandler.handleNumberOfSimulation(MessageHandler.java:988)
+	at server.Session.handleMessage(Session.java:261)
+	at server.Session.run(Session.java:116)
+WARN  2016-06-14 23:05:47 at MessageHandler:1020 :		 SQLException caught
+java.sql.SQLSyntaxErrorException: ORA-00936: missing expression
+
+	at oracle.jdbc.driver.SQLStateMapping.newSQLException(SQLStateMapping.java:91)
+	at oracle.jdbc.driver.DatabaseError.newSQLException(DatabaseError.java:133)
+	at oracle.jdbc.driver.DatabaseError.throwSqlException(DatabaseError.java:206)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:455)
+	at oracle.jdbc.driver.T4CTTIoer.processError(T4CTTIoer.java:413)
+	at oracle.jdbc.driver.T4C8Oall.receive(T4C8Oall.java:1034)
+	at oracle.jdbc.driver.T4CStatement.doOall8(T4CStatement.java:183)
+	at oracle.jdbc.driver.T4CStatement.executeForDescribe(T4CStatement.java:780)
+	at oracle.jdbc.driver.T4CStatement.executeMaybeDescribe(T4CStatement.java:855)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1186)
+	at oracle.jdbc.driver.OracleStatement.executeQuery(OracleStatement.java:1377)
+	at oracle.jdbc.driver.OracleStatementWrapper.executeQuery(OracleStatementWrapper.java:387)
+	at server.MessageHandler.handleNumberOfSimulation(MessageHandler.java:988)
+	at server.Session.handleMessage(Session.java:261)
+	at server.Session.run(Session.java:116)
+ERROR 2016-06-14 23:06:57 at Session:133 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:109)
+INFO  2016-06-14 23:06:57 at Session:141 :		 Connection terminated
+INFO  2016-06-14 23:45:14 at Server:154 :		 Connection received
+INFO  2016-06-14 23:45:25 at Session:206 :		 DSI logged in successfully.
+ERROR 2016-06-14 23:46:20 at Session:133 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:109)
+INFO  2016-06-14 23:46:20 at Session:141 :		 Connection terminated
+INFO  2016-06-14 23:53:03 at Server:154 :		 Connection received
+INFO  2016-06-14 23:53:09 at Session:206 :		 DSI logged in successfully.
+ERROR 2016-06-14 23:53:37 at Session:133 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:109)
+INFO  2016-06-14 23:53:37 at Session:141 :		 Connection terminated
+INFO  2016-06-14 23:53:50 at Server:154 :		 Connection received
+INFO  2016-06-14 23:53:53 at Session:206 :		 DSI logged in successfully.
+ERROR 2016-06-14 23:54:07 at Session:133 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:109)
+INFO  2016-06-14 23:54:07 at Session:141 :		 Connection terminated
