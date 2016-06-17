@@ -1,4 +1,4 @@
-ERROR 2016-05-29 03:19:30 at Session:133 :		 Session : IOException caught
+ERROR 2016-06-17 01:16:47 at Session:133 :		 Session : IOException caught
 java.net.SocketException: Connection reset
 	at java.net.SocketInputStream.read(Unknown Source)
 	at java.net.SocketInputStream.read(Unknown Source)
@@ -10,4 +10,4 @@ java.net.SocketException: Connection reset
 	at java.io.BufferedReader.readLine(Unknown Source)
 	at java.io.BufferedReader.readLine(Unknown Source)
 	at server.Session.run(Session.java:109)
-INFO  2016-05-29 03:19:30 at Session:141 :		 Connection terminated
+INFO  2016-06-17 01:16:48 at Session:141 :		 Connection terminated

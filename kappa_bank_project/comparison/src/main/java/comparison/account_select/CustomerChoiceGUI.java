@@ -139,7 +139,7 @@ public abstract class CustomerChoiceGUI extends AccountSelectionGUI {
 		
 	}
 
-	
+
 	@Override
 	protected ClientQuery generateQuery() {
 		return new SearchAccountsQuery(firstNameField.getText(), lastNameField.getText(), myCustomersCheckbox.isSelected());

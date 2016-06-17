@@ -2,7 +2,7 @@ package model.query;
 
 import util.JsonImpl;
 
-public class GetAllAccountsQuery {
+public class GetAllAccountsQuery  implements ClientQuery{
 	
 private String message;
 

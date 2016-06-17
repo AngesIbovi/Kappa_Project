@@ -2,7 +2,7 @@ package model.query;
 
 import java.util.Date;
 
-public class NumberOfLoanQuery {
+public class NumberOfLoanQuery  implements ClientQuery{
 	public String date;
 
 	public String getDate() {

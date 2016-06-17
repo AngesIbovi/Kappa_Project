@@ -2,7 +2,7 @@ package model.query;
 
 import java.util.ArrayList;
 
-public class SumOfInterestQuery {
+public class SumOfInterestQuery  implements ClientQuery {
 	
 	
 	String typeOfLoans;

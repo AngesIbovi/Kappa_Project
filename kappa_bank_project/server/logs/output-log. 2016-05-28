@@ -1,0 +1,107 @@
+INFO  2016-05-28 21:50:33 at Server:201 :		 Server initialized.
+INFO  2016-05-28 21:50:37 at Server:154 :		 Connection received
+INFO  2016-05-28 21:50:40 at Session:206 :		 DSI logged in successfully.
+ERROR 2016-05-28 21:51:16 at Session:133 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:109)
+INFO  2016-05-28 21:51:16 at Session:141 :		 Connection terminated
+INFO  2016-05-28 21:52:03 at Server:154 :		 Connection received
+INFO  2016-05-28 21:52:06 at Session:206 :		 DSI logged in successfully.
+ERROR 2016-05-28 21:52:28 at Session:133 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:109)
+INFO  2016-05-28 21:52:28 at Session:141 :		 Connection terminated
+INFO  2016-05-28 21:53:26 at Server:154 :		 Connection received
+ERROR 2016-05-28 21:53:38 at Session:133 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:109)
+INFO  2016-05-28 21:53:38 at Session:141 :		 Connection terminated
+INFO  2016-05-28 21:54:54 at Server:154 :		 Connection received
+INFO  2016-05-28 21:55:00 at Session:206 :		 DSI logged in successfully.
+ERROR 2016-05-28 21:56:37 at Session:133 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:109)
+INFO  2016-05-28 21:56:37 at Session:141 :		 Connection terminated
+INFO  2016-05-28 21:57:33 at Server:154 :		 Connection received
+INFO  2016-05-28 21:57:37 at Session:206 :		 DSI logged in successfully.
+ERROR 2016-05-28 21:57:54 at Session:133 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:109)
+INFO  2016-05-28 21:57:54 at Session:141 :		 Connection terminated
+INFO  2016-05-28 21:59:23 at Server:154 :		 Connection received
+INFO  2016-05-28 21:59:26 at Session:206 :		 DSI logged in successfully.
+ERROR 2016-05-28 21:59:45 at Session:133 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:109)
+INFO  2016-05-28 21:59:45 at Session:141 :		 Connection terminated
+INFO  2016-05-28 22:02:04 at Server:154 :		 Connection received
+INFO  2016-05-28 22:02:08 at Session:206 :		 DSI logged in successfully.
+ERROR 2016-05-28 22:02:31 at Session:133 :		 Session : IOException caught
+java.net.SocketException: Connection reset
+	at java.net.SocketInputStream.read(Unknown Source)
+	at java.net.SocketInputStream.read(Unknown Source)
+	at sun.nio.cs.StreamDecoder.readBytes(Unknown Source)
+	at sun.nio.cs.StreamDecoder.implRead(Unknown Source)
+	at sun.nio.cs.StreamDecoder.read(Unknown Source)
+	at java.io.InputStreamReader.read(Unknown Source)
+	at java.io.BufferedReader.fill(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at java.io.BufferedReader.readLine(Unknown Source)
+	at server.Session.run(Session.java:109)
+INFO  2016-05-28 22:02:31 at Session:141 :		 Connection terminated
+INFO  2016-05-28 22:05:01 at Server:154 :		 Connection received
+INFO  2016-05-28 22:05:06 at Session:206 :		 DSI logged in successfully.

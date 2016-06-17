@@ -2,7 +2,7 @@ package model.query;
 
 import util.JsonImpl;
 
-public class evolutionOfTheSimulationsQuery {
+public class evolutionOfTheSimulationsQuery  implements ClientQuery {
 	String date;
 	
 	public evolutionOfTheSimulationsQuery(String date){

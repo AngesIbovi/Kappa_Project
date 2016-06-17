@@ -182,7 +182,7 @@ public class Session extends Thread {
 
 			String prefix = message.substring(0, prefixEnd);
 			String content = message.substring(prefixEnd + 1);
-
+			System.out.println(content);
 			ServerResponse response;
 			switch (prefix) {
 			case "AUTH":
@@ -243,6 +243,18 @@ public class Session extends Thread {
 				response = MessageHandler.handleEvolutionOfTheSimulation(evolution.getDate());
 
 				break;
+			case "evolutionOfTheSimulation":
+				if (this.sessionInformation.getAuthorization_level() < 3) {
+					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id() == null),
+							this.sessionInformation.getAuthorization_level(), 2);
+				}
+
+				evolutionOfTheSimulationsQuery evolution2 = JsonImpl.fromJson(content,
+						evolutionOfTheSimulationsQuery.class);
+				
+				response = MessageHandler.handleEvolutionSim(evolution2.getDate());
+
+				break;
 			case "NumberOfLoanQuery":
 				if (this.sessionInformation.getAuthorization_level() < 3) {
 					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id() == null),
@@ -251,7 +263,9 @@ public class Session extends Thread {
 				NumberOfLoanQuery numberOfLoan = JsonImpl.fromJson(content, NumberOfLoanQuery.class);
 				response = MessageHandler.handleNumberOfLoan(numberOfLoan.getDate());
 				break;
-
+				
+			
+				
 			case "MustSimulatedLoan":
 				if (this.sessionInformation.getAuthorization_level() < 3) {
 					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id() == null),
@@ -265,6 +279,21 @@ public class Session extends Thread {
 
 				}
 				response = MessageHandler.handleMustSimulatedLoanQuery();
+				break;
+
+			case "worseSimulatedLoan":
+				if (this.sessionInformation.getAuthorization_level() < 3) {
+					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id() == null),
+							this.sessionInformation.getAuthorization_level(), 2);
+				}
+				NumberOfLoanQuery numberfLoanQuery = JsonImpl.fromJson(content, NumberOfLoanQuery.class);
+				System.out.println(numberfLoanQuery.toString());
+				try {
+					response = MessageHandler.handleworseSimulatedLoanQuery();
+				} catch (Exception e) {
+
+				}
+				response = MessageHandler.handleworseSimulatedLoanQuery();
 				break;
 
 			case "SumOfInterest":

@@ -1,4 +1,4 @@
-package server;
+﻿package server;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -42,8 +42,8 @@ import model.response.ServerResponse;
 import model.response.SignLoanServerResponse;
 import model.response.SumOfInterestResponse;
 import model.response.SumOfInterestResponse.Interest;
-import model.response.evolutionOfTheSimulationsResponse;
-import model.response.evolutionOfTheSimulationsResponse.ListResult;
+import model.response.EvolutionOfTheSimulationsResponse;
+import model.response.EvolutionOfTheSimulationsResponse.ListResult;
 import model.simulation.Event;
 import model.simulation.RateChange;
 import model.simulation.Repayment;
@@ -905,7 +905,7 @@ public abstract class MessageHandler {
 			ConnectionPool.release(databaseConnection);
 		}
 	}
-	
+	//////////////////////////////////////////////////////////////boubacar////////////////////////////////////////////////////////////////////
 	
 public static ServerResponse handleNumberOfLoan(String date){
 		
@@ -1126,6 +1126,7 @@ public static ServerResponse handleSumofInterest(){
 
 
 
+
 public static ServerResponse handleAverage(){
 	 {
 			logger.trace("Entering MessageHandler.handleGetSimsQuery");
@@ -1195,7 +1196,7 @@ public static ServerResponse handleEvolutionOfTheSimulation(String date){
 		try {
 			
 			String SQLquery = "SELECT COUNT(effective_date) as counts, "
-					+ " effective_date from loans where extract(year from EFFECTIVE_DATE )= "+date+" and is_real='N' group by effective_date order by effective_date";
+					+ " effective_date from loans where extract(year from EFFECTIVE_DATE )= "+date+" and is_real='Y' group by effective_date order by effective_date";
 			System.out.println(SQLquery);
 			Statement statement = databaseConnection.createStatement();
 			
@@ -1204,7 +1205,7 @@ public static ServerResponse handleEvolutionOfTheSimulation(String date){
 				
 				ResultSet results = statement.executeQuery(SQLquery);
 				
-				evolutionOfTheSimulationsResponse response = new evolutionOfTheSimulationsResponse();
+				EvolutionOfTheSimulationsResponse response = new EvolutionOfTheSimulationsResponse();
 				ListResult result ;
 				
 				ArrayList<ListResult> array = new ArrayList<ListResult>();
@@ -1246,6 +1247,126 @@ public static ServerResponse handleEvolutionOfTheSimulation(String date){
 	}
 
 
+
+public static ServerResponse handleEvolutionSim(String date){
+		Connection databaseConnection;
+		
+		try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (IllegalStateException | ClassNotFoundException | SQLException e) {
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+		
+		try {
+			
+			String SQLquery = "SELECT COUNT(effective_date) as counts, "
+					+ " effective_date from loans where extract(year from EFFECTIVE_DATE )= "+date+" and is_real='N' group by effective_date order by effective_date";
+			System.out.println(SQLquery);
+			Statement statement = databaseConnection.createStatement();
+			
+			try {
+				
+				
+				ResultSet results = statement.executeQuery(SQLquery);
+				
+				EvolutionOfTheSimulationsResponse response = new EvolutionOfTheSimulationsResponse();
+				ListResult result ;
+				
+				ArrayList<ListResult> array = new ArrayList<ListResult>();
+				String dateReturn;
+				System.out.println("Bonjour");
+				while(results.next()) {
+					System.out.println(results.getDate("effective_date")+""+results.getInt("counts"));
+					dateReturn = new SimpleDateFormat("dd/MM/yyyy").format(results.getDate("effective_date")) ;
+					System.out.println(dateReturn+" : "+results.getInt("counts"));
+					result	= new ListResult(dateReturn,results.getInt("counts"));
+					
+					array.add(result);
+					
+				}
+				for(ListResult lr: array){
+					System.out.println(lr.getCount());
+					System.out.println(lr.getDate());
+				}
+				response.setArray(array);
+				
+				System.out.println(array);
+				logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+				return response;
+			} catch (SQLException e) {
+				throw e;
+			} finally {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			logger.warn("SQLException caught", e);
+			logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+			return new ErrorServerResponse("Database error");
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+			ConnectionPool.release(databaseConnection);
+		}
+		
+		
+	}
+
+
+
+public static ServerResponse handleworseSimulatedLoanQuery() throws IllegalStateException, ClassNotFoundException{
+Connection databaseConnection = null ;
+
+try {
+	String SQLQuery = "select loan_type_id from  loans where is_real ='N' group by loan_type_id having count(*)<=(select min(count(loan_type_id)) from loans where is_real='N' group by loan_type_id)";
+	  databaseConnection = ConnectionPool.acquire();
+
+	Statement statement = databaseConnection.createStatement();
+	Statement statement2 = databaseConnection.createStatement();
+	
+	try {
+		ResultSet results = statement.executeQuery(SQLQuery);
+		
+		int idOfMustSimulatedLoan=0;
+		
+		while(results.next()){
+			idOfMustSimulatedLoan = results.getInt("loan_type_id");
+			System.out.println("id "+idOfMustSimulatedLoan);
+		}
+		
+		String SQLQuery2="SELECT NAME FROM LOAN_TYPES WHERE LOAN_TYPE_ID= "+idOfMustSimulatedLoan;
+		ResultSet results2 = statement2.executeQuery(SQLQuery2);
+		String Name = null;
+		
+		while (results2.next()) {
+			Name=results2.getString("Name");
+			
+		}
+		
+		
+		MustSimulatedLoanResponse mustSimulatedResponse = new MustSimulatedLoanResponse ();
+		
+		mustSimulatedResponse.setMessage(Name);
+		
+		logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+		return mustSimulatedResponse;
+	} catch (SQLException e) {
+		logger.warn("SQLException caught", e);
+		throw e;
+	} finally {
+		statement.close();
+	}
+} catch (SQLException e) {
+	logger.warn("SQLException caught", e);
+	logger.trace("Exiting MessageHandler.handleAuthQuery");
+	return new ErrorServerResponse("Database error");
+} finally {
+	// Good practice : the cleanup code is in a finally block.
+	ConnectionPool.release(databaseConnection);
+}
+
+}
+	
 
 
 
@@ -1301,10 +1422,8 @@ try {
 }
 
 }
-	
-	
 		
-	
+	////////////////////////////////////////////////////////Fin Boubacar///////////////////////////////////////////////////////////////////////////
 	
 
 

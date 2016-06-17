@@ -2,7 +2,7 @@ package model.query;
 
 import util.JsonImpl;
 
-public class GetAllLoanTypeQuery {
+public class GetAllLoanTypeQuery implements ClientQuery{
 	
 	String Name;
 

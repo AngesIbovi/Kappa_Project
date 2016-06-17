@@ -1,9 +1,9 @@
 package model.query;
 
-public class MustSimulatedLoanQuery  implements ClientQuery {
+public class WorseSimulatedLoanQuery  implements ClientQuery{
 	private String message;
 
-	public MustSimulatedLoanQuery(String message) {
+	public WorseSimulatedLoanQuery(String message) {
 		
 		this.message = message;
 	}
@@ -15,7 +15,7 @@ public class MustSimulatedLoanQuery  implements ClientQuery {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public MustSimulatedLoanQuery(){
+	public WorseSimulatedLoanQuery(){
 	
 	}
 

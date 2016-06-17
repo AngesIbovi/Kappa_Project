@@ -94,7 +94,6 @@ public abstract class LoginChoiceGUI extends AccountSelectionGUI {
 		gbc_selectButton.gridy = 4;
 		add(getSelectButton(), gbc_selectButton);
 	}
-	
 	@Override
 	protected ClientQuery generateQuery() {
 		return new GetAccountsQuery(loginField.getText());

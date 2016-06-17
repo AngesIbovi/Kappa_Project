@@ -7,9 +7,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.swing.JDialog;
@@ -40,7 +38,7 @@ public class MainMenuGUI extends JDialog implements SessionSpecific { // JDialog
 	 * The set of all tabs that could be used.</br>
 	 * The user's authorizationLevel is used to determine which ones to display.
 	 */
-	private List<Tab> tabs;
+	private Set<Tab> tabs;
 	
 	/**
 	 * This session's socket, initialized in AuthGUI.OnSuccessfulLoginRunable.run
@@ -58,7 +56,7 @@ public class MainMenuGUI extends JDialog implements SessionSpecific { // JDialog
 	 * Default constructor.
 	 * @param tabs : the set of tabs from which a subset will be selected when the user's authorization level is known.
 	 */
-	public MainMenuGUI(List<Tab> tabs) {
+	public MainMenuGUI(Set<Tab> tabs) {
 		this.tabs = tabs;
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -94,7 +92,7 @@ public class MainMenuGUI extends JDialog implements SessionSpecific { // JDialog
 	 * Runs everything properly
 	 * @param tabs : feeds it to a MainMenuGUI which will be displayed after on through an AuthGUI.
 	 */
-	public static void launch(List<Tab> tabs) {
+	public static void launch(Set<Tab> tabs) {
 		// Tools initialization
 		try {
 			KappaProperties.init();
@@ -124,18 +122,18 @@ public class MainMenuGUI extends JDialog implements SessionSpecific { // JDialog
 	 * @param args : not used
 	 */
 	public static void main(String[] args) {
-		List<Tab> tabs = new ArrayList<>(); 
+		Set<Tab> tabs = new HashSet<>(); 
 
-		Tab comparison = new ComparisonGUI(); //valentin
-		Tab resultprintview = new MainResultGUI(); // Marc
-		Tab fixratesimulation = new ihm(); // Mohamed
-		Tab variablesimulation = new VariableLoanGUI(); // Anges
-		Tab analyseofindicator=new AnalyseOfIndicatorsGui();//boubacar
-		tabs.add(fixratesimulation); 
-		tabs.add(variablesimulation); 
-		tabs.add(resultprintview);
-		tabs.add(comparison);
-		tabs.add(analyseofindicator);
+		Tab t = new ComparisonGUI(); //valentin
+		Tab t2 = new MainResultGUI(); // Marc
+		Tab fixRateTab = new ihm(); // Mohamed
+		Tab t3 = new VariableLoanGUI(); // Anges
+		Tab t4=new AnalysisOfIndicatorsGui();//boubacar
+		tabs.add(fixRateTab); 
+		tabs.add(t2); 
+		tabs.add(t);
+		tabs.add(t3);
+		tabs.add(t4);
 		launch(tabs);
 	}
 }

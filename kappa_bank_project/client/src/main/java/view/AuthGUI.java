@@ -61,7 +61,7 @@ public class AuthGUI extends JFrame {
 		
 		// Socket initialization
 		Properties prop = KappaProperties.getInstance();
-		final Socket connection = new Socket(prop.getProperty("SERVER_IP"), Integer.parseInt(prop.getProperty("SERVER_PORT")));
+		final Socket connection = new Socket("localhost", Integer.parseInt(prop.getProperty("SERVER_PORT")));
 		final PrintWriter out = new PrintWriter(connection.getOutputStream(), true);
 		final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		

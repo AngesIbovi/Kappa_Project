@@ -71,7 +71,6 @@ public class AmortizationElement extends SimulationComparisonElement {
 			repaymentFrequency = sim.getRepaymentFrequency();
 			totalRepayments = sim.getRemainingRepayments();
 		}
-
 		public String getName() {
 			return name;
 		}

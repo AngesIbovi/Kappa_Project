@@ -1,6 +1,6 @@
 package model.query;
 
-public class DynamiqueResearchQuery {
+public class DynamiqueResearchQuery implements ClientQuery{
 	String typeOfLoans;
 	int ageRange;
 	String date;
