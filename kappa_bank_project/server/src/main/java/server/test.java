@@ -20,7 +20,7 @@ import model.response.DynamiqueResearchResponse.SumInterest;
 import model.response.MustSimulatedLoanResponse;
 import model.response.NumberOfLoanResponse;
 import model.response.SumOfInterestResponse;
-import model.response.EvolutionOfTheSimulationsResponse;
+import model.response.evolutionOfTheSimulationsResponse;
 import view.Tab;
 
 
@@ -249,7 +249,7 @@ public void mustSimulatedLoan(Socket socket){
 	// evolution of the simulation year by year
 	public void evolutionOfTheSimulations(String date,Socket socket){
 
-		 EvolutionOfTheSimulationsResponse evolution ;
+		 evolutionOfTheSimulationsResponse evolution ;
 		try{
 			
 
@@ -280,7 +280,7 @@ public void mustSimulatedLoan(Socket socket){
 			String content = response.substring(prefixEnd + 1);
 			
 		
-			 evolution = gson.fromJson(content, EvolutionOfTheSimulationsResponse.class);
+			 evolution = gson.fromJson(content, evolutionOfTheSimulationsResponse.class);
 			System.out.println(evolution.toString());
 			
 		}catch(Exception e){

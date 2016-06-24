@@ -16,7 +16,7 @@ import model.query.DynamiqueResearchQuery;
 import model.response.AverageDurationResponse.AverageClass;
 import model.response.DynamiqueResearchResponse.SumInterest;
 import model.response.SumOfInterestResponse.Interest;
-import model.response.EvolutionOfTheSimulationsResponse.ListResult;
+import model.response.evolutionOfTheSimulationsResponse.ListResult;
 import serverCommunication.ServerCommunication;
 
 /*

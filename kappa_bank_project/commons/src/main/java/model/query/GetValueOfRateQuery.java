@@ -4,14 +4,14 @@ import util.JsonImpl;
 
 public class GetValueOfRateQuery {
 	
-	int rate;
+	float rate;
 	
 	public GetValueOfRateQuery(int rate)
 	{
 		this.rate=rate;
 	}
 
-	public int getRate() {
+	public float getRate() {
 		return rate;
 	}
 

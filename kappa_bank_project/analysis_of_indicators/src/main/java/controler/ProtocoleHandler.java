@@ -19,9 +19,9 @@ import model.response.MustSimulatedLoanResponse;
 import model.response.NumberOfLoanResponse;
 import model.response.SumOfInterestResponse;
 import model.response.SumOfInterestResponse.Interest;
-import model.response.EvolutionOfTheSimulationsResponse;
-import model.response.EvolutionOfTheSimulationsResponse.ListResult;
-import model.response.WorseSimulatedLoanResponse;
+import model.response.evolutionOfTheSimulationsResponse;
+import model.response.evolutionOfTheSimulationsResponse.ListResult;
+import model.response.worseSimulatedLoanResponse;
 
 
 
@@ -248,7 +248,7 @@ public String mustSimulatedLoan(Socket socket){
 
 public String worseSimulatedLoan(Socket socket){
 
- WorseSimulatedLoanResponse evolution = null ;
+ worseSimulatedLoanResponse evolution = null ;
 try{
 	
 
@@ -279,8 +279,7 @@ try{
 	String content = response.substring(prefixEnd + 1);
 	
 
-	 evolution = gson.fromJson(content, 
-			 WorseSimulatedLoanResponse.class);
+	 evolution = gson.fromJson(content,worseSimulatedLoanResponse.class);
 	 
 	System.out.println(content);
 	
@@ -297,7 +296,7 @@ return evolution.getMessage();
 	// evolution of the simulation year by year
 	public ArrayList<ListResult> evolutionOfTheSimulations(String date,Socket socket){
 
-		 EvolutionOfTheSimulationsResponse evolution = null ;
+		 evolutionOfTheSimulationsResponse evolution = null ;
 		 
 		try{
 			
@@ -330,7 +329,7 @@ return evolution.getMessage();
 			String content = response.substring(prefixEnd + 1);
 			
 		
-			 evolution = gson.fromJson(content, EvolutionOfTheSimulationsResponse.class);
+			 evolution = gson.fromJson(content, evolutionOfTheSimulationsResponse.class);
 			 
 			System.out.println(evolution.toString());
 			
@@ -345,7 +344,7 @@ return evolution.getMessage();
 	
 	public ArrayList<ListResult> evolutionOfTheSimulation(String date,Socket socket){
 
-		 EvolutionOfTheSimulationsResponse evolution = null ;
+		 evolutionOfTheSimulationsResponse evolution = null ;
 		 
 		try{
 			
@@ -378,7 +377,7 @@ return evolution.getMessage();
 			String content = response.substring(prefixEnd + 1);
 			
 		
-			 evolution = gson.fromJson(content, EvolutionOfTheSimulationsResponse.class);
+			 evolution = gson.fromJson(content, evolutionOfTheSimulationsResponse.class);
 			System.out.println(evolution.toString());
 			
 		}catch(Exception e){

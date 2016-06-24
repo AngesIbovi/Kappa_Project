@@ -37,6 +37,7 @@ public class risk_level extends Tab {
 	Socket socket = null;
 
 	public risk_level() {
+		super("Taux d'interet", 3);
 	}
 
 	public JTextField DureeEmprText;

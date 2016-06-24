@@ -43,8 +43,9 @@ import model.response.ServerResponse;
 import model.response.SignLoanServerResponse;
 import model.response.SumOfInterestResponse;
 import model.response.SumOfInterestResponse.Interest;
-import model.response.EvolutionOfTheSimulationsResponse;
-import model.response.EvolutionOfTheSimulationsResponse.ListResult;
+import model.response.evolutionOfTheSimulationsResponse;
+import model.response.evolutionOfTheSimulationsResponse.ListResult;
+import model.response.evolutionOfTheSimulationsResponse;
 import model.simulation.Event;
 import model.simulation.RateChange;
 import model.simulation.Repayment;
@@ -1269,7 +1270,7 @@ public static ServerResponse handleEvolutionOfTheSimulation(String date){
 				
 				ResultSet results = statement.executeQuery(SQLquery);
 				
-				EvolutionOfTheSimulationsResponse response = new EvolutionOfTheSimulationsResponse();
+				evolutionOfTheSimulationsResponse response = new evolutionOfTheSimulationsResponse();
 				ListResult result ;
 				
 				ArrayList<ListResult> array = new ArrayList<ListResult>();
@@ -1335,7 +1336,7 @@ public static ServerResponse handleEvolutionSim(String date){
 				
 				ResultSet results = statement.executeQuery(SQLquery);
 				
-				EvolutionOfTheSimulationsResponse response = new EvolutionOfTheSimulationsResponse();
+				evolutionOfTheSimulationsResponse response = new evolutionOfTheSimulationsResponse();
 				ListResult result ;
 				
 				ArrayList<ListResult> array = new ArrayList<ListResult>();

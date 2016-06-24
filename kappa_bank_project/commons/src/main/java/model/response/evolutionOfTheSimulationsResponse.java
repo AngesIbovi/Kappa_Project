@@ -2,7 +2,7 @@ package model.response;
 
 import java.util.ArrayList;
 
-public class EvolutionOfTheSimulationsResponse extends ServerResponse {
+public class evolutionOfTheSimulationsResponse extends ServerResponse {
 	
 	public ArrayList<ListResult> array = new ArrayList<>();
 	
@@ -38,12 +38,12 @@ public class EvolutionOfTheSimulationsResponse extends ServerResponse {
 	
 	}
 	
-	public EvolutionOfTheSimulationsResponse(ArrayList<ListResult> array) {
+	public evolutionOfTheSimulationsResponse(ArrayList<ListResult> array) {
 		this.array = array;
 
 	}
 
-	public EvolutionOfTheSimulationsResponse() {
+	public evolutionOfTheSimulationsResponse() {
 	
 	}
 
