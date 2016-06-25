@@ -537,6 +537,68 @@ public abstract class MessageHandler {
 	 * Typically an GetAllaccountsServerResponse, but can also be an ErrorServerResponse.
 	 */
 
+
+public static ServerResponse handleRepayments(RepaymentsQuery repaymentQuery){
+
+		Connection databaseConnection;
+		
+		try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (IllegalStateException | ClassNotFoundException | SQLException e) {
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+		
+		try {
+			String SQLQuery = "select sum(capital) as sumCapital from loans where extract(year from \"EFFECTIVE_DATE\")="+repaymentQuery.getDate();
+			String SQLQuery2 = "select sum(capital)as sumRepayment from REPAYMENTS  where EXTRACT(YEAR FROM \"Date\")= "+repaymentQuery.getDate();
+			Statement statement = databaseConnection.createStatement();
+			Statement statement2 = databaseConnection.createStatement();
+			System.out.println(SQLQuery);
+			System.out.println(SQLQuery2);
+			try {
+				ResultSet results = statement.executeQuery(SQLQuery);
+				ResultSet result2 = statement2.executeQuery(SQLQuery2);
+				
+				
+				float capitalLoan = 0;
+				float capitalRepayments = 0;
+				
+				while(results.next()) {
+					
+					capitalLoan=results.getFloat("sumCapital");
+					System.out.println("capital"+capitalLoan);
+				}
+				while(result2.next()){
+					capitalRepayments=result2.getFloat("sumRepayment");
+					System.out.println("capital"+capitalRepayments);
+				}
+				
+				
+				RepaymentsResponse response = new RepaymentsResponse();
+				
+				response.setTotalLoans(capitalLoan);
+				response.setTotalRepayments(capitalRepayments);
+			//	System.out.println(response.getNumberOfLoans() +" : "+response.getNumberOfLoans());
+				logger.trace("Exiting MessageHandler.handleGetAccountsQuery");
+				return response; 
+			} catch (SQLException e) {
+				logger.warn("SQLException caught", e);
+				throw e;
+			} finally {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			logger.warn("SQLException caught", e);
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			return new ErrorServerResponse("Database error");
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+			ConnectionPool.release(databaseConnection);
+		}
+	}
+	
 	public static ServerResponse handleGetAllAccountQuery(){
 		Connection databaseConnection;
 		ArrayList<String> array = new ArrayList<>();
