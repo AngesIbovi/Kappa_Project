@@ -93,7 +93,7 @@ public class AnalysisOfIndicatorsGui extends Tab {
 
 		indicateur.setModel(new javax.swing.DefaultComboBoxModel<>(
 				new String[] { " ", "Somme des intérêts sur un type de prêt","Somme des intérêts à une année", "detail des intérêts perçus","Le type de prêt le plus simulé",
-						"Durée Moyenne des prêts par type de prêt","Évolution mois par mois du nombre de simulation", "Évolution mois par mois du nombre de prêts",
+						"Durée Moyenne des prêts par type de prêt","Total des Empreints / Total des Remboursements","Évolution mois par mois du nombre de simulation", "Évolution mois par mois du nombre de prêts",
 						"Recherche dynamique sur les intérêts", "Le type de prêt le moins simulé" }));
 
 		date.setModel(new javax.swing.DefaultComboBoxModel<>(
@@ -354,6 +354,12 @@ public class AnalysisOfIndicatorsGui extends Tab {
 					LabelPret.setForeground(new java.awt.Color(0, 153, 153));
 				}
 				
+					else if(choix=="Total des Empreints / Total des Remboursements"){
+					labelDate.setForeground(new java.awt.Color(153, 0, 0));
+					labelAge.setForeground(new java.awt.Color(0, 153, 153));
+					LabelPret.setForeground(new java.awt.Color(0, 153, 153));
+				}
+				
 				if (choix == "Évolution mois par mois du nombre de simulation") {
 					labelDate.setForeground(new java.awt.Color(153, 0, 0));
 					labelAge.setForeground(new java.awt.Color(0, 153, 153));
@@ -422,7 +428,35 @@ public class AnalysisOfIndicatorsGui extends Tab {
 					textArea.setFont(new Font("Serif", Font.BOLD, 20));
 					textArea.setText("Le type de prêt le moins simulé dans cette agence est :" + reponse);
 
-				} else if (choix == "detail des intérêts perçus") {
+				}
+				
+				
+			else if (choix =="Total des Empreints / Total des Remboursements"){
+
+					
+					RepaymentsResponse repaymentResponse = new RepaymentsResponse();
+					RepaymentsQuery repaymentQuery = new RepaymentsQuery((String) date.getSelectedItem());
+					repaymentResponse = protocole.getRepayments(socket, repaymentQuery);
+					Object[][] object = new Object[50][50];
+				
+					
+					
+							object[0][0] =date.getSelectedItem();
+							object[0][1] = repaymentResponse.getTotalLoans();
+							object[0][2] = repaymentResponse.getTotalRepayments();
+						
+
+						
+			
+			textArea.setText("");
+		
+		
+			resultatTable.setModel(new DefaultTableModel(object, new String[] { "Résumé de l'année ", "Total des empreints","Total des remboursements"
+
+			}));
+				}
+				
+				else if (choix == "detail des intérêts perçus") {
 
 					ArrayList<Interest> array = new ArrayList<Interest>();
 
