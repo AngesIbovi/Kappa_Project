@@ -27,7 +27,48 @@ import model.response.worseSimulatedLoanResponse;
 
 public class ProtocoleHandler {
 	
+		
+	public RepaymentsResponse getRepayments(Socket socket,RepaymentsQuery repaymentsQuery){
+		
+		
+		RepaymentsResponse repayement = new RepaymentsResponse();
 	
+		
+		try{
+
+			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			
+		
+			Gson gson = new Gson();
+			String query = "repayments " + gson.toJson(repaymentsQuery);
+			System.out.print(query);
+		
+			out.println(query);
+
+			
+			// manage the response of the server
+			
+			String response = in.readLine();
+
+
+			int prefixEnd = response.indexOf(' ');
+
+			String prefix = response.substring(0, prefixEnd);
+			
+
+			String content = response.substring(prefixEnd + 1);
+			
+		
+			repayement= gson.fromJson(content, RepaymentsResponse.class);
+		
+			
+		}catch(Exception e){
+			e.toString();
+		}
+		
+		return repayement;
+	}
 	public ArrayList<SumInterest>  InterestBySegment(DynamiqueResearchQuery InterestQuery,Socket socket){
 		ArrayList<SumInterest> array= new ArrayList<SumInterest>();
 		
