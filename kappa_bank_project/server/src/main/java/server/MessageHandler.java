@@ -326,6 +326,116 @@ public abstract class MessageHandler {
 	}
 	
 	/**
+	 * Searches for loan type's max duration.
+	 * @param query : contains the loan name.
+	 * @return the server's response to the query. Never null nor an exception.
+	 */
+	public static ServerResponse handlegetMaxDuration(getMaxDurationQuery query) {
+		logger.trace("Entering MessageHandler.handleGetMaxDuration");
+		
+		String SQLquery = "SELECT Max_Duration FROM LOAN_TYPES  WHERE LOAN_TYPES.NAME='" + query.getName() + "'";
+		System.out.println(SQLquery);
+	
+		 Connection databaseConnection;
+   	try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (Exception e) {
+			logger.trace("Exiting MessageHandler.handlegetMaxDuration");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+		
+		try {
+			Statement statement = databaseConnection.createStatement();
+
+			try {
+				ResultSet results = statement.executeQuery(SQLquery);
+				
+				getMaxDurationResponse response = new getMaxDurationResponse();
+				int duration=0;
+				while(results.next()) {
+					duration = results.getInt("Max_Duration");
+				
+				}
+				
+				response.setMax_duration(duration);
+				logger.trace("Exiting MessageHandler.handlegetMaxDuration");
+				return response;
+			} catch (SQLException e) {
+				throw e;
+			} finally {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			logger.warn("SQLException caught", e);
+			logger.trace("Exiting MessageHandler.handlegetMaxDuration");
+			return new ErrorServerResponse("Database error");
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+		ConnectionPool.release(databaseConnection);
+		}
+	}
+	
+	/**
+	 * Searche for Indicator Rate 
+	 * @param query : contains the loan name.
+	 * @return the server's response to the query. Never null nor an exception.
+	 */
+	
+	
+	public static ServerResponse handlegetIndicatorRate(getIndicatorRate query){
+		Connection databaseConnection;
+		
+		try {
+			databaseConnection = ConnectionPool.acquire();
+		} catch (IllegalStateException | ClassNotFoundException | SQLException e) {
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			logger.warn("Can't acquire a connection from the pool", e);
+			return new ErrorServerResponse("Server-side error. Please retry later.");
+		}
+		
+		try {
+			String SQLQuery = "select value from InterestRate where name='" + query.getName() + "'";
+			System.out.println(SQLQuery);
+			Statement statement = databaseConnection.createStatement();
+			
+			try {
+				ResultSet results = statement.executeQuery(SQLQuery);
+				float value=0;
+				
+				while(results.next()){
+					value = results.getFloat("value");
+					System.out.println("resultat "+results.getFloat("value"));
+				}
+				
+				
+				
+				getIndicatorRateServerResponse getIndicatorRate = new getIndicatorRateServerResponse();
+				getIndicatorRate.setRate(value);
+				
+				logger.trace("Exiting MessageHandler.handlegetIndicatorRate");
+				return getIndicatorRate;
+			} catch (SQLException e) {
+				logger.warn("SQLException caught", e);
+				throw e;
+			} finally {
+				statement.close();
+			}
+		} catch (SQLException e) {
+			logger.warn("SQLException caught", e);
+			logger.trace("Exiting MessageHandler.handleAuthQuery");
+			return new ErrorServerResponse("Database error");
+		} finally {
+			// Good practice : the cleanup code is in a finally block.
+			ConnectionPool.release(databaseConnection);
+		}
+		
+		}
+	
+	
+	
+	
+	/**
 	 * Searches for simulations associated with a particular account.
 	 * @param query : contains the account id.
 	 * @return the server's response to the query. Never null nor an exception.
