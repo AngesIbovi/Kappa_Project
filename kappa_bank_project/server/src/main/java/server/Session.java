@@ -232,7 +232,33 @@ public class Session extends Thread {
 				break;
 				
 				
+case "getIndicatorRate":
 
+				getIndicatorRate getIndicatorRate = JsonImpl.fromJson(content, getIndicatorRate.class);
+				System.out.println(getIndicatorRate.toString());
+				try {
+					response = MessageHandler.handlegetIndicatorRate(getIndicatorRate);
+				} catch (Exception e) {
+				}
+				response = MessageHandler.handlegetIndicatorRate(getIndicatorRate);
+				break;
+				
+				case "GetMaxDuration":
+
+				getMaxDurationQuery MaxDurationQuery = JsonImpl.fromJson(content, getMaxDurationQuery.class);
+				System.out.println(MaxDurationQuery.toString());
+				
+				try{
+				response = MessageHandler.handlegetMaxDuration(MaxDurationQuery);
+				}catch(Exception e){
+					response = MessageHandler.handlegetMaxDuration(MaxDurationQuery);
+				}
+				System.out.println(response);
+				break;
+				
+				
+				
+				
 			case "evolutionOfTheSimulations":
 				if (this.sessionInformation.getAuthorization_level() < 3) {
 					return new UnauthorizedErrorServerResponse((this.sessionInformation.getUser_id() == null),
