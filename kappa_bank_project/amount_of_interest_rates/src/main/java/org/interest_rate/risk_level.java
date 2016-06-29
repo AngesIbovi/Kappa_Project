@@ -1,35 +1,23 @@
-package org.interest_rate;
+package view;
 
 import serverCommunication.ServerCommunication;
-
+import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.awt.event.ActionListener;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-//import serverCommunication.ServerCommunication;
-
-import javax.swing.DefaultComboBoxModel;
-
+import controler.Controler;
 import model.SessionInformation;
-import serverCommunication.ServerCommunication;
 import view.Tab;
 
 public class risk_level extends Tab {
@@ -37,8 +25,10 @@ public class risk_level extends Tab {
 	Socket socket = null;
 
 	public risk_level() {
+		super(" Le montant des taux d'intérêt de l'agence", 3);
 	}
 
+	// Declarations
 	public JTextField DureeEmprText;
 	static float rate;
 	static float rate1;
@@ -46,26 +36,18 @@ public class risk_level extends Tab {
 	static float rate3;
 	static float ratePretEtud;
 
-	
-
-	
-
-	public JRadioButton Radio2,Radio3,Radio4,Radio1,radioIlness,RadioHealthy;
-	public JLabel rateLabel,RatePerc,DureeLabel,health;
-	public JTextField rateText,finalRateText,RefRateText;
-	private JButton btnNewButton;
+	public JRadioButton Radio2, Radio3, Radio4, Radio1, radioIlness,
+			RadioHealthy;
+	public JLabel rateLabel, RatePerc, DureeLabel, maxDuration, health;
+	public JTextField finalRateText, maxDurationTex, RefRateText;
+	private JButton btnNewButton, btnannuler;
+	private JPanel cards, card1, card2, card3, card4;
 	private JComboBox<String> comboBox;
 
-//	@Override
-//	public void layout() {
-//		// TODO Auto-generated method stub
-//		super.layout();
-//	}
-
 	private void initialize() {
-		
+		CardLayout cards = new CardLayout();
+		this.setLayout(cards);
 
-		// frmNiveauDeRisque.setTitle("Niveau de risque");
 		setFont(new Font("Tahoma", Font.BOLD, 11));
 		setForeground(Color.BLACK);
 		setBounds(300, 300, 900, 600);
@@ -74,39 +56,27 @@ public class risk_level extends Tab {
 
 		DureeLabel = new JLabel("Age de l'emprunteur");
 		DureeLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		DureeLabel.setBounds(10, 242, 158, 19);
+		DureeLabel.setBounds(10, 200, 158, 19);
 		add(DureeLabel);
 
 		Radio1 = new JRadioButton("18 à 30 ans");
 		Radio1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		Radio1.setBounds(201, 240, 109, 23);
+		Radio1.setBounds(201, 200, 109, 23);
 
 		Radio1.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
 
-				rate = 0;
-				rate = (float) (rate + 0.5);
-				System.out.println(rate);
-
-				String rateString = Float.toString(rate);
-				finalRateText.setText(rateString);
 			}
 		});
 		add(Radio1);
 
 		Radio2 = new JRadioButton("De 30 à 45");
 		Radio2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		Radio2.setBounds(329, 240, 114, 23);
+		Radio2.setBounds(329, 200, 114, 23);
 		Radio2.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				rate1 = 0;
-				rate1 = (float) (rate1 + 1.28);
-				System.out.println(rate1);
-
-				String rateString = Float.toString(rate1);
-				finalRateText.setText(rateString);
 
 			}
 		});
@@ -114,16 +84,10 @@ public class risk_level extends Tab {
 
 		Radio3 = new JRadioButton("De 45 à 60");
 		Radio3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		Radio3.setBounds(471, 240, 120, 23);
+		Radio3.setBounds(471, 200, 120, 23);
 		Radio3.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				rate2 = 0;
-				rate2 = (float) (rate2 + 1.98);
-				System.out.println(rate2);
-
-				String rateString = Float.toString(rate2);
-				finalRateText.setText(rateString);
 
 			}
 		});
@@ -132,22 +96,16 @@ public class risk_level extends Tab {
 
 		Radio4 = new JRadioButton("60 et plus");
 		Radio4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		Radio4.setBounds(628, 240, 109, 23);
+		Radio4.setBounds(628, 200, 109, 23);
 		Radio4.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				rate3 = 0;
-				rate3 = (float) (rate3 + 2.4);
-				System.out.println(rate3);
-
-				String rateString = Float.toString(rate3);
-				finalRateText.setText(rateString);
 
 			}
 		});
 		add(Radio4);
 
-		ButtonGroup group = new ButtonGroup();
+		final ButtonGroup group = new ButtonGroup();
 		group.add(Radio1);
 		group.add(Radio2);
 		group.add(Radio3);
@@ -155,59 +113,113 @@ public class risk_level extends Tab {
 
 		JLabel DureeEmprlabel = new JLabel("Durée de l'emprunt");
 		DureeEmprlabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		DureeEmprlabel.setBounds(10, 391, 158, 20);
+		DureeEmprlabel.setBounds(10, 391, 159, 19);
 		add(DureeEmprlabel);
 
 		DureeEmprText = new JTextField();
 		DureeEmprText.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		DureeEmprText.setBounds(308, 390, 114, 22);
-		add(DureeEmprText);
+		DureeEmprText.setBounds(308, 391, 115, 22);
 		DureeEmprText.setColumns(10);
+		add(DureeEmprText);
+
+		maxDuration = new JLabel("Durée Maximale");
+		maxDuration.setFont(new Font("Tahoma", Font.BOLD, 15));
+		maxDuration.setBounds(600, 391, 158, 20);
+		add(maxDuration);
+
+		maxDurationTex = new JTextField();
+		maxDurationTex.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		maxDurationTex.setBounds(730, 391, 114, 22);
+		maxDurationTex.setColumns(10);
+		add(maxDurationTex);
+		maxDurationTex.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				Controler contr = new Controler();
+
+			}
+		});
 
 		JLabel lblAns = new JLabel("(ans)");
 		lblAns.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lblAns.setBounds(424, 396, 46, 14);
 		add(lblAns);
-		
-		
-//		health = new JLabel("Etat de santé :");
-//		health.setFont(new Font("Tahoma", Font.BOLD, 15));
-//		health.setBounds(10, 391, 158, 20);
-//		add(health);
-//		
-//		radioIlness= new JRadioButton("Etat aggravé");
-//		radioIlness.setFont(new Font("Tahoma", Font.PLAIN, 15));
-//		radioIlness.setBounds(628, 240, 109, 23);
-//		add(radioIlness);
-//		
-//		
-//		RadioHealthy = new JRadioButton("Etat satisfaisant");
-//		RadioHealthy.setFont(new Font("Tahoma", Font.PLAIN, 15));
-//		RadioHealthy.setBounds(628, 240, 109, 23);
-//		add(RadioHealthy);
-//		
-		
 
+		DureeEmprText.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+
+			}
+		});
+
+		health = new JLabel("Etat de santé :");
+		health.setFont(new Font("Tahoma", Font.BOLD, 15));
+		health.setBounds(10, 300, 158, 20);
+		add(health);
+
+		radioIlness = new JRadioButton("Etat aggravé");
+		radioIlness.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		radioIlness.setBounds(200, 300, 500, 20);
+		add(radioIlness);
+
+		RadioHealthy = new JRadioButton("Etat satisfaisant");
+		RadioHealthy.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		RadioHealthy.setBounds(700, 300, 250, 20);
+		add(RadioHealthy);
+
+		final ButtonGroup group2 = new ButtonGroup();
+		group2.add(RadioHealthy);
+		group2.add(radioIlness);
+
+		//
 		rateLabel = new JLabel("Le Taux :");
 		rateLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		rateLabel.setBounds(10, 529, 158, 19);
+		rateLabel.setBounds(10, 500, 158, 19);
 		add(rateLabel);
 
 		finalRateText = new JTextField();
 		finalRateText.setForeground(Color.RED);
 		finalRateText.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		finalRateText.setBounds(308, 529, 114, 23);
+		finalRateText.setBounds(308, 500, 114, 23);
 		add(finalRateText);
 		finalRateText.setColumns(10);
 
 		RatePerc = new JLabel("(%)");
 		RatePerc.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		RatePerc.setBounds(424, 533, 46, 14);
+		RatePerc.setBounds(424, 500, 46, 14);
 		add(RatePerc);
 
+		btnannuler = new JButton("Annuler");
+		btnannuler.setBounds(600, 600, 100, 33);
+		add(btnannuler);
+
+		btnannuler.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+			
+				group.clearSelection();
+				group2.clearSelection();
+				finalRateText.setText("");
+				maxDurationTex.setText("");
+				RefRateText.setText("");
+				comboBox.setSelectedIndex(0);
+				DureeEmprText.setText("");
+			}
+		});
+
 		btnNewButton = new JButton("Valider");
-		btnNewButton.setBounds(639, 463, 87, 33);
+		btnNewButton.setBounds(450, 600, 100, 33);
 		add(btnNewButton);
+
+		btnNewButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+
+				Final();
+
+			}
+		});
 
 		Label label_5 = new Label("Types du prêt");
 		label_5.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -225,21 +237,17 @@ public class risk_level extends Tab {
 		RefRateText.setBounds(308, 107, 114, 20);
 		add(RefRateText);
 
+		RefRateText.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+
+			}
+		});
+
 		JLabel label_4 = new JLabel("(%)");
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		label_4.setBounds(424, 110, 46, 14);
 		add(label_4);
-
-		// //String [] title = { "Prêt étudiant" , "Prêt immobilier" ,
-		// "Prêt conso" };
-
-		// comboBox.addActionListener(new ActionListener() {
-		//
-		// public void actionPerformed(ActionEvent arg0) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		// });
 
 		btnNewButton.addActionListener(new ActionListener() {
 
@@ -258,47 +266,103 @@ public class risk_level extends Tab {
 	/**
 	 * Launch the application.
 	 */
-	// public static void main(String[] args) {
-	// EventQueue.invokeLater(new Runnable() {
-	// public void run() {
-	// try {
-	// risk_level window = new risk_level();
-	// //window.frmNiveauDeRisque.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// });
-
-	// }
 
 	public void actionPerformed(ActionEvent e) {
-		if (comboBox.getSelectedIndex() == 0) {
 
-			float ratePretEtud = 9;
+		Controler contr = new Controler();
+		String Name = (String) comboBox.getSelectedItem();
 
-			String ratePretEtudText = Float.toString(ratePretEtud);
+	}
 
-			RefRateText.setText(ratePretEtudText);
+	// Manage the margin according to the health
+	public float choice() {
 
-		} else if (comboBox.getSelectedIndex() == 1) {
+		float rateHealth = 0;
+		if (RadioHealthy.isSelected()) {
+			rateHealth = rateHealth + 0.9f;
 
-			float ratePretEtud = 25;
-
-			String ratePretEtudText = Float.toString(ratePretEtud);
-
-			RefRateText.setText(ratePretEtudText);
-
-		} else if (comboBox.getSelectedIndex() == 2) {
-
-			ratePretEtud = 2;
-
-			String ratePretEtudText = Float.toString(ratePretEtud);
-
-			RefRateText.setText(ratePretEtudText);
+		} else if (radioIlness.isSelected()) {
+			rateHealth = rateHealth + 5;
 
 		}
 
+		return rateHealth;
+
+	}
+
+	// Manage the margin according to the Age
+	public float choiceAge() {
+		float rateAge = 0;
+		if (Radio1.isSelected()) {
+
+			rateAge = (float) (rateAge - 0.5);
+		} else if (Radio2.isSelected()) {
+			rateAge = rateAge + 0.02f;
+		} else if (Radio3.isSelected()) {
+			rateAge = rateAge + 0.9f;
+		} else if (Radio4.isSelected()) {
+			rateAge = rateAge + 1.9f;
+		}
+		return rateAge;
+	}
+
+	//
+
+	public void Final() {
+
+		float f0 = choiceAge();
+
+		// recupere le contenu dans taux indicateur
+		String indicatorratestr;
+		indicatorratestr = RefRateText.getText();
+		// le convertir en float
+		float f1 = Float.parseFloat(indicatorratestr);
+		// recuperer les taux concernanat l'état de santé
+		float f2 = choice();
+
+		// recuperer le taux concernanat la durée de l'emprunt
+		float f3 = choiceDurr();
+
+		float floatrate = f0 + f1 + f2 + f3;
+		System.out.println(floatrate);
+
+		// Finaly: The final interest rate
+
+		String finalInterestRate = Float.toString(floatrate);
+		System.out.println("sldkurghslrkugh " + finalInterestRate);
+
+		finalRateText.setText(finalInterestRate);
+	}
+
+	// Manage the margin according to the duration
+	public float choiceDurr() {
+
+		// recuoerer la duree max
+		float f3 = 0;
+
+		String duremax;
+		duremax = maxDurationTex.getText();
+		// convertir en entier
+		int duremaxint = Integer.parseInt(duremax);
+
+		// recuperer la duree de l'emprunt
+		String duremprunt;
+		duremprunt = DureeEmprText.getText();
+		// convertir en entier
+		int durempruntint = Integer.parseInt(duremprunt);
+
+		// Tests
+		if (durempruntint == duremaxint) {
+			f3 = f3 + 2;
+		} else if (durempruntint == duremaxint / 2) {
+			f3 = f3 + 0.9f;
+		} else if (durempruntint > duremaxint / 2) {
+			f3 = f3 + 1.9f;
+		} else if (durempruntint < duremaxint / 2) {
+			f3 = f3 + 0.02f;
+		}
+
+		return f3;
 	}
 
 	public void setSessionInformation(SessionInformation sessionInformation) {
@@ -315,13 +379,39 @@ public class risk_level extends Tab {
 		ArrayList<String> array = new ArrayList<String>();
 		array = servercommunication.getAlltypeofLoan(socket);
 
+		System.out.println(array);
+		// array.getMax_Duration();
+
 		for (String string : array) {
 			System.out.println(string);
 			comboBox.addItem(string);
 
 		}
 		add(comboBox);
+
+		comboBox.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				Controler contr = new Controler();
+				System.out.println("selecton " + comboBox.getSelectedItem());
+				System.out.println("rate  "
+						+ contr.getIndicatorRate(socket,
+								(String) comboBox.getSelectedItem()));
+				System.out.println();
+
+				String RefRateString = Float.toString(contr.getIndicatorRate(
+						socket, (String) comboBox.getSelectedItem()));
+				RefRateText.setText(RefRateString);
+
+				int duree = contr.getDuration(
+						(String) comboBox.getSelectedItem(), socket);
+				System.out.println("durée " + duree);
+				String dureeString = Integer.toString(duree);
+				maxDurationTex.setText(dureeString);
+
+			}
+		});
+
 	}
 
-	
 }
